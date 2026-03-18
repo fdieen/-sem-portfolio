@@ -60,7 +60,7 @@ export default function Skills() {
             <div>
               <p className="text-2xl font-bold mb-2">Geen project te groot<br />of te klein.</p>
               <p className="text-white/40 text-sm leading-relaxed">
-                Van een simpele landingspagina tot een volledige webshop met betalingen, database en admin-paneel. Ik pas me aan op wat jij nodig hebt.
+                Van een simpele landingspagina tot een volledige webshop met betalingen, database en admin-paneel. Ik pas me aan op wat u nodig hebt.
               </p>
             </div>
           </motion.div>

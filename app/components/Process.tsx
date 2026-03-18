@@ -11,7 +11,7 @@ const steps = [
   {
     number: "02",
     title: "Afspraak of WhatsApp",
-    description: "We plannen een gesprek of sparren gewoon via WhatsApp. Wat jij fijner vindt.",
+    description: "We plannen een gesprek of sparren gewoon via WhatsApp. Wat u fijner vindt.",
   },
   {
     number: "03",
