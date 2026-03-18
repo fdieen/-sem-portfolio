@@ -111,7 +111,8 @@ export default function Projects() {
               <motion.span
                 animate={{ x: [0, 5, 0] }}
                 transition={{ duration: 2, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.5 }}
-                className="text-white/40 group-hover:text-[#6ee7f7] text-xl transition-colors duration-300"
+                className="text-[#6ee7f7] text-xl"
+                style={{ textShadow: "0 0 8px rgba(110,231,247,0.6), 0 0 20px rgba(110,231,247,0.3)" }}
               >→</motion.span>
             </div>
             <div>
