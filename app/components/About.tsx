@@ -25,7 +25,7 @@ export default function About() {
 
               <div className="relative rounded-2xl overflow-hidden border border-white/10 aspect-[3/4]">
                 <Image
-                  src="/sem.png"
+                  src="/sem-new.jpg"
                   alt="Sem van Dieen"
                   fill
                   className="object-cover object-[center_10%]"
