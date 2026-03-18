@@ -7,21 +7,36 @@ const steps = [
     number: "01",
     title: "Neem contact op",
     description: "Stuur me een berichtje via WhatsApp of mail. Vertel wat u zoekt en ik reageer snel.",
+    color: "#4ade80",
+    glow: "rgba(74,222,128",
   },
   {
     number: "02",
     title: "Afspraak of WhatsApp",
     description: "We plannen een gesprek of sparren gewoon via WhatsApp. Wat u fijner vindt.",
+    color: "#4ade80",
+    glow: "rgba(74,222,128",
   },
   {
     number: "03",
     title: "Ik ga aan de slag",
     description: "Ik bouw uw website of webshop volledig op maat. U blijft op de hoogte tijdens het proces.",
+    color: "#4ade80",
+    glow: "rgba(74,222,128",
   },
   {
     number: "04",
     title: "Oplevering",
     description: "Uw platform gaat live en de eerste bezoekers bekijken uw platform.",
+    color: "#4ade80",
+    glow: "rgba(74,222,128",
+  },
+  {
+    number: "05",
+    title: "Onderhoud",
+    description: "Als u na de oplevering nog gebruik wilt maken van mijn diensten kunnen we in samenspraak kijken naar wat u nodig heeft.",
+    color: "#f59e0b",
+    glow: "rgba(245,158,11",
   },
 ];
 
@@ -46,7 +61,7 @@ export default function Process() {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
           {steps.map((step, i) => (
             <motion.div
               key={step.number}
@@ -66,13 +81,13 @@ export default function Process() {
                   <span
                     className="text-3xl font-black leading-none"
                     style={{
-                      color: "#4ade80",
-                      textShadow: "0 0 20px rgba(74,222,128,0.5), 0 0 40px rgba(74,222,128,0.2)",
+                      color: step.color,
+                      textShadow: `0 0 20px ${step.glow},0.5), 0 0 40px ${step.glow},0.2)`,
                     }}
                   >
                     {step.number}
                   </span>
-                  <div className="w-2 h-2 rounded-full" style={{ background: "#4ade80", boxShadow: "0 0 8px rgba(74,222,128,0.6), 0 0 16px rgba(74,222,128,0.3)" }} />
+                  <div className="w-2 h-2 rounded-full" style={{ background: step.color, boxShadow: `0 0 8px ${step.glow},0.6), 0 0 16px ${step.glow},0.3)` }} />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">{step.title}</h3>
                 <p className="text-white/40 text-sm leading-relaxed">{step.description}</p>
