@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { projects } from "../data/projects";
 
@@ -107,22 +106,12 @@ export default function Projects() {
             viewport={{ once: true, amount: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
             className="group flex flex-col items-center justify-center gap-4 border-2 border-dashed border-white/15 hover:border-[#6ee7f7]/50 rounded-2xl p-8 min-h-[200px] text-center transition-all duration-300 hover:bg-white/[0.03]"
-            onClick={(e) => {
-              e.preventDefault();
-              const el = e.currentTarget.querySelector(".arrow-icon") as HTMLElement;
-              if (el) {
-                el.style.transition = "transform 0.12s ease-in, opacity 0.12s ease-in";
-                el.style.transform = "translateX(48px)";
-                el.style.opacity = "0";
-              }
-              setTimeout(() => { window.location.href = "/projecten"; }, 130);
-            }}
           >
-            <div className="w-12 h-12 rounded-full border border-white/15 group-hover:border-[#6ee7f7]/50 flex items-center justify-center transition-all duration-300 overflow-hidden">
+            <div className="w-12 h-12 rounded-full border border-white/15 group-hover:border-[#6ee7f7]/50 flex items-center justify-center transition-all duration-300">
               <motion.span
                 animate={{ x: [0, 5, 0] }}
                 transition={{ duration: 2, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.5 }}
-                className="arrow-icon text-[#6ee7f7] text-xl"
+                className="text-[#6ee7f7] text-xl"
                 style={{ textShadow: "0 0 8px rgba(110,231,247,0.6), 0 0 20px rgba(110,231,247,0.3)" }}
               >→</motion.span>
             </div>
