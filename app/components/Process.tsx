@@ -21,7 +21,7 @@ const steps = [
   {
     number: "04",
     title: "Oplevering",
-    description: "Uw platform gaat live. En de eerste bezoekers bekijken uw platform.",
+    description: "Uw platform gaat live en de eerste bezoekers bekijken uw platform.",
   },
 ];
 
