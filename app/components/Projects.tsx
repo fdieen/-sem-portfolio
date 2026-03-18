@@ -108,7 +108,11 @@ export default function Projects() {
             className="group flex flex-col items-center justify-center gap-4 border-2 border-dashed border-white/15 hover:border-[#6ee7f7]/50 rounded-2xl p-8 min-h-[200px] text-center transition-all duration-300 hover:bg-white/[0.03]"
           >
             <div className="w-12 h-12 rounded-full border border-white/15 group-hover:border-[#6ee7f7]/50 flex items-center justify-center transition-all duration-300">
-              <span className="text-white/40 group-hover:text-[#6ee7f7] text-xl transition-colors duration-300">→</span>
+              <motion.span
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 2, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.5 }}
+                className="text-white/40 group-hover:text-[#6ee7f7] text-xl transition-colors duration-300"
+              >→</motion.span>
             </div>
             <div>
               <p className="text-white font-semibold text-lg group-hover:text-[#6ee7f7] transition-colors duration-300">
