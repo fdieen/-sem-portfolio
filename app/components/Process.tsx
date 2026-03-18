@@ -35,8 +35,8 @@ const steps = [
     number: "05",
     title: "Onderhoud",
     description: "Als u na de oplevering nog gebruik wilt maken van mijn diensten kunnen we in samenspraak kijken naar wat u nodig heeft.",
-    color: "#f59e0b",
-    glow: "rgba(245,158,11",
+    color: "#FFD700",
+    glow: "rgba(255,215,0",
   },
 ];
 
@@ -79,10 +79,13 @@ export default function Process() {
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4">
                   <span
-                    className="text-3xl font-black leading-none"
+                    className="font-black leading-none"
                     style={{
+                      fontSize: step.number === "05" ? "2.25rem" : "1.875rem",
                       color: step.color,
-                      textShadow: `0 0 20px ${step.glow},0.5), 0 0 40px ${step.glow},0.2)`,
+                      textShadow: step.number === "05"
+                        ? `0 0 16px ${step.glow},0.9), 0 0 32px ${step.glow},0.6), 0 0 60px ${step.glow},0.3)`
+                        : `0 0 20px ${step.glow},0.5), 0 0 40px ${step.glow},0.2)`,
                     }}
                   >
                     {step.number}
