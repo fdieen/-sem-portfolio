@@ -81,9 +81,12 @@ export default function Process() {
                   <span className="relative inline-block">
                     {step.number === "05" && (
                       <svg
-                        width="14" height="10" viewBox="0 0 24 16" fill="#FFD700"
-                        className="absolute -top-3.5 left-0"
-                        style={{ filter: "drop-shadow(0 0 4px rgba(255,215,0,0.9)) drop-shadow(0 0 8px rgba(255,215,0,0.5))" }}
+                        width="13" height="10" viewBox="0 0 24 16" fill="#FFD700"
+                        className="absolute -top-3 -left-1"
+                        style={{
+                          transform: "rotate(-25deg)",
+                          filter: "drop-shadow(0 0 4px rgba(255,215,0,0.9)) drop-shadow(0 0 8px rgba(255,215,0,0.5))",
+                        }}
                       >
                         <path d="M0 16 L4 4 L9 10 L12 0 L15 10 L20 4 L24 16 Z" />
                       </svg>
