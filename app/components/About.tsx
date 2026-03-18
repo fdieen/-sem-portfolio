@@ -28,7 +28,7 @@ export default function About() {
                   src="/sem.png"
                   alt="Sem van Dieen"
                   fill
-                  className="object-cover object-[center_15%]"
+                  className="object-cover object-[center_10%]"
                   sizes="(max-width: 768px) 100vw, 400px"
                 />
                 {/* Overlay gradient at bottom */}
@@ -36,7 +36,7 @@ export default function About() {
               </div>
 
               {/* Name badge */}
-              <div className="absolute -bottom-4 left-6 bg-[#111] border border-white/10 rounded-xl px-4 py-2.5">
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-[#111] border border-white/10 rounded-xl px-4 py-2.5 whitespace-nowrap">
                 <p className="text-sm font-semibold">Sem van Dieen</p>
                 <p className="text-xs text-white/40">14 jaar · Den Haag</p>
               </div>
