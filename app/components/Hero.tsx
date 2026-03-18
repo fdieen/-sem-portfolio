@@ -108,8 +108,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.35 }}
             className="text-white/50 text-lg leading-relaxed mb-10 max-w-md"
           >
-            Van webshop tot bedrijfswebsite, volledig op maat, modern design en
-            gebouwd om klanten binnen te halen.
+            Van webshop tot bedrijfswebsite, volledig op maat. Gevonden worden begint hier.
           </motion.p>
 
           <motion.div
