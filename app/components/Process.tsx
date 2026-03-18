@@ -78,17 +78,28 @@ export default function Process() {
 
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-4">
-                  <span
-                    className="font-black leading-none"
-                    style={{
-                      fontSize: "1.875rem",
-                      color: step.color,
-                      textShadow: step.number === "05"
-                        ? `0 0 16px ${step.glow},0.9), 0 0 32px ${step.glow},0.6), 0 0 60px ${step.glow},0.3)`
-                        : `0 0 20px ${step.glow},0.5), 0 0 40px ${step.glow},0.2)`,
-                    }}
-                  >
-                    {step.number}
+                  <span className="relative inline-block">
+                    {step.number === "05" && (
+                      <svg
+                        width="14" height="10" viewBox="0 0 24 16" fill="#FFD700"
+                        className="absolute -top-3.5 left-0"
+                        style={{ filter: "drop-shadow(0 0 4px rgba(255,215,0,0.9)) drop-shadow(0 0 8px rgba(255,215,0,0.5))" }}
+                      >
+                        <path d="M0 16 L4 4 L9 10 L12 0 L15 10 L20 4 L24 16 Z" />
+                      </svg>
+                    )}
+                    <span
+                      className="font-black leading-none"
+                      style={{
+                        fontSize: "1.875rem",
+                        color: step.color,
+                        textShadow: step.number === "05"
+                          ? `0 0 16px ${step.glow},0.9), 0 0 32px ${step.glow},0.6), 0 0 60px ${step.glow},0.3)`
+                          : `0 0 20px ${step.glow},0.5), 0 0 40px ${step.glow},0.2)`,
+                      }}
+                    >
+                      {step.number}
+                    </span>
                   </span>
                   <div className="w-2 h-2 rounded-full" style={{ background: step.color, boxShadow: `0 0 8px ${step.glow},0.6), 0 0 16px ${step.glow},0.3)` }} />
                 </div>
