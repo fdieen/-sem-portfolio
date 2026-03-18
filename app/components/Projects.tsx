@@ -110,6 +110,7 @@ export default function Projects() {
             <div className="w-12 h-12 rounded-full border border-white/15 group-hover:border-[#6ee7f7]/50 flex items-center justify-center transition-all duration-300">
               <motion.span
                 animate={{ x: [0, 5, 0] }}
+                whileTap={{ x: 36, opacity: 0, transition: { duration: 0.18, ease: "easeIn" } }}
                 transition={{ duration: 2, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.5 }}
                 className="text-[#6ee7f7] text-xl"
                 style={{ textShadow: "0 0 8px rgba(110,231,247,0.6), 0 0 20px rgba(110,231,247,0.3)" }}
