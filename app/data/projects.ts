@@ -13,7 +13,7 @@ export const projects: Project[] = [
     url: "https://beletteringbestellen.nl",
     type: "Webshop",
     description:
-      "Een complete webshop voor plakletters en belettering op maat. Klanten ontwerpen hun tekst live op de site, zien direct de prijs en betalen via iDEAL of Bancontact. Inclusief automatische e-mails, Track & Trace en een admin-paneel voor de eigenaar.",
+      "Een complete webshop voor plakletters en belettering. Klanten ontwerpen hun tekst in de webshop, zien direct de prijs en kunnen gemakkelijk betalen via iDEAL, Bancontact of creditcard. Inclusief automatische e-mails, Track & Trace en een admin-paneel voor de eigenaar.",
     tags: ["React", "TypeScript", "Tailwind CSS", "Supabase", "Mollie", "Cloudflare"],
     year: "2026",
   },
