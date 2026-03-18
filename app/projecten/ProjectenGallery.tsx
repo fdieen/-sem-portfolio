@@ -125,7 +125,7 @@ export default function ProjectenGallery() {
           className="mt-16 text-center"
         >
           <p className="text-white/30 text-sm mb-4">
-            Wil u ook een website laten maken?
+            Wilt u ook een website laten maken?
           </p>
           <a
             href="/#contact"
