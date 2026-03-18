@@ -96,6 +96,37 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
+
+          {/* Desktop socials */}
+          <div className="flex items-center gap-2">
+            {socials.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                className="flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-200"
+                style={{
+                  color: s.color,
+                  background: `${s.glow.replace("0.4", "0.06")}`,
+                  border: `1px solid ${s.glow.replace("0.4", "0.18")}`,
+                  boxShadow: s.shadow ?? `0 0 16px 2px ${s.glow.replace("0.4", "0.2")}, 0 0 6px ${s.glow.replace("0.4", "0.15")}`,
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = s.shadowHover ?? `0 0 24px 4px ${s.glow.replace("0.4", "0.35")}, 0 0 10px ${s.glow.replace("0.4", "0.25")}`;
+                  (e.currentTarget as HTMLElement).style.borderColor = s.glow.replace("0.4", "0.45");
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = s.shadow ?? `0 0 16px 2px ${s.glow.replace("0.4", "0.2")}, 0 0 6px ${s.glow.replace("0.4", "0.15")}`;
+                  (e.currentTarget as HTMLElement).style.borderColor = s.glow.replace("0.4", "0.18");
+                }}
+              >
+                <span className="scale-75">{s.icon}</span>
+              </a>
+            ))}
+          </div>
+
           <a
             href="/#contact"
             className="text-sm bg-[#6ee7f7] text-[#080808] font-medium px-4 py-2 rounded-full hover:bg-white transition-colors duration-200"
