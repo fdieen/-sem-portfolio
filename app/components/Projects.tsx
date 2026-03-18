@@ -85,11 +85,8 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <span className="text-xs text-[#6ee7f7] uppercase tracking-widest font-medium">
+          <h2 className="text-4xl lg:text-5xl font-bold tracking-tight text-[#6ee7f7]">
             Mijn werk
-          </span>
-          <h2 className="text-4xl lg:text-5xl font-bold mt-3 tracking-tight">
-            Projecten
           </h2>
           <p className="text-white/60 mt-4 max-w-xl">
             Websites en webshops die ik heb gebouwd voor klanten. Elk project is
