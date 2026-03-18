@@ -97,9 +97,9 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-5xl lg:text-7xl font-bold tracking-tight leading-[1.05] mb-6"
           >
-            Uw unieke ideeën
+            Gevonden worden
             <br />
-            <span className="text-[#6ee7f7]">breng ik tot leven.</span>
+            <span className="text-[#6ee7f7]">begint hier.</span>
           </motion.h1>
 
           <motion.p
@@ -108,7 +108,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.35 }}
             className="text-white/50 text-lg leading-relaxed mb-10 max-w-md"
           >
-            Van webshop tot bedrijfswebsite, volledig op maat. Gevonden worden begint hier.
+            Uw unieke ideeën breng ik tot leven. Van webshop tot bedrijfswebsite, volledig op maat.
           </motion.p>
 
           <motion.div
