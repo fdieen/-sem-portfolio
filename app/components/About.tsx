@@ -59,28 +59,13 @@ export default function About() {
 
             <div className="space-y-4 text-white/50 leading-relaxed">
               <p>
-                Ik ben 14 jaar en bouw websites voor bedrijven. Via mijn stage
-                bij{" "}
-                <a
-                  href="https://www.donatues.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/70 hover:text-[#6ee7f7] transition-colors underline underline-offset-2"
-                >
-                  Stichting Donatues
-                </a>{" "}
-                in Eindhoven werk ik aan echte opdrachten voor echte
-                klanten.
+                Ik ben Sem, 14 jaar en kom uit Den Haag. Naast mijn passie voor webdesign ben ik sportief en houd ik van muziek. Die energie neem ik mee in elk project dat ik oppak.
               </p>
               <p>
-                Ik werk divers, van een eenvoudige bedrijfswebsite tot een
-                volledige webshop met betalingssysteem en admin-paneel. Ik pas
-                me volledig aan op wat een klant nodig heeft.
+                Ik werk divers, van een eenvoudige bedrijfswebsite tot een volledige webshop met betalingssysteem en admin-paneel. Elk project lever ik op met aandacht voor design en vindbaarheid.
               </p>
               <p>
-                Elk project lever ik op met aandacht voor design, snelheid en
-                vindbaarheid zodat uw website niet alleen mooi is, maar ook
-                echt iets oplevert.
+                Daarnaast adviseer ik mijn klanten actief over het promoten van hun platform, want een mooie website zonder bezoekers doet zijn werk niet.
               </p>
             </div>
           </motion.div>
