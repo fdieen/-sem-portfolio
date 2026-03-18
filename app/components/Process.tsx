@@ -81,7 +81,7 @@ export default function Process() {
                   <span
                     className="font-black leading-none"
                     style={{
-                      fontSize: step.number === "05" ? "2.25rem" : "1.875rem",
+                      fontSize: "1.875rem",
                       color: step.color,
                       textShadow: step.number === "05"
                         ? `0 0 16px ${step.glow},0.9), 0 0 32px ${step.glow},0.6), 0 0 60px ${step.glow},0.3)`
