@@ -51,7 +51,7 @@ export default function Contact() {
               Laten we praten.
             </h2>
             <p className="text-white/40 text-lg leading-relaxed mb-12">
-              Wil u een website of webshop laten maken? Neem gerust contact
+              Wilt u een website of webshop laten maken? Neem gerust contact
               op. Ik denk graag met u mee en stuur u een vrijblijvende
               offerte.
             </p>
