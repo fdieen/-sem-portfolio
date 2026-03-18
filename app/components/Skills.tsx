@@ -154,7 +154,7 @@ export default function Skills() {
             </svg>
             <div>
               <p className="font-semibold text-sm">Alle branches</p>
-              <p className="text-white/30 text-xs mt-0.5">Ik verdiep me in jouw markt</p>
+              <p className="text-white/30 text-xs mt-0.5">Ik verdiep me in uw markt</p>
             </div>
           </motion.div>
 

@@ -79,7 +79,7 @@ export default function About() {
               </p>
               <p>
                 Elk project lever ik op met aandacht voor design, snelheid en
-                vindbaarheid zodat jouw website niet alleen mooi is, maar ook
+                vindbaarheid zodat uw website niet alleen mooi is, maar ook
                 echt iets oplevert.
               </p>
             </div>

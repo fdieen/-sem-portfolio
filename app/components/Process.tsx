@@ -6,7 +6,7 @@ const steps = [
   {
     number: "01",
     title: "Neem contact op",
-    description: "Stuur me een berichtje via WhatsApp of mail. Vertel wat je zoekt en ik reageer snel.",
+    description: "Stuur me een berichtje via WhatsApp of mail. Vertel wat u zoekt en ik reageer snel.",
   },
   {
     number: "02",
@@ -16,12 +16,12 @@ const steps = [
   {
     number: "03",
     title: "Ik ga aan de slag",
-    description: "Ik bouw jouw website of webshop volledig op maat. Je blijft op de hoogte tijdens het proces.",
+    description: "Ik bouw uw website of webshop volledig op maat. U blijft op de hoogte tijdens het proces.",
   },
   {
     number: "04",
     title: "Oplevering",
-    description: "Jouw website gaat live. Ik zorg dat alles werkt en blijf beschikbaar voor vragen achteraf.",
+    description: "Uw website gaat live. Ik zorg dat alles werkt en blijf beschikbaar voor vragen achteraf.",
   },
 ];
 
