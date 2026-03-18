@@ -89,8 +89,7 @@ export default function Projects() {
             Mijn werk
           </h2>
           <p className="text-white/60 mt-4 max-w-xl">
-            Websites en webshops die ik heb gebouwd voor klanten. Elk project is
-            volledig op maat gemaakt.
+            Bekijk hier de websites & webshops die ik heb afgerond, elk project is volledig op maat gemaakt.
           </p>
         </motion.div>
 
