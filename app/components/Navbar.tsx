@@ -92,31 +92,8 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <div
-            className="shrink-0 overflow-hidden rounded-full"
-            style={{ width: "42px", height: "42px" }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo.png"
-              alt="SVD Webdesign"
-              style={{
-                width: "120%",
-                height: "120%",
-                objectFit: "cover",
-                objectPosition: "center 10%",
-                marginLeft: "-10%",
-                marginTop: "-6%",
-                mixBlendMode: "screen",
-                filter: "brightness(1.6) saturate(1.3) hue-rotate(-20deg)",
-              }}
-            />
-          </div>
-          <span className="text-lg font-semibold tracking-tight">
-            Sem van Dieen<span className="text-[#6ee7f7]">.</span>
-          </span>
+        <a href="/" className="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity">
+          Sem van Dieen<span className="text-[#6ee7f7]">.</span>
         </a>
 
         {/* Desktop links */}
