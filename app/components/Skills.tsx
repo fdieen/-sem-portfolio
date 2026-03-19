@@ -32,8 +32,9 @@ export default function Skills() {
             Wat ik bied
           </span>
           <h2 className="text-4xl lg:text-5xl font-bold mt-3 tracking-tight">
-            Divers. Aanpasbaar.<br />
-            <span className="text-[#6ee7f7]">Altijd op maat.</span>
+            <span className="cursor-default transition-all duration-300 hover:text-[#6ee7f7]" style={{}} onMouseEnter={e => (e.currentTarget as HTMLElement).style.textShadow = "0 0 20px rgba(110,231,247,0.7), 0 0 40px rgba(110,231,247,0.3)"} onMouseLeave={e => (e.currentTarget as HTMLElement).style.textShadow = "none"}>Divers.</span>{" "}
+            <span className="cursor-default transition-all duration-300 hover:text-[#6ee7f7]" onMouseEnter={e => (e.currentTarget as HTMLElement).style.textShadow = "0 0 20px rgba(110,231,247,0.7), 0 0 40px rgba(110,231,247,0.3)"} onMouseLeave={e => (e.currentTarget as HTMLElement).style.textShadow = "none"}>Aanpasbaar.</span><br />
+            <span className="text-[#6ee7f7] cursor-default" onMouseEnter={e => (e.currentTarget as HTMLElement).style.textShadow = "0 0 20px rgba(110,231,247,0.9), 0 0 40px rgba(110,231,247,0.5)"} onMouseLeave={e => (e.currentTarget as HTMLElement).style.textShadow = "none"}>Altijd op maat.</span>
           </h2>
         </motion.div>
 
