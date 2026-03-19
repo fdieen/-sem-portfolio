@@ -59,13 +59,13 @@ export default function About() {
 
             <div className="space-y-4 text-white/50 leading-relaxed">
               <p>
-                Ik ben Sem, 14 jaar en kom uit Den Haag. Naast mijn passie voor webdesign ben ik sportief en houd ik van muziek. Die energie neem ik mee in elk project dat ik oppak.
+                Ik ben Sem, 14 jaar en kom uit Den Haag. Naast mijn passie voor webdesign ben ik sportief en ga ik graag naar concerten van artiesten binnen de hiphopscene. Die energie en creativiteit neem ik mee in mijn werk.
               </p>
               <p>
-                Ik werk divers, van een eenvoudige bedrijfswebsite tot een volledige webshop met betalingssysteem en admin-paneel. Elk project lever ik op met aandacht voor design en vindbaarheid.
+                Ik werk aan uiteenlopende projecten: van eenvoudige bedrijfswebsites tot complete webshops met betalingssysteem en een overzichtelijk adminpaneel. Elk project lever ik op met aandacht voor design, gebruiksvriendelijkheid en vindbaarheid.
               </p>
               <p>
-                Daarnaast adviseer ik mijn klanten actief over het promoten van hun platform, want een mooie website zonder bezoekers doet zijn werk niet.
+                Daarnaast adviseer ik mijn klanten actief over het promoten van hun platform, want een sterke website heeft pas echt waarde als deze ook bezoekers en klanten oplevert.
               </p>
             </div>
           </motion.div>
