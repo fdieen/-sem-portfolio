@@ -94,7 +94,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <a href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="SVD Webdesign logo" className="h-9 w-auto" />
+          <img src="/logo.png" alt="SVD Webdesign logo" className="h-14 w-auto" />
           <span className="text-lg font-semibold tracking-tight">
             Sem van Dieen<span className="text-[#6ee7f7]">.</span>
           </span>
