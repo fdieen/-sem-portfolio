@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const socials = [
   {
     label: "Instagram",
-    href: "#",
+    href: "https://www.instagram.com/svd_webdesign?igsh=N3l5ZWxqYmozZTFl&utm_source=qr",
     color: "#E1306C",
     glow: "rgba(225,48,108,0.4)",
     shadow: "0 0 20px 4px rgba(225,48,108,0.28), 0 0 8px rgba(225,48,108,0.2)",
@@ -19,7 +20,7 @@ const socials = [
   },
   {
     label: "X",
-    href: "#",
+    href: "https://x.com/svd_webdesign?s=21",
     color: "#1d9bf0",
     glow: "rgba(29,155,240,0.4)",
     icon: (
@@ -30,7 +31,7 @@ const socials = [
   },
   {
     label: "TikTok",
-    href: "#",
+    href: "https://www.tiktok.com/@svd_webdesign?_r=1&_t=ZG-94qMnxsIaK8",
     color: "#bf00ff",
     glow: "rgba(191,0,255,0.4)",
     icon: (
@@ -41,7 +42,7 @@ const socials = [
   },
   {
     label: "YouTube",
-    href: "#",
+    href: "https://youtube.com/@svd_webdesign?si=AhEvKuutUMaCfyl",
     color: "#FF0000",
     glow: "rgba(255,0,0,0.4)",
     icon: (
@@ -52,7 +53,7 @@ const socials = [
   },
   {
     label: "LinkedIn",
-    href: "#",
+    href: "https://www.linkedin.com/in/sem-van-dieen-a228353b8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     color: "#0A66C2",
     glow: "rgba(10,102,194,0.4)",
     icon: (
@@ -67,7 +68,7 @@ const links = [
   { label: "Projecten", href: "/projecten" },
   { label: "Werkproces", href: "/#werkproces" },
   { label: "Over mij", href: "/#over-mij" },
-  { label: "Skills", href: "/#skills" },
+  { label: "Wat ik bied", href: "/#skills" },
 ];
 
 export default function Navbar() {
@@ -91,9 +92,11 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="/" className="text-lg font-semibold tracking-tight hover:opacity-80 transition-opacity">
-          Sem van Dieen<span className="text-[#6ee7f7]">.</span>
+      <div className={`max-w-6xl mx-auto px-6 flex items-center justify-between transition-all duration-300 ${scrolled ? "py-2" : "py-4"}`}>
+        <a href="/" className="flex items-center hover:opacity-90 transition-opacity">
+          <div style={{ mixBlendMode: "screen", filter: `drop-shadow(0 0 8px rgba(110,231,247,0.7)) drop-shadow(0 0 20px rgba(110,231,247,0.35))` }}>
+            <Image src="/svd-logo.png" alt="SVD WebDesign" width={700} height={200} className="object-contain transition-all duration-300" style={{ height: scrolled ? "80px" : "120px", width: "auto" }} />
+          </div>
         </a>
 
         {/* Desktop links */}

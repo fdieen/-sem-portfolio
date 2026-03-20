@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sem van Dieen | Webdesign & Development",
+  title: "SVD WebDesign | Websites & Webshops op maat",
   description:
-    "Ik bouw moderne websites en webshops op maat. Bekijk mijn werk en neem contact op voor een offerte.",
+    "SVD WebDesign bouwt moderne websites en webshops op maat. Bekijk ons werk en neem contact op voor een vrijblijvende offerte.",
   icons: {
     icon: "/favicon.svg",
   },

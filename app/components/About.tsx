@@ -65,7 +65,7 @@ export default function About() {
                 Ik werk aan uiteenlopende projecten: van eenvoudige bedrijfswebsites tot complete webshops met betalingssysteem en een overzichtelijk adminpaneel. Elk project lever ik op met aandacht voor design, gebruiksvriendelijkheid en vindbaarheid.
               </p>
               <p>
-                Daarnaast adviseer ik mijn klanten actief over het promoten van hun platform, want een sterke website heeft pas echt waarde als deze ook bezoekers en klanten oplevert.
+                Daarnaast adviseer ik mijn klanten over het promoten van hun platform, want een sterke website heeft pas echt waarde als deze ook bezoekers en klanten oplevert.
               </p>
             </div>
           </motion.div>
