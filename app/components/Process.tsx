@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import SaturnGlobe from "./SaturnGlobe";
+import MarsGlobe from "./MarsGlobe";
 
 export default function Process() {
   const router = useRouter();
@@ -37,7 +37,7 @@ export default function Process() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <SaturnGlobe onClick={() => router.push("/werkproces")} size={340} />
+          <MarsGlobe onClick={() => router.push("/werkproces")} size={340} />
         </motion.div>
 
         <motion.div
