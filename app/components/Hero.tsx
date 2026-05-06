@@ -81,21 +81,23 @@ export default function Hero() {
         style={{ top: "8%", left: "4%", animation: "moonFloat 9s ease-in-out infinite", zIndex: 2 }}
       >
         <div style={{
-          width: 110, height: 110,
+          width: 520, height: 520,
           borderRadius: "50%",
           background: "radial-gradient(circle at 35% 30%, #e8e0d0 0%, #c8bfb0 30%, #9e9488 60%, #6e6660 85%, #3a3430 100%)",
-          boxShadow: "inset -18px -12px 40px rgba(0,0,0,0.65), inset 6px 6px 20px rgba(255,255,240,0.12), 0 0 40px rgba(200,190,170,0.12), 0 0 80px rgba(180,170,150,0.06)",
+          boxShadow: "inset -70px -50px 140px rgba(0,0,0,0.7), inset 20px 20px 60px rgba(255,255,240,0.1), 0 0 80px rgba(200,190,170,0.1), 0 0 160px rgba(180,170,150,0.05)",
           position: "relative",
           overflow: "hidden",
         }}>
           {/* Kraters */}
-          <div style={{ position:"absolute", width:18, height:18, borderRadius:"50%", top:"22%", left:"28%", background:"radial-gradient(circle at 40% 35%, #b0a898 0%, #7a7268 60%, #5a5248 100%)", boxShadow:"inset 2px 2px 4px rgba(0,0,0,0.5)" }} />
-          <div style={{ position:"absolute", width:11, height:11, borderRadius:"50%", top:"52%", left:"18%", background:"radial-gradient(circle at 40% 35%, #b0a898 0%, #7a7268 60%, #5a5248 100%)", boxShadow:"inset 1px 1px 3px rgba(0,0,0,0.5)" }} />
-          <div style={{ position:"absolute", width:22, height:22, borderRadius:"50%", top:"58%", left:"52%", background:"radial-gradient(circle at 40% 35%, #aaa098 0%, #787068 60%, #585048 100%)", boxShadow:"inset 3px 3px 6px rgba(0,0,0,0.5)" }} />
-          <div style={{ position:"absolute", width:8, height:8, borderRadius:"50%", top:"32%", left:"62%", background:"radial-gradient(circle at 40% 35%, #b8b0a0 0%, #888078 100%)", boxShadow:"inset 1px 1px 2px rgba(0,0,0,0.4)" }} />
-          <div style={{ position:"absolute", width:13, height:13, borderRadius:"50%", top:"70%", left:"32%", background:"radial-gradient(circle at 40% 35%, #a8a098 0%, #787068 100%)", boxShadow:"inset 2px 2px 4px rgba(0,0,0,0.45)" }} />
+          <div style={{ position:"absolute", width:80, height:80, borderRadius:"50%", top:"22%", left:"28%", background:"radial-gradient(circle at 40% 35%, #b0a898 0%, #7a7268 60%, #5a5248 100%)", boxShadow:"inset 8px 8px 18px rgba(0,0,0,0.5)" }} />
+          <div style={{ position:"absolute", width:48, height:48, borderRadius:"50%", top:"52%", left:"18%", background:"radial-gradient(circle at 40% 35%, #b0a898 0%, #7a7268 60%, #5a5248 100%)", boxShadow:"inset 5px 5px 12px rgba(0,0,0,0.5)" }} />
+          <div style={{ position:"absolute", width:100, height:100, borderRadius:"50%", top:"58%", left:"52%", background:"radial-gradient(circle at 40% 35%, #aaa098 0%, #787068 60%, #585048 100%)", boxShadow:"inset 10px 10px 24px rgba(0,0,0,0.5)" }} />
+          <div style={{ position:"absolute", width:34, height:34, borderRadius:"50%", top:"32%", left:"62%", background:"radial-gradient(circle at 40% 35%, #b8b0a0 0%, #888078 100%)", boxShadow:"inset 4px 4px 8px rgba(0,0,0,0.4)" }} />
+          <div style={{ position:"absolute", width:58, height:58, borderRadius:"50%", top:"70%", left:"32%", background:"radial-gradient(circle at 40% 35%, #a8a098 0%, #787068 100%)", boxShadow:"inset 6px 6px 16px rgba(0,0,0,0.45)" }} />
+          <div style={{ position:"absolute", width:26, height:26, borderRadius:"50%", top:"14%", left:"55%", background:"radial-gradient(circle at 40% 35%, #bab2a2 0%, #8a8278 100%)", boxShadow:"inset 3px 3px 7px rgba(0,0,0,0.4)" }} />
+          <div style={{ position:"absolute", width:42, height:42, borderRadius:"50%", top:"42%", left:"70%", background:"radial-gradient(circle at 40% 35%, #a8a098 0%, #787068 100%)", boxShadow:"inset 5px 5px 12px rgba(0,0,0,0.45)" }} />
           {/* Lichtreflectie linksboven */}
-          <div style={{ position:"absolute", inset:0, background:"radial-gradient(circle at 32% 28%, rgba(255,255,240,0.18) 0%, transparent 55%)", borderRadius:"50%" }} />
+          <div style={{ position:"absolute", inset:0, background:"radial-gradient(circle at 32% 28%, rgba(255,255,240,0.15) 0%, transparent 50%)", borderRadius:"50%" }} />
         </div>
       </motion.div>
 
