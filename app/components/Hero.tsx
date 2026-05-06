@@ -24,7 +24,7 @@ function MoonMesh() {
         <meshPhongMaterial
           map={moonMap}
           specular={new THREE.Color(0x111111)}
-          shininess={4}
+          shininess={18}
         />
       </mesh>
       {/* Subtiele atmosferische rand */}
@@ -43,7 +43,7 @@ function MoonGlobe() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1.4, delay: 0.5 }}
       className="hidden lg:block absolute pointer-events-none"
-      style={{ top: "-160px", left: "-160px", animation: "moonFloat 11s ease-in-out infinite", zIndex: 2, width: 520, height: 520 }}
+      style={{ top: "-60px", left: "-80px", animation: "moonFloat 11s ease-in-out infinite", zIndex: 2, width: 320, height: 320 }}
     >
       <Canvas
         camera={{ position: [0, 0, 2.55], fov: 42 }}
