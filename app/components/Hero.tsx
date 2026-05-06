@@ -20,11 +20,11 @@ function MoonMesh() {
   return (
     <>
       <mesh ref={meshRef}>
-        <sphereGeometry args={[1, 96, 96]} />
-        <meshPhongMaterial
+        <sphereGeometry args={[1, 128, 128]} />
+        <meshStandardMaterial
           map={moonMap}
-          specular={new THREE.Color(0x111111)}
-          shininess={18}
+          roughness={0.82}
+          metalness={0.0}
         />
       </mesh>
       {/* Subtiele atmosferische rand */}
@@ -50,9 +50,9 @@ function MoonGlobe() {
         gl={{ antialias: true, alpha: false }}
         style={{ background: "#030c18", borderRadius: "50%", width: "100%", height: "100%" }}
       >
-        <directionalLight position={[3, 2, 2]} intensity={1.6} color="#e8f0ff" />
-        <directionalLight position={[-2, -1, -2]} intensity={0.04} color="#112244" />
-        <ambientLight intensity={0.06} />
+        <directionalLight position={[3, 2, 2]} intensity={1.2} color="#e8f0ff" />
+        <directionalLight position={[-2, -1, -2]} intensity={0.08} color="#223355" />
+        <ambientLight intensity={0.22} />
         <Suspense fallback={null}>
           <MoonMesh />
         </Suspense>
