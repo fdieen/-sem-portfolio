@@ -104,7 +104,7 @@ export default function SpaceGlobe() {
   return (
     <div
       className="pointer-events-none select-none"
-      style={{ position:"absolute", bottom:"-165px", right:"-130px", width:520, height:520, zIndex:0 }}
+      style={{ position:"absolute", bottom:"-165px", right:"-130px", width:520, height:520, zIndex:0, filter:"blur(0.7px)" }}
     >
       <Canvas
         camera={{ position: [0, 0, 2.55], fov: 42 }}

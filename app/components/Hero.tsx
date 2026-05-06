@@ -32,7 +32,7 @@ function MoonGlobe() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1.4, delay: 0.5 }}
       className="hidden lg:block absolute pointer-events-none"
-      style={{ top: "-60px", left: "-80px", animation: "moonFloat 11s ease-in-out infinite", zIndex: 2, width: 320, height: 320 }}
+      style={{ top: "-60px", left: "-80px", animation: "moonFloat 11s ease-in-out infinite", zIndex: 2, width: 320, height: 320, filter: "blur(0.7px)" }}
     >
       <div style={{
         width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden",

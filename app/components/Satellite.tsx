@@ -62,6 +62,7 @@ export default function Satellite() {
         width: 120,
         height: 120,
         willChange: "transform",
+        filter: "blur(0.5px)",
       }}
     >
       <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
