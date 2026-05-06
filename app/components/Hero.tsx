@@ -43,8 +43,8 @@ function MoonGlobe() {
           gl={{ antialias: true, alpha: false }}
           style={{ background: "#030c18", width: "100%", height: "100%" }}
         >
-          <directionalLight position={[0, 0, 5]} intensity={0.5} color="#f0f4ff" />
-          <ambientLight intensity={1.1} color="#dce6f5" />
+          <directionalLight position={[0.8, 0.4, 5]} intensity={1.1} color="#f0f4ff" />
+          <ambientLight intensity={0.55} color="#c8d4e8" />
           <Suspense fallback={null}>
             <MoonMesh />
           </Suspense>
