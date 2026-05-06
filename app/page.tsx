@@ -5,6 +5,7 @@ import Process from "./components/Process";
 import About from "./components/About";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
+import SeoFooter from "./components/SeoFooter";
 import Footer from "./components/Footer";
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
       <About />
       <Skills />
       <Contact />
+      <SeoFooter />
       <Footer />
     </main>
   );

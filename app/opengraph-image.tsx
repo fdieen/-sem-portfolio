@@ -75,7 +75,7 @@ export default async function Image() {
           fontSize: 16,
           fontWeight: 600,
         }}>
-          sem.vdieen@gmail.com
+          semvdwebdesign@gmail.com
         </div>
       </div>
     ),

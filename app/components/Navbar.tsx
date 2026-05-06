@@ -6,6 +6,17 @@ import Image from "next/image";
 
 const socials = [
   {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/sem-van-dieen-a228353b8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+    color: "#0A66C2",
+    glow: "rgba(10,102,194,0.4)",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+      </svg>
+    ),
+  },
+  {
     label: "Instagram",
     href: "https://www.instagram.com/svd_webdesign?igsh=N3l5ZWxqYmozZTFl&utm_source=qr",
     color: "#E1306C",
@@ -30,17 +41,6 @@ const socials = [
     ),
   },
   {
-    label: "TikTok",
-    href: "https://www.tiktok.com/@svd_webdesign?_r=1&_t=ZG-94qMnxsIaK8",
-    color: "#bf00ff",
-    glow: "rgba(191,0,255,0.4)",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
-      </svg>
-    ),
-  },
-  {
     label: "YouTube",
     href: "https://youtube.com/@svd_webdesign?si=AhEvKuutUMaCfyl",
     color: "#FF0000",
@@ -52,13 +52,13 @@ const socials = [
     ),
   },
   {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/sem-van-dieen-a228353b8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
-    color: "#0A66C2",
-    glow: "rgba(10,102,194,0.4)",
+    label: "TikTok",
+    href: "https://www.tiktok.com/@svd_webdesign?_r=1&_t=ZG-94qMnxsIaK8",
+    color: "#bf00ff",
+    glow: "rgba(191,0,255,0.4)",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
       </svg>
     ),
   },
@@ -72,11 +72,11 @@ const links = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -88,14 +88,14 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#080808]/90 backdrop-blur-md border-b border-white/5"
+          ? "bg-[#0a1628]/75 backdrop-blur-md border-b border-white/5"
           : "bg-transparent"
       }`}
     >
       <div className={`max-w-6xl mx-auto px-6 flex items-center justify-between transition-all duration-300 ${scrolled ? "py-2" : "py-4"}`}>
         <a href="/" className="flex items-center hover:opacity-90 transition-opacity">
           <div style={{ mixBlendMode: "screen", filter: `drop-shadow(0 0 8px rgba(110,231,247,0.7)) drop-shadow(0 0 20px rgba(110,231,247,0.35))` }}>
-            <Image src="/svd-logo.png" alt="SVD WebDesign" width={700} height={200} className="object-contain transition-all duration-300" style={{ height: scrolled ? "80px" : "120px", width: "auto" }} />
+            <Image src="/svd-logo.png" alt="SVD WebDesign" width={700} height={200} className="object-contain transition-all duration-300" style={{ height: "55px", width: "auto" }} />
           </div>
         </a>
 

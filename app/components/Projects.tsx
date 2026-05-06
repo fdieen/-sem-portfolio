@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "../data/projects";
 
 function ProjectCard({
@@ -10,6 +11,8 @@ function ProjectCard({
   project: (typeof projects)[0];
   index: number;
 }) {
+  const [expanded, setExpanded] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -45,6 +48,47 @@ function ProjectCard({
       <p className="text-white/60 text-sm leading-relaxed mb-6">
         {project.description}
       </p>
+
+      {project.techChoices && (
+        <>
+          <AnimatePresence>
+            {expanded && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <div className="mb-6 border-t border-white/8 pt-5">
+                  <p className="text-xs text-[#6ee7f7] uppercase tracking-widest font-medium mb-3">Waarom deze keuzes?</p>
+                  <div className="space-y-3">
+                    {project.techChoices.split("\n\n").map((paragraph, i) => (
+                      <p key={i} className="text-white/50 text-sm leading-relaxed">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="text-sm text-white/40 hover:text-[#6ee7f7] transition-colors duration-200 flex items-center gap-1.5 mb-6"
+          >
+            <motion.span
+              animate={{ rotate: expanded ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+              className="inline-block"
+            >
+              ↓
+            </motion.span>
+            {expanded ? "Zie minder" : "Zie meer"}
+          </button>
+        </>
+      )}
 
       <div className="flex flex-wrap gap-2 mb-6">
         {project.tags.map((tag) => (
@@ -94,7 +138,7 @@ export default function Projects() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {projects.slice(0, 3).map((project, i) => (
+          {projects.filter(p => !p.comingSoon).slice(0, 3).map((project, i) => (
             <ProjectCard key={project.name} project={project} index={i} />
           ))}
 

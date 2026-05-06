@@ -54,18 +54,27 @@ export default function About() {
               Over mij
             </span>
             <h2 className="text-4xl lg:text-5xl font-bold mt-3 mb-6 tracking-tight">
-              Hoi, ik ben Sem.
+              Hoi, ik ben Sem,
             </h2>
 
             <div className="space-y-4 text-white/50 leading-relaxed">
               <p>
-                Ik ben Sem, 14 jaar en kom uit Den Haag. Naast mijn passie voor webdesign ben ik sportief en ga ik graag naar concerten van artiesten binnen de hiphopscene. Die energie en creativiteit neem ik mee in mijn werk.
+                Vanuit mijn jonge, frisse blik ga ik met mijn 100% mentaliteit voor u aan de slag.
               </p>
               <p>
-                Ik werk aan uiteenlopende projecten: van eenvoudige bedrijfswebsites tot complete webshops met betalingssysteem en een overzichtelijk adminpaneel. Elk project lever ik op met aandacht voor design, gebruiksvriendelijkheid en vindbaarheid.
+                Mijn verhaal, passie, creativiteit breng ik samen tot een tactische professionele uitvoering.
               </p>
               <p>
-                Daarnaast adviseer ik mijn klanten over het promoten van hun platform, want een sterke website heeft pas echt waarde als deze ook bezoekers en klanten oplevert.
+                Hierbij staat uw verhaal en doel voorop, waarbij wij samen met een kritische blik kijken hoe uw website dit overbrengt.
+              </p>
+              <p>
+                Een betrouwbare connectie, eerlijke prijs en een resultaat dat er toe doet.
+              </p>
+              <p>
+                Ik garandeer een vertrouwde nieuwe look of eerste stap.
+              </p>
+              <p className="text-white/70 font-medium">
+                → Full service van bouwen tot design en SEO verwerking in de website
               </p>
             </div>
           </motion.div>

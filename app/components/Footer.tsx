@@ -1,5 +1,14 @@
 const socials = [
   {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/sem-van-dieen-a228353b8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+      </svg>
+    ),
+  },
+  {
     label: "Instagram",
     href: "https://www.instagram.com/svd_webdesign?igsh=N3l5ZWxqYmozZTFl&utm_source=qr",
     icon: (
@@ -18,15 +27,6 @@ const socials = [
     ),
   },
   {
-    label: "TikTok",
-    href: "https://www.tiktok.com/@svd_webdesign?_r=1&_t=ZG-94qMnxsIaK8",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
-      </svg>
-    ),
-  },
-  {
     label: "YouTube",
     href: "https://youtube.com/@svd_webdesign?si=AhEvKuutUMaCfyl",
     icon: (
@@ -36,11 +36,11 @@ const socials = [
     ),
   },
   {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/sem-van-dieen-a228353b8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+    label: "TikTok",
+    href: "https://www.tiktok.com/@svd_webdesign?_r=1&_t=ZG-94qMnxsIaK8",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
       </svg>
     ),
   },
