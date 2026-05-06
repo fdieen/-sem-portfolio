@@ -20,7 +20,7 @@ function MoonMesh() {
   return (
     <mesh ref={meshRef}>
       <sphereGeometry args={[1, 96, 96]} />
-      <meshStandardMaterial map={moonMap} roughness={0.9} metalness={0.0} />
+      <meshStandardMaterial map={moonMap} roughness={0.55} metalness={0.0} />
     </mesh>
   );
 }
@@ -43,8 +43,8 @@ function MoonGlobe() {
           gl={{ antialias: true, alpha: false }}
           style={{ background: "#030c18", width: "100%", height: "100%" }}
         >
-          <directionalLight position={[0, 0, 5]} intensity={1.6} color="#f0f4ff" />
-          <ambientLight intensity={0.55} color="#d8e0f0" />
+          <directionalLight position={[0, 0, 5]} intensity={0.5} color="#f0f4ff" />
+          <ambientLight intensity={1.1} color="#dce6f5" />
           <Suspense fallback={null}>
             <MoonMesh />
           </Suspense>
