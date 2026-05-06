@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import EarthGlobe from "./EarthGlobe";
+import JupiterGlobe from "./JupiterGlobe";
 
 export default function Process() {
   const router = useRouter();
@@ -37,7 +37,7 @@ export default function Process() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <EarthGlobe onClick={() => router.push("/werkproces")} size={340} />
+          <JupiterGlobe onClick={() => router.push("/werkproces")} size={340} />
         </motion.div>
 
         <motion.div
