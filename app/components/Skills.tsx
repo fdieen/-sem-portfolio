@@ -12,10 +12,8 @@ function GoldenCoin() {
     if (spinning.current) return;
     spinning.current = true;
 
-    // 1. Spring naar voren (schaal omhoog + beetje omhoog)
-    await animate(scope.current, { scale: 1.6, y: -16 }, { duration: 0.18, ease: [0.2, 0, 0.2, 1] });
-
-    // 2. Coinflip × 5 terwijl hij naar voren staat
+    // 1 + 2 tegelijk: smooth naar voren + spin start gelijk
+    animate(scope.current, { scale: 1.6, y: -16 }, { duration: 0.42, ease: [0.16, 1, 0.3, 1] });
     await animate(scope.current, { rotateY: 1800 }, { duration: 1.3, ease: [0.25, 0, 0.4, 1] });
 
     // 3. Reset rotatie instantaan (eindigt face-up na 5 rondes)
