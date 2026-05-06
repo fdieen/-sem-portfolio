@@ -48,11 +48,27 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="py-8 px-6 border-t" style={{ background: "#05060f", borderColor: "rgba(255,255,255,0.06)" }}>
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-white/20 text-sm">
-          © 2026 Sem van Dieen. Alle rechten voorbehouden.
-        </p>
+    <footer className="py-10 px-6 border-t" style={{ background: "#05060f", borderColor: "rgba(255,255,255,0.06)" }}>
+      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+
+        {/* Logo + copyright links */}
+        <div className="flex flex-col items-center sm:items-start gap-2">
+          <a href="/" className="hover:opacity-80 transition-opacity">
+            <img
+              src="/svd-logo.png"
+              alt="SVD WebDesign"
+              style={{
+                height: "42px",
+                width: "auto",
+                filter: "drop-shadow(0 0 6px rgba(110,231,247,0.55)) drop-shadow(0 0 16px rgba(110,231,247,0.25))",
+                mixBlendMode: "screen",
+              }}
+            />
+          </a>
+          <p className="text-white/20 text-xs">
+            © 2026 Sem van Dieen. Alle rechten voorbehouden.
+          </p>
+        </div>
 
         <div className="flex items-center gap-4">
           {socials.map((s) => (
