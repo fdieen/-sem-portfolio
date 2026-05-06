@@ -1,9 +1,65 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useRef, Suspense } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useTexture } from "@react-three/drei";
+import * as THREE from "three";
 import SpaceGlobe from "./SpaceGlobe";
 import Satellite from "./Satellite";
 import StarField from "./StarField";
+
+useTexture.preload(["/moon-texture.jpg"]);
+
+function MoonMesh() {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const [moonMap] = useTexture(["/moon-texture.jpg"]);
+  useFrame((_, delta) => {
+    if (meshRef.current) meshRef.current.rotation.y += delta * 0.018;
+  });
+  return (
+    <>
+      <mesh ref={meshRef}>
+        <sphereGeometry args={[1, 96, 96]} />
+        <meshPhongMaterial
+          map={moonMap}
+          specular={new THREE.Color(0x111111)}
+          shininess={4}
+        />
+      </mesh>
+      {/* Subtiele atmosferische rand */}
+      <mesh scale={[1.02, 1.02, 1.02]}>
+        <sphereGeometry args={[1, 64, 64]} />
+        <meshBasicMaterial color={new THREE.Color(0x334455)} transparent opacity={0.08} side={THREE.BackSide} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </mesh>
+    </>
+  );
+}
+
+function MoonGlobe() {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.4, delay: 0.5 }}
+      className="hidden lg:block absolute pointer-events-none"
+      style={{ top: "-160px", left: "-160px", animation: "moonFloat 11s ease-in-out infinite", zIndex: 2, width: 520, height: 520 }}
+    >
+      <Canvas
+        camera={{ position: [0, 0, 2.55], fov: 42 }}
+        gl={{ antialias: true, alpha: false }}
+        style={{ background: "#030c18", borderRadius: "50%", width: "100%", height: "100%" }}
+      >
+        <directionalLight position={[3, 2, 2]} intensity={1.6} color="#e8f0ff" />
+        <directionalLight position={[-2, -1, -2]} intensity={0.04} color="#112244" />
+        <ambientLight intensity={0.06} />
+        <Suspense fallback={null}>
+          <MoonMesh />
+        </Suspense>
+      </Canvas>
+    </motion.div>
+  );
+}
 
 export default function Hero() {
   return (
@@ -72,59 +128,7 @@ export default function Hero() {
 
 
 
-      {/* Maan — holografisch wireframe, linksboven, alleen desktop */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.4, delay: 0.5 }}
-        className="hidden lg:block absolute pointer-events-none"
-        style={{ top: "-160px", left: "-160px", animation: "moonFloat 11s ease-in-out infinite", zIndex: 2, width: 520, height: 520 }}
-      >
-        {/* Buitenste glow */}
-        <div style={{ position:"absolute", inset:-40, borderRadius:"50%", background:"radial-gradient(circle at 50% 50%, transparent 48%, rgba(0,220,255,0.04) 56%, rgba(0,200,255,0.08) 63%, transparent 75%)" }} />
-        <div style={{ position:"absolute", inset:-20, borderRadius:"50%", boxShadow:"0 0 50px rgba(0,200,255,0.1), 0 0 100px rgba(0,180,255,0.06)" }} />
-        {/* Scan-lijn */}
-        <div style={{ position:"absolute", inset:0, borderRadius:"50%", overflow:"hidden", zIndex:5 }}>
-          <div style={{ position:"absolute", left:0, right:0, height:2, background:"linear-gradient(90deg, transparent, rgba(0,220,255,0.4), transparent)", animation:"moonScan 5s ease-in-out infinite" }} />
-        </div>
-        {/* Bol */}
-        <div style={{
-          position:"absolute", inset:0, borderRadius:"50%", overflow:"hidden",
-          background:"radial-gradient(circle at 50% 50%, #020d1a 0%, #010810 60%, #000508 100%)",
-          boxShadow:"inset 0 0 80px rgba(0,0,0,0.95), 0 0 0 1.5px rgba(0,220,255,0.4), 0 0 30px rgba(0,220,255,0.18), 0 0 80px rgba(0,180,255,0.08)",
-        }}>
-          {/* Krater-achtige donkere zones */}
-          <div style={{ position:"absolute", inset:0, background:`
-            radial-gradient(ellipse 100px 50px at 35% 40%, rgba(0,180,255,0.07) 0%, transparent 100%),
-            radial-gradient(ellipse 70px 35px at 60% 30%, rgba(0,190,255,0.06) 0%, transparent 100%),
-            radial-gradient(ellipse 120px 55px at 48% 62%, rgba(0,170,255,0.05) 0%, transparent 100%),
-            radial-gradient(ellipse 50px 25px at 25% 58%, rgba(0,180,255,0.06) 0%, transparent 100%)
-          `}} />
-          {/* Grid lijnen */}
-          <svg viewBox="0 0 520 520" width="520" height="520" style={{ position:"absolute", inset:0 }}>
-            <defs>
-              <filter id="moonGlow">
-                <feGaussianBlur stdDeviation="1" result="blur"/>
-                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-            {[-75,-55,-35,-15,0,15,35,55,75].map((deg) => {
-              const rad = deg * Math.PI / 180;
-              const y = 260 - 258 * Math.sin(rad);
-              const rx = 258 * Math.cos(rad);
-              const ry = rx * 0.28;
-              return <ellipse key={deg} cx={260} cy={y} rx={rx} ry={ry} fill="none" stroke="#00d4ff" strokeWidth={deg===0?1:0.6} opacity={deg===0?0.6:0.35} filter="url(#moonGlow)" />;
-            })}
-            {[0,30,60,90,120,150].map((deg) => (
-              <ellipse key={deg} cx={260} cy={260} rx={258*Math.abs(Math.cos(deg*Math.PI/180))} ry={258} fill="none" stroke="#00d4ff" strokeWidth="0.6" opacity={0.3} filter="url(#moonGlow)" />
-            ))}
-          </svg>
-          {/* Rim glow */}
-          <div style={{ position:"absolute", inset:0, borderRadius:"50%", background:"radial-gradient(circle at 50% 50%, transparent 62%, rgba(0,210,255,0.06) 72%, rgba(0,230,255,0.18) 85%, rgba(0,240,255,0.28) 93%, rgba(0,255,255,0.12) 100%)" }} />
-          {/* Dot texture */}
-          <div style={{ position:"absolute", inset:0, opacity:0.05, backgroundImage:"radial-gradient(circle, #00d4ff 1px, transparent 1px)", backgroundSize:"14px 14px" }} />
-        </div>
-      </motion.div>
+      <MoonGlobe />
 
       {/* Sterren + globe + satelliet */}
       <StarField />
