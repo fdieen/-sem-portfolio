@@ -58,7 +58,7 @@ export default function Footer() {
               src="/svd-logo.png"
               alt="SVD WebDesign"
               style={{
-                height: "42px",
+                height: "70px",
                 width: "auto",
                 filter: "drop-shadow(0 0 6px rgba(110,231,247,0.55)) drop-shadow(0 0 16px rgba(110,231,247,0.25))",
                 mixBlendMode: "screen",
