@@ -16,11 +16,8 @@ function GoldenCoin() {
     animate(scope.current, { scale: 1.6, y: -16 }, { duration: 0.42, ease: [0.16, 1, 0.3, 1] });
     await animate(scope.current, { rotateY: 1800 }, { duration: 1.3, ease: [0.25, 0, 0.4, 1] });
 
-    // 3. Reset rotatie instantaan
-    animate(scope.current, { rotateY: 0 }, { duration: 0 });
-
-    // 4. Land terug + rustige spin tegelijk
-    animate(scope.current, { rotateY: 360 }, { duration: 0.65, ease: [0.4, 0, 0.2, 1] });
+    // 3. Doorgaan van 1800° → 2160° (rustig uitdraaien) + landing tegelijk
+    animate(scope.current, { rotateY: 2160 }, { duration: 0.65, ease: [0.4, 0, 0.1, 1] });
     await animate(scope.current, { scale: 1, y: 0 }, { duration: 0.60, ease: [0.4, 0, 0.2, 1] });
     animate(scope.current, { rotateY: 0 }, { duration: 0 });
 
