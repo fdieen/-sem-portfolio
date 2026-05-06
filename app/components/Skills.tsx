@@ -11,9 +11,22 @@ function GoldenCoin() {
   const handleHover = async () => {
     if (spinning.current) return;
     spinning.current = true;
-    await animate(scope.current, { rotateY: 1800 }, { duration: 1.5, ease: "easeInOut" });
+
+    // 1. Spring naar voren (schaal omhoog + beetje omhoog)
+    await animate(scope.current, { scale: 1.6, y: -16 }, { duration: 0.18, ease: [0.2, 0, 0.2, 1] });
+
+    // 2. Coinflip × 5 terwijl hij naar voren staat
+    await animate(scope.current, { rotateY: 1800 }, { duration: 1.3, ease: [0.25, 0, 0.4, 1] });
+
+    // 3. Reset rotatie instantaan (eindigt face-up na 5 rondes)
     animate(scope.current, { rotateY: 0 }, { duration: 0 });
-    animateShine(shineScope.current, { x: ["-120%", "160%"] }, { duration: 0.45, ease: "easeIn" });
+
+    // 4. Land terug op achtergrond
+    await animate(scope.current, { scale: 1, y: 0 }, { duration: 0.38, ease: [0.4, 0, 0.2, 1] });
+
+    // 5. Glans over de coin
+    animateShine(shineScope.current, { x: ["-120%", "160%"] }, { duration: 0.42, ease: "easeIn" });
+
     spinning.current = false;
   };
 
