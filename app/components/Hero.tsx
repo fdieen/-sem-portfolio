@@ -9,6 +9,54 @@ import SpaceGlobe from "./SpaceGlobe";
 import Satellite from "./Satellite";
 import StarField from "./StarField";
 
+const moonVertexShader = `
+  varying vec3 vNormal;
+  varying vec3 vWorldNormal;
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    vNormal = normalize(normalMatrix * normal);
+    vWorldNormal = normalize(mat3(modelMatrix) * normal);
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const moonFragmentShader = `
+  uniform sampler2D moonTex;
+  uniform vec3 lightDir;
+  varying vec3 vNormal;
+  varying vec3 vWorldNormal;
+  varying vec2 vUv;
+
+  void main() {
+    // Base texture maar sterk gedesatureerd en afgezwakt
+    vec4 tex = texture2D(moonTex, vUv);
+    float grey = dot(tex.rgb, vec3(0.33));
+    vec3 base = vec3(0.52, 0.54, 0.58); // blauwgrijs
+
+    // Mix texture subtiel in voor lichte variatie
+    base = mix(base, vec3(grey * 0.7 + 0.3), 0.25);
+
+    // Diffuse shading
+    float diff = max(dot(vWorldNormal, normalize(lightDir)), 0.0);
+    // Zachte overgang — geen harde dag/nacht
+    float shade = smoothstep(0.0, 0.8, diff) * 0.7 + 0.15;
+
+    // Fresnel rim — blauwig gloed aan de rand
+    float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.5);
+    vec3 rimColor = vec3(0.3, 0.55, 0.85);
+
+    vec3 color = base * shade;
+    color += rimColor * fresnel * 0.35;
+
+    // Lichte highlight aan de lichtbron kant
+    float spec = pow(max(dot(vNormal, normalize(vec3(0.6, 0.5, 1.0))), 0.0), 12.0);
+    color += vec3(0.6, 0.7, 0.85) * spec * 0.12;
+
+    gl_FragColor = vec4(color, 1.0);
+  }
+`;
+
 useTexture.preload(["/moon-texture.jpg"]);
 
 function MoonMesh() {
@@ -20,17 +68,20 @@ function MoonMesh() {
   return (
     <>
       <mesh ref={meshRef}>
-        <sphereGeometry args={[1, 128, 128]} />
-        <meshStandardMaterial
-          map={moonMap}
-          roughness={0.82}
-          metalness={0.0}
+        <sphereGeometry args={[1, 96, 96]} />
+        <shaderMaterial
+          vertexShader={moonVertexShader}
+          fragmentShader={moonFragmentShader}
+          uniforms={{
+            moonTex: { value: moonMap },
+            lightDir: { value: new THREE.Vector3(3, 2, 2).normalize() },
+          }}
         />
       </mesh>
-      {/* Subtiele atmosferische rand */}
-      <mesh scale={[1.02, 1.02, 1.02]}>
+      {/* Rim glow */}
+      <mesh scale={[1.025, 1.025, 1.025]}>
         <sphereGeometry args={[1, 64, 64]} />
-        <meshBasicMaterial color={new THREE.Color(0x334455)} transparent opacity={0.08} side={THREE.BackSide} blending={THREE.AdditiveBlending} depthWrite={false} />
+        <meshBasicMaterial color={new THREE.Color(0x2244aa)} transparent opacity={0.1} side={THREE.BackSide} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
     </>
   );
