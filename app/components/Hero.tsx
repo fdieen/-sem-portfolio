@@ -72,32 +72,44 @@ export default function Hero() {
 
 
 
-      {/* Maan — linksboven, alleen desktop */}
+      {/* Maan — sci-fi, deels buiten beeld linksboven, alleen desktop */}
       <motion.div
-        initial={{ opacity: 0, x: -30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 1, delay: 0.6 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.4, delay: 0.5 }}
         className="hidden lg:block absolute pointer-events-none"
-        style={{ top: "8%", left: "4%", animation: "moonFloat 9s ease-in-out infinite", zIndex: 2 }}
+        style={{ top: "-160px", left: "-160px", animation: "moonFloat 11s ease-in-out infinite", zIndex: 2 }}
       >
+        {/* Buitenste sci-fi ringen */}
+        <div style={{ position:"absolute", inset:-28, borderRadius:"50%", border:"1px solid rgba(110,231,247,0.12)", boxShadow:"0 0 20px rgba(110,231,247,0.06)" }} />
+        <div style={{ position:"absolute", inset:-52, borderRadius:"50%", border:"1px solid rgba(110,231,247,0.06)" }} />
+        {/* Scan-lijn animatie */}
+        <div style={{ position:"absolute", inset:0, borderRadius:"50%", overflow:"hidden", zIndex:5 }}>
+          <div style={{ position:"absolute", left:0, right:0, height:2, background:"linear-gradient(90deg, transparent, rgba(110,231,247,0.35), transparent)", animation:"moonScan 4s ease-in-out infinite", top:0 }} />
+        </div>
+
+        {/* Maan bol */}
         <div style={{
           width: 520, height: 520,
           borderRadius: "50%",
-          background: "radial-gradient(circle at 35% 30%, #e8e0d0 0%, #c8bfb0 30%, #9e9488 60%, #6e6660 85%, #3a3430 100%)",
-          boxShadow: "inset -70px -50px 140px rgba(0,0,0,0.7), inset 20px 20px 60px rgba(255,255,240,0.1), 0 0 80px rgba(200,190,170,0.1), 0 0 160px rgba(180,170,150,0.05)",
+          background: "radial-gradient(circle at 38% 32%, #c8cdd8 0%, #8e95a8 28%, #5a6070 55%, #2e3340 78%, #12161e 100%)",
+          boxShadow: "inset -80px -55px 150px rgba(0,0,0,0.85), inset 15px 15px 50px rgba(110,231,247,0.04), 0 0 60px rgba(110,231,247,0.08), 0 0 120px rgba(110,231,247,0.04)",
           position: "relative",
           overflow: "hidden",
         }}>
-          {/* Kraters */}
-          <div style={{ position:"absolute", width:80, height:80, borderRadius:"50%", top:"22%", left:"28%", background:"radial-gradient(circle at 40% 35%, #b0a898 0%, #7a7268 60%, #5a5248 100%)", boxShadow:"inset 8px 8px 18px rgba(0,0,0,0.5)" }} />
-          <div style={{ position:"absolute", width:48, height:48, borderRadius:"50%", top:"52%", left:"18%", background:"radial-gradient(circle at 40% 35%, #b0a898 0%, #7a7268 60%, #5a5248 100%)", boxShadow:"inset 5px 5px 12px rgba(0,0,0,0.5)" }} />
-          <div style={{ position:"absolute", width:100, height:100, borderRadius:"50%", top:"58%", left:"52%", background:"radial-gradient(circle at 40% 35%, #aaa098 0%, #787068 60%, #585048 100%)", boxShadow:"inset 10px 10px 24px rgba(0,0,0,0.5)" }} />
-          <div style={{ position:"absolute", width:34, height:34, borderRadius:"50%", top:"32%", left:"62%", background:"radial-gradient(circle at 40% 35%, #b8b0a0 0%, #888078 100%)", boxShadow:"inset 4px 4px 8px rgba(0,0,0,0.4)" }} />
-          <div style={{ position:"absolute", width:58, height:58, borderRadius:"50%", top:"70%", left:"32%", background:"radial-gradient(circle at 40% 35%, #a8a098 0%, #787068 100%)", boxShadow:"inset 6px 6px 16px rgba(0,0,0,0.45)" }} />
-          <div style={{ position:"absolute", width:26, height:26, borderRadius:"50%", top:"14%", left:"55%", background:"radial-gradient(circle at 40% 35%, #bab2a2 0%, #8a8278 100%)", boxShadow:"inset 3px 3px 7px rgba(0,0,0,0.4)" }} />
-          <div style={{ position:"absolute", width:42, height:42, borderRadius:"50%", top:"42%", left:"70%", background:"radial-gradient(circle at 40% 35%, #a8a098 0%, #787068 100%)", boxShadow:"inset 5px 5px 12px rgba(0,0,0,0.45)" }} />
-          {/* Lichtreflectie linksboven */}
-          <div style={{ position:"absolute", inset:0, background:"radial-gradient(circle at 32% 28%, rgba(255,255,240,0.15) 0%, transparent 50%)", borderRadius:"50%" }} />
+          {/* Kraters met cyan gloed */}
+          <div style={{ position:"absolute", width:80, height:80, borderRadius:"50%", top:"22%", left:"28%", background:"radial-gradient(circle at 40% 35%, #8890a0 0%, #505868 60%, #2a3040 100%)", boxShadow:"inset 8px 8px 20px rgba(0,0,0,0.7), 0 0 8px rgba(110,231,247,0.08)" }} />
+          <div style={{ position:"absolute", width:48, height:48, borderRadius:"50%", top:"50%", left:"55%", background:"radial-gradient(circle at 40% 35%, #7880a0 0%, #484e68 60%, #222840 100%)", boxShadow:"inset 5px 5px 14px rgba(0,0,0,0.7), 0 0 6px rgba(110,231,247,0.07)" }} />
+          <div style={{ position:"absolute", width:110, height:110, borderRadius:"50%", top:"55%", left:"38%", background:"radial-gradient(circle at 38% 33%, #7078900 0%, #404858 60%, #1e2430 100%)", boxShadow:"inset 12px 12px 28px rgba(0,0,0,0.75)" }} />
+          <div style={{ position:"absolute", width:34, height:34, borderRadius:"50%", top:"30%", left:"60%", background:"radial-gradient(circle at 40% 35%, #8890a8 0%, #585e78 100%)", boxShadow:"inset 4px 4px 10px rgba(0,0,0,0.6)" }} />
+          <div style={{ position:"absolute", width:58, height:58, borderRadius:"50%", top:"68%", left:"22%", background:"radial-gradient(circle at 40% 35%, #707888 0%, #404858 100%)", boxShadow:"inset 6px 6px 16px rgba(0,0,0,0.65)" }} />
+          <div style={{ position:"absolute", width:26, height:26, borderRadius:"50%", top:"38%", left:"72%", background:"radial-gradient(circle at 40% 35%, #808898 0%, #505868 100%)", boxShadow:"inset 3px 3px 8px rgba(0,0,0,0.6)" }} />
+          {/* Hex grid overlay — sci-fi */}
+          <div style={{ position:"absolute", inset:0, opacity:0.04, backgroundImage:"linear-gradient(#6ee7f7 1px, transparent 1px), linear-gradient(90deg, #6ee7f7 1px, transparent 1px)", backgroundSize:"32px 32px" }} />
+          {/* Cyan atmosferische rand */}
+          <div style={{ position:"absolute", inset:0, borderRadius:"50%", background:"radial-gradient(circle at 38% 32%, transparent 55%, rgba(110,231,247,0.06) 80%, rgba(110,231,247,0.12) 100%)" }} />
+          {/* Lichtreflectie */}
+          <div style={{ position:"absolute", inset:0, background:"radial-gradient(circle at 36% 30%, rgba(200,210,230,0.18) 0%, transparent 45%)", borderRadius:"50%" }} />
         </div>
       </motion.div>
 
