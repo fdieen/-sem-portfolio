@@ -7,6 +7,7 @@ import StarField from "./StarField";
 
 function GoldenCoin() {
   const [scope, animate] = useAnimate();
+  const [shineScope, animateShine] = useAnimate();
   const spinning = { current: false };
 
   const handleHover = async () => {
@@ -14,6 +15,7 @@ function GoldenCoin() {
     spinning.current = true;
     await animate(scope.current, { rotateY: 1800 }, { duration: 1.5, ease: "easeInOut" });
     animate(scope.current, { rotateY: 0 }, { duration: 0 });
+    animateShine(shineScope.current, { x: ["-120%", "160%"] }, { duration: 0.45, ease: "easeIn" });
     spinning.current = false;
   };
 
@@ -37,8 +39,21 @@ function GoldenCoin() {
           boxShadow: "0 2px 0 #7a4a00, 0 4px 0 #5a3600, 0 0 24px rgba(245,168,0,0.35), inset 0 1px 2px rgba(255,255,255,0.35)",
           border: "1.5px solid rgba(255,220,80,0.5)",
           transformStyle: "preserve-3d",
+          overflow: "hidden",
         }}
       >
+        {/* Shine sweep */}
+        <motion.div
+          ref={shineScope}
+          style={{
+            position: "absolute",
+            inset: 0,
+            x: "-120%",
+            background: "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%)",
+            pointerEvents: "none",
+            borderRadius: "50%",
+          }}
+        />
         <span style={{
           color: "#5a3200",
           fontSize: 9,
