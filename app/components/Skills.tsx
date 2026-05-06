@@ -28,7 +28,7 @@ function GoldenCoin() {
   };
 
   return (
-    <div style={{ display: "inline-block", animation: "coinFloat1 6s ease-in-out infinite", verticalAlign: "middle" }}>
+    <div style={{ display: "inline-block", animation: "coinFloat1 6s ease-in-out infinite", verticalAlign: "middle", marginLeft: "10px" }}>
       <motion.div
         ref={scope}
         onMouseEnter={handleHover}
