@@ -29,29 +29,23 @@ const moonFragmentShader = `
   varying vec2 vUv;
 
   void main() {
-    // Base texture maar sterk gedesatureerd en afgezwakt
     vec4 tex = texture2D(moonTex, vUv);
     float grey = dot(tex.rgb, vec3(0.33));
-    vec3 base = vec3(0.52, 0.54, 0.58); // blauwgrijs
 
-    // Mix texture subtiel in voor lichte variatie
-    base = mix(base, vec3(grey * 0.7 + 0.3), 0.25);
+    // Meer texture, minder nep blauw
+    vec3 base = mix(vec3(grey), vec3(0.5, 0.51, 0.53), 0.2);
 
-    // Diffuse shading
     float diff = max(dot(vWorldNormal, normalize(lightDir)), 0.0);
-    // Zachte overgang — geen harde dag/nacht
-    float shade = smoothstep(0.0, 0.8, diff) * 0.7 + 0.15;
+    float shade = smoothstep(-0.2, 1.0, diff) * 0.65 + 0.35;
 
-    // Fresnel rim — blauwig gloed aan de rand
-    float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.5);
-    vec3 rimColor = vec3(0.3, 0.55, 0.85);
+    // Subtiele rim
+    float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 3.5);
 
     vec3 color = base * shade;
-    color += rimColor * fresnel * 0.35;
+    color += vec3(0.35, 0.45, 0.6) * fresnel * 0.1;
 
-    // Lichte highlight aan de lichtbron kant
-    float spec = pow(max(dot(vNormal, normalize(vec3(0.6, 0.5, 1.0))), 0.0), 12.0);
-    color += vec3(0.6, 0.7, 0.85) * spec * 0.12;
+    float spec = pow(max(dot(vNormal, normalize(vec3(0.6, 0.5, 1.0))), 0.0), 20.0);
+    color += vec3(0.8, 0.85, 0.9) * spec * 0.05;
 
     gl_FragColor = vec4(color, 1.0);
   }
@@ -81,7 +75,7 @@ function MoonMesh() {
       {/* Rim glow */}
       <mesh scale={[1.025, 1.025, 1.025]}>
         <sphereGeometry args={[1, 64, 64]} />
-        <meshBasicMaterial color={new THREE.Color(0x2244aa)} transparent opacity={0.1} side={THREE.BackSide} blending={THREE.AdditiveBlending} depthWrite={false} />
+        <meshBasicMaterial color={new THREE.Color(0x334466)} transparent opacity={0.05} side={THREE.BackSide} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
     </>
   );
