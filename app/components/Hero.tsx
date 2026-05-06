@@ -1,9 +1,61 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useAnimate } from "framer-motion";
 import SpaceGlobe from "./SpaceGlobe";
 import Satellite from "./Satellite";
 import StarField from "./StarField";
+
+function GoldenCoin() {
+  const [scope, animate] = useAnimate();
+  const spinning = { current: false };
+
+  const handleHover = async () => {
+    if (spinning.current) return;
+    spinning.current = true;
+    await animate(scope.current, { rotateY: 1800 }, { duration: 1.5, ease: "easeInOut" });
+    animate(scope.current, { rotateY: 0 }, { duration: 0 });
+    spinning.current = false;
+  };
+
+  return (
+    // Outer: CSS float — Inner: Framer Motion 3D spin (geen conflict)
+    <motion.div
+      initial={{ opacity: 0, scale: 0.6 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.6, delay: 0.8 }}
+      className="hidden lg:block absolute"
+      style={{ top: "18%", left: "3%", animation: "coinFloat1 6s ease-in-out infinite", zIndex: 20 }}
+    >
+      <motion.div
+        ref={scope}
+        onMouseEnter={handleHover}
+        className="flex items-center justify-center cursor-pointer"
+        style={{
+          width: 76, height: 76,
+          borderRadius: "50%",
+          background: "radial-gradient(circle at 38% 32%, #ffe066 0%, #f5a800 45%, #b8720a 80%, #7a4a00 100%)",
+          boxShadow: "0 2px 0 #7a4a00, 0 4px 0 #5a3600, 0 0 24px rgba(245,168,0,0.35), inset 0 1px 2px rgba(255,255,255,0.35)",
+          border: "1.5px solid rgba(255,220,80,0.5)",
+          transformStyle: "preserve-3d",
+        }}
+      >
+        <span style={{
+          color: "#5a3200",
+          fontSize: 9,
+          fontWeight: 800,
+          letterSpacing: "0.05em",
+          textTransform: "uppercase",
+          textShadow: "0 1px 0 rgba(255,220,100,0.5)",
+          textAlign: "center",
+          lineHeight: 1.2,
+          userSelect: "none",
+        }}>
+          3D<br/>Animaties
+        </span>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export default function Hero() {
   return (
@@ -69,6 +121,10 @@ export default function Hero() {
           </motion.div>
         </div>
       </div>
+
+      {/* Gouden muntje — linksboven */}
+      <GoldenCoin />
+
 
       {/* Sterren + globe + satelliet */}
       <StarField />

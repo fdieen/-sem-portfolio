@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const socials = [
   {
@@ -71,15 +72,56 @@ const links = [
   { label: "Wat ik bied", href: "/#skills" },
 ];
 
+const sectionIds = ["werkproces", "over-mij", "skills", "contact"];
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("");
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Track active section via IntersectionObserver (only on home page)
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const observers: IntersectionObserver[] = [];
+    const visible = new Map<string, number>();
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          visible.set(id, entry.intersectionRatio);
+          // Pick section with highest visibility
+          let best = "";
+          let bestRatio = 0;
+          visible.forEach((ratio, sid) => {
+            if (ratio > bestRatio) { bestRatio = ratio; best = sid; }
+          });
+          setActiveSection(best);
+        },
+        { threshold: [0, 0.25, 0.5, 0.75, 1] }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, [pathname]);
+
+  const isActive = (href: string) => {
+    if (href.startsWith("/#")) {
+      return activeSection === href.slice(2);
+    }
+    return pathname === href || pathname.startsWith(href + "/");
+  };
 
   return (
     <motion.nav
@@ -177,16 +219,26 @@ export default function Navbar() {
             className="md:hidden bg-[#080808]/95 backdrop-blur-md border-t border-white/5 px-6 pb-6"
           >
             <div className="flex flex-col gap-4 pt-4">
-              {links.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-white/70 hover:text-white transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {links.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-2 transition-colors"
+                    style={{ color: active ? "#fff" : "rgba(255,255,255,0.5)" }}
+                  >
+                    {active && (
+                      <span
+                        className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0"
+                        style={{ background: "#6ee7f7", boxShadow: "0 0 6px #6ee7f7" }}
+                      />
+                    )}
+                    <span className={active ? "font-semibold" : ""}>{link.label}</span>
+                  </a>
+                );
+              })}
               <a
                 href="/#contact"
                 onClick={() => setMenuOpen(false)}
