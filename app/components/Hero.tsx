@@ -72,44 +72,57 @@ export default function Hero() {
 
 
 
-      {/* Maan — sci-fi, deels buiten beeld linksboven, alleen desktop */}
+      {/* Maan — holografisch wireframe, linksboven, alleen desktop */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.4, delay: 0.5 }}
         className="hidden lg:block absolute pointer-events-none"
-        style={{ top: "-160px", left: "-160px", animation: "moonFloat 11s ease-in-out infinite", zIndex: 2 }}
+        style={{ top: "-160px", left: "-160px", animation: "moonFloat 11s ease-in-out infinite", zIndex: 2, width: 520, height: 520 }}
       >
-        {/* Buitenste sci-fi ringen */}
-        <div style={{ position:"absolute", inset:-28, borderRadius:"50%", border:"1px solid rgba(110,231,247,0.12)", boxShadow:"0 0 20px rgba(110,231,247,0.06)" }} />
-        <div style={{ position:"absolute", inset:-52, borderRadius:"50%", border:"1px solid rgba(110,231,247,0.06)" }} />
-        {/* Scan-lijn animatie */}
+        {/* Buitenste glow */}
+        <div style={{ position:"absolute", inset:-40, borderRadius:"50%", background:"radial-gradient(circle at 50% 50%, transparent 48%, rgba(0,220,255,0.04) 56%, rgba(0,200,255,0.08) 63%, transparent 75%)" }} />
+        <div style={{ position:"absolute", inset:-20, borderRadius:"50%", boxShadow:"0 0 50px rgba(0,200,255,0.1), 0 0 100px rgba(0,180,255,0.06)" }} />
+        {/* Scan-lijn */}
         <div style={{ position:"absolute", inset:0, borderRadius:"50%", overflow:"hidden", zIndex:5 }}>
-          <div style={{ position:"absolute", left:0, right:0, height:2, background:"linear-gradient(90deg, transparent, rgba(110,231,247,0.35), transparent)", animation:"moonScan 4s ease-in-out infinite", top:0 }} />
+          <div style={{ position:"absolute", left:0, right:0, height:2, background:"linear-gradient(90deg, transparent, rgba(0,220,255,0.4), transparent)", animation:"moonScan 5s ease-in-out infinite" }} />
         </div>
-
-        {/* Maan bol */}
+        {/* Bol */}
         <div style={{
-          width: 520, height: 520,
-          borderRadius: "50%",
-          background: "radial-gradient(circle at 38% 32%, #c8cdd8 0%, #8e95a8 28%, #5a6070 55%, #2e3340 78%, #12161e 100%)",
-          boxShadow: "inset -80px -55px 150px rgba(0,0,0,0.85), inset 15px 15px 50px rgba(110,231,247,0.04), 0 0 60px rgba(110,231,247,0.08), 0 0 120px rgba(110,231,247,0.04)",
-          position: "relative",
-          overflow: "hidden",
+          position:"absolute", inset:0, borderRadius:"50%", overflow:"hidden",
+          background:"radial-gradient(circle at 50% 50%, #020d1a 0%, #010810 60%, #000508 100%)",
+          boxShadow:"inset 0 0 80px rgba(0,0,0,0.95), 0 0 0 1.5px rgba(0,220,255,0.4), 0 0 30px rgba(0,220,255,0.18), 0 0 80px rgba(0,180,255,0.08)",
         }}>
-          {/* Kraters met cyan gloed */}
-          <div style={{ position:"absolute", width:80, height:80, borderRadius:"50%", top:"22%", left:"28%", background:"radial-gradient(circle at 40% 35%, #8890a0 0%, #505868 60%, #2a3040 100%)", boxShadow:"inset 8px 8px 20px rgba(0,0,0,0.7), 0 0 8px rgba(110,231,247,0.08)" }} />
-          <div style={{ position:"absolute", width:48, height:48, borderRadius:"50%", top:"50%", left:"55%", background:"radial-gradient(circle at 40% 35%, #7880a0 0%, #484e68 60%, #222840 100%)", boxShadow:"inset 5px 5px 14px rgba(0,0,0,0.7), 0 0 6px rgba(110,231,247,0.07)" }} />
-          <div style={{ position:"absolute", width:110, height:110, borderRadius:"50%", top:"55%", left:"38%", background:"radial-gradient(circle at 38% 33%, #7078900 0%, #404858 60%, #1e2430 100%)", boxShadow:"inset 12px 12px 28px rgba(0,0,0,0.75)" }} />
-          <div style={{ position:"absolute", width:34, height:34, borderRadius:"50%", top:"30%", left:"60%", background:"radial-gradient(circle at 40% 35%, #8890a8 0%, #585e78 100%)", boxShadow:"inset 4px 4px 10px rgba(0,0,0,0.6)" }} />
-          <div style={{ position:"absolute", width:58, height:58, borderRadius:"50%", top:"68%", left:"22%", background:"radial-gradient(circle at 40% 35%, #707888 0%, #404858 100%)", boxShadow:"inset 6px 6px 16px rgba(0,0,0,0.65)" }} />
-          <div style={{ position:"absolute", width:26, height:26, borderRadius:"50%", top:"38%", left:"72%", background:"radial-gradient(circle at 40% 35%, #808898 0%, #505868 100%)", boxShadow:"inset 3px 3px 8px rgba(0,0,0,0.6)" }} />
-          {/* Hex grid overlay — sci-fi */}
-          <div style={{ position:"absolute", inset:0, opacity:0.04, backgroundImage:"linear-gradient(#6ee7f7 1px, transparent 1px), linear-gradient(90deg, #6ee7f7 1px, transparent 1px)", backgroundSize:"32px 32px" }} />
-          {/* Cyan atmosferische rand */}
-          <div style={{ position:"absolute", inset:0, borderRadius:"50%", background:"radial-gradient(circle at 38% 32%, transparent 55%, rgba(110,231,247,0.06) 80%, rgba(110,231,247,0.12) 100%)" }} />
-          {/* Lichtreflectie */}
-          <div style={{ position:"absolute", inset:0, background:"radial-gradient(circle at 36% 30%, rgba(200,210,230,0.18) 0%, transparent 45%)", borderRadius:"50%" }} />
+          {/* Krater-achtige donkere zones */}
+          <div style={{ position:"absolute", inset:0, background:`
+            radial-gradient(ellipse 100px 50px at 35% 40%, rgba(0,180,255,0.07) 0%, transparent 100%),
+            radial-gradient(ellipse 70px 35px at 60% 30%, rgba(0,190,255,0.06) 0%, transparent 100%),
+            radial-gradient(ellipse 120px 55px at 48% 62%, rgba(0,170,255,0.05) 0%, transparent 100%),
+            radial-gradient(ellipse 50px 25px at 25% 58%, rgba(0,180,255,0.06) 0%, transparent 100%)
+          `}} />
+          {/* Grid lijnen */}
+          <svg viewBox="0 0 520 520" width="520" height="520" style={{ position:"absolute", inset:0 }}>
+            <defs>
+              <filter id="moonGlow">
+                <feGaussianBlur stdDeviation="1" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            {[-75,-55,-35,-15,0,15,35,55,75].map((deg) => {
+              const rad = deg * Math.PI / 180;
+              const y = 260 - 258 * Math.sin(rad);
+              const rx = 258 * Math.cos(rad);
+              const ry = rx * 0.28;
+              return <ellipse key={deg} cx={260} cy={y} rx={rx} ry={ry} fill="none" stroke="#00d4ff" strokeWidth={deg===0?1:0.6} opacity={deg===0?0.6:0.35} filter="url(#moonGlow)" />;
+            })}
+            {[0,30,60,90,120,150].map((deg) => (
+              <ellipse key={deg} cx={260} cy={260} rx={258*Math.abs(Math.cos(deg*Math.PI/180))} ry={258} fill="none" stroke="#00d4ff" strokeWidth="0.6" opacity={0.3} filter="url(#moonGlow)" />
+            ))}
+          </svg>
+          {/* Rim glow */}
+          <div style={{ position:"absolute", inset:0, borderRadius:"50%", background:"radial-gradient(circle at 50% 50%, transparent 62%, rgba(0,210,255,0.06) 72%, rgba(0,230,255,0.18) 85%, rgba(0,240,255,0.28) 93%, rgba(0,255,255,0.12) 100%)" }} />
+          {/* Dot texture */}
+          <div style={{ position:"absolute", inset:0, opacity:0.05, backgroundImage:"radial-gradient(circle, #00d4ff 1px, transparent 1px)", backgroundSize:"14px 14px" }} />
         </div>
       </motion.div>
 
