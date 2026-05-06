@@ -1,7 +1,61 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useAnimate } from "framer-motion";
 import { useState } from "react";
+
+function GoldenCoin() {
+  const [scope, animate] = useAnimate();
+  const [shineScope, animateShine] = useAnimate();
+  const spinning = { current: false };
+
+  const handleHover = async () => {
+    if (spinning.current) return;
+    spinning.current = true;
+    await animate(scope.current, { rotateY: 1800 }, { duration: 1.5, ease: "easeInOut" });
+    animate(scope.current, { rotateY: 0 }, { duration: 0 });
+    animateShine(shineScope.current, { x: ["-120%", "160%"] }, { duration: 0.45, ease: "easeIn" });
+    spinning.current = false;
+  };
+
+  return (
+    <div style={{ display: "inline-block", animation: "coinFloat1 6s ease-in-out infinite", verticalAlign: "middle" }}>
+      <motion.div
+        ref={scope}
+        onMouseEnter={handleHover}
+        className="flex items-center justify-center cursor-pointer"
+        style={{
+          width: 68, height: 68,
+          borderRadius: "50%",
+          background: "radial-gradient(circle at 38% 32%, #ffe066 0%, #f5a800 45%, #b8720a 80%, #7a4a00 100%)",
+          boxShadow: "0 2px 0 #7a4a00, 0 4px 0 #5a3600, 0 0 24px rgba(245,168,0,0.35), inset 0 1px 2px rgba(255,255,255,0.35)",
+          border: "1.5px solid rgba(255,220,80,0.5)",
+          transformStyle: "preserve-3d",
+          overflow: "hidden",
+          position: "relative",
+        }}
+      >
+        <motion.div
+          ref={shineScope}
+          style={{
+            position: "absolute", inset: 0,
+            x: "-120%",
+            background: "linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.55) 50%, transparent 70%)",
+            pointerEvents: "none",
+            borderRadius: "50%",
+          }}
+        />
+        <span style={{
+          color: "#5a3200", fontSize: 8, fontWeight: 800,
+          letterSpacing: "0.05em", textTransform: "uppercase",
+          textShadow: "0 1px 0 rgba(255,220,100,0.5)",
+          textAlign: "center", lineHeight: 1.2, userSelect: "none",
+        }}>
+          3D<br/>Animaties
+        </span>
+      </motion.div>
+    </div>
+  );
+}
 
 const tags = [
   "Webshops", "Bedrijfswebsites", "iDEAL betalingen", "Admin panelen",
@@ -48,7 +102,10 @@ export default function Skills() {
           </span>
           <h2 className="text-4xl lg:text-5xl font-bold mt-3 tracking-tight">
             <span className="cursor-default transition-all duration-300 hover:text-[#6ee7f7]" style={{}} onMouseEnter={e => (e.currentTarget as HTMLElement).style.textShadow = "0 0 20px rgba(110,231,247,0.7), 0 0 40px rgba(110,231,247,0.3)"} onMouseLeave={e => (e.currentTarget as HTMLElement).style.textShadow = "none"}>Divers.</span>{" "}
-            <span className="cursor-default transition-all duration-300 hover:text-[#6ee7f7]" onMouseEnter={e => (e.currentTarget as HTMLElement).style.textShadow = "0 0 20px rgba(110,231,247,0.7), 0 0 40px rgba(110,231,247,0.3)"} onMouseLeave={e => (e.currentTarget as HTMLElement).style.textShadow = "none"}>Aanpasbaar.</span><br />
+            <span className="inline-flex items-center gap-3">
+              <span className="cursor-default transition-all duration-300 hover:text-[#6ee7f7]" onMouseEnter={e => (e.currentTarget as HTMLElement).style.textShadow = "0 0 20px rgba(110,231,247,0.7), 0 0 40px rgba(110,231,247,0.3)"} onMouseLeave={e => (e.currentTarget as HTMLElement).style.textShadow = "none"}>Aanpasbaar.</span>
+              <GoldenCoin />
+            </span><br />
             <span className="text-[#6ee7f7] cursor-default" onMouseEnter={e => (e.currentTarget as HTMLElement).style.textShadow = "0 0 20px rgba(110,231,247,0.9), 0 0 40px rgba(110,231,247,0.5)"} onMouseLeave={e => (e.currentTarget as HTMLElement).style.textShadow = "none"}>Altijd op maat.</span>
           </h2>
         </motion.div>
