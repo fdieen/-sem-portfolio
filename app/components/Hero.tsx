@@ -36,7 +36,7 @@ function MoonGlobe() {
     >
       <div style={{
         width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden",
-        boxShadow: "0 0 50px 12px rgba(210,220,240,0.13), 0 0 100px 30px rgba(190,205,230,0.07), 0 0 6px 2px rgba(220,230,245,0.18)"
+        boxShadow: "0 0 30px 6px rgba(210,220,240,0.07), 0 0 60px 15px rgba(190,205,230,0.04)"
       }}>
         <Canvas
           camera={{ position: [0, 0, 2.55], fov: 42 }}
