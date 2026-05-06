@@ -9,48 +9,6 @@ import SpaceGlobe from "./SpaceGlobe";
 import Satellite from "./Satellite";
 import StarField from "./StarField";
 
-const moonVertexShader = `
-  varying vec3 vNormal;
-  varying vec3 vWorldNormal;
-  varying vec2 vUv;
-  void main() {
-    vUv = uv;
-    vNormal = normalize(normalMatrix * normal);
-    vWorldNormal = normalize(mat3(modelMatrix) * normal);
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
-
-const moonFragmentShader = `
-  uniform sampler2D moonTex;
-  uniform vec3 lightDir;
-  varying vec3 vNormal;
-  varying vec3 vWorldNormal;
-  varying vec2 vUv;
-
-  void main() {
-    vec4 tex = texture2D(moonTex, vUv);
-    float grey = dot(tex.rgb, vec3(0.33));
-
-    // Meer texture, minder nep blauw
-    vec3 base = mix(vec3(grey), vec3(0.5, 0.51, 0.53), 0.2);
-
-    float diff = max(dot(vWorldNormal, normalize(lightDir)), 0.0);
-    float shade = smoothstep(-0.2, 1.0, diff) * 0.65 + 0.35;
-
-    // Subtiele rim
-    float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 3.5);
-
-    vec3 color = base * shade;
-    color += vec3(0.35, 0.45, 0.6) * fresnel * 0.1;
-
-    float spec = pow(max(dot(vNormal, normalize(vec3(0.6, 0.5, 1.0))), 0.0), 20.0);
-    color += vec3(0.8, 0.85, 0.9) * spec * 0.05;
-
-    gl_FragColor = vec4(color, 1.0);
-  }
-`;
-
 useTexture.preload(["/moon-texture.jpg"]);
 
 function MoonMesh() {
@@ -60,24 +18,10 @@ function MoonMesh() {
     if (meshRef.current) meshRef.current.rotation.y += delta * 0.018;
   });
   return (
-    <>
-      <mesh ref={meshRef}>
-        <sphereGeometry args={[1, 96, 96]} />
-        <shaderMaterial
-          vertexShader={moonVertexShader}
-          fragmentShader={moonFragmentShader}
-          uniforms={{
-            moonTex: { value: moonMap },
-            lightDir: { value: new THREE.Vector3(3, 2, 2).normalize() },
-          }}
-        />
-      </mesh>
-      {/* Rim glow */}
-      <mesh scale={[1.025, 1.025, 1.025]}>
-        <sphereGeometry args={[1, 64, 64]} />
-        <meshBasicMaterial color={new THREE.Color(0x334466)} transparent opacity={0.05} side={THREE.BackSide} blending={THREE.AdditiveBlending} depthWrite={false} />
-      </mesh>
-    </>
+    <mesh ref={meshRef}>
+      <sphereGeometry args={[1, 96, 96]} />
+      <meshStandardMaterial map={moonMap} roughness={0.9} metalness={0.0} />
+    </mesh>
   );
 }
 
@@ -90,18 +34,22 @@ function MoonGlobe() {
       className="hidden lg:block absolute pointer-events-none"
       style={{ top: "-60px", left: "-80px", animation: "moonFloat 11s ease-in-out infinite", zIndex: 2, width: 320, height: 320 }}
     >
-      <Canvas
-        camera={{ position: [0, 0, 2.55], fov: 42 }}
-        gl={{ antialias: true, alpha: false }}
-        style={{ background: "#030c18", borderRadius: "50%", width: "100%", height: "100%" }}
-      >
-        <directionalLight position={[3, 2, 2]} intensity={1.2} color="#e8f0ff" />
-        <directionalLight position={[-2, -1, -2]} intensity={0.08} color="#223355" />
-        <ambientLight intensity={0.22} />
-        <Suspense fallback={null}>
-          <MoonMesh />
-        </Suspense>
-      </Canvas>
+      <div style={{
+        width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden",
+        boxShadow: "0 0 50px 12px rgba(210,220,240,0.13), 0 0 100px 30px rgba(190,205,230,0.07), 0 0 6px 2px rgba(220,230,245,0.18)"
+      }}>
+        <Canvas
+          camera={{ position: [0, 0, 2.55], fov: 42 }}
+          gl={{ antialias: true, alpha: false }}
+          style={{ background: "#030c18", width: "100%", height: "100%" }}
+        >
+          <directionalLight position={[0, 0, 5]} intensity={1.6} color="#f0f4ff" />
+          <ambientLight intensity={0.55} color="#d8e0f0" />
+          <Suspense fallback={null}>
+            <MoonMesh />
+          </Suspense>
+        </Canvas>
+      </div>
     </motion.div>
   );
 }
