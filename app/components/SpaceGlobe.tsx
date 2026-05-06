@@ -48,8 +48,8 @@ const atmFragmentShader = `
   varying vec3 vNormal;
   void main() {
     float rim = 1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0)));
-    rim = pow(rim, 1.4);
-    gl_FragColor = vec4(0.18, 0.55, 1.0, rim * 0.85);
+    rim = pow(rim, 1.0);
+    gl_FragColor = vec4(0.18, 0.58, 1.0, rim * 1.15);
   }
 `;
 
@@ -92,9 +92,9 @@ function EarthScene() {
           blending={THREE.AdditiveBlending}
         />
       </mesh>
-      <mesh scale={[1.07, 1.07, 1.07]}>
+      <mesh scale={[1.10, 1.10, 1.10]}>
         <sphereGeometry args={[1, 64, 64]} />
-        <meshBasicMaterial color={new THREE.Color(0x2255ee)} transparent opacity={0.06} side={THREE.BackSide} blending={THREE.AdditiveBlending} depthWrite={false} />
+        <meshBasicMaterial color={new THREE.Color(0x2266ff)} transparent opacity={0.13} side={THREE.BackSide} blending={THREE.AdditiveBlending} depthWrite={false} />
       </mesh>
     </>
   );

@@ -11,6 +11,22 @@ import StarField from "./StarField";
 
 useTexture.preload(["/moon-texture.jpg"]);
 
+const moonAtmVertex = `
+  varying vec3 vNormal;
+  void main() {
+    vNormal = normalize(normalMatrix * normal);
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+const moonAtmFragment = `
+  varying vec3 vNormal;
+  void main() {
+    float rim = 1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0)));
+    rim = pow(rim, 1.1);
+    gl_FragColor = vec4(0.78, 0.86, 1.0, rim * 0.9);
+  }
+`;
+
 function MoonMesh() {
   const meshRef = useRef<THREE.Mesh>(null);
   const [moonMap] = useTexture(["/moon-texture.jpg"]);
@@ -18,10 +34,29 @@ function MoonMesh() {
     if (meshRef.current) meshRef.current.rotation.y += delta * 0.018;
   });
   return (
-    <mesh ref={meshRef}>
-      <sphereGeometry args={[1, 96, 96]} />
-      <meshStandardMaterial map={moonMap} roughness={0.55} metalness={0.0} />
-    </mesh>
+    <>
+      <mesh ref={meshRef}>
+        <sphereGeometry args={[1, 96, 96]} />
+        <meshStandardMaterial map={moonMap} roughness={0.55} metalness={0.0} />
+      </mesh>
+      {/* Fresnel rim glow */}
+      <mesh scale={[1.03, 1.03, 1.03]}>
+        <sphereGeometry args={[1, 48, 48]} />
+        <shaderMaterial
+          vertexShader={moonAtmVertex}
+          fragmentShader={moonAtmFragment}
+          side={THREE.FrontSide}
+          transparent
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+      {/* Outer soft halo */}
+      <mesh scale={[1.10, 1.10, 1.10]}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshBasicMaterial color={new THREE.Color(0x99aacc)} transparent opacity={0.08} side={THREE.BackSide} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </mesh>
+    </>
   );
 }
 
@@ -34,14 +69,13 @@ function MoonGlobe() {
       className="hidden lg:block absolute pointer-events-none"
       style={{ top: "-60px", left: "-80px", animation: "moonFloat 11s ease-in-out infinite", zIndex: 2, width: 320, height: 320 }}
     >
-      <div style={{
-        width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden",
-        boxShadow: "0 0 30px 6px rgba(210,220,240,0.07), 0 0 60px 15px rgba(190,205,230,0.04)"
-      }}>
+      <div style={{ width: "100%", height: "100%", position: "relative" }}>
+        {/* Dark circle background so moon sits on space */}
+        <div style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "#030c18", zIndex: 0 }} />
         <Canvas
           camera={{ position: [0, 0, 2.55], fov: 42 }}
-          gl={{ antialias: true, alpha: false }}
-          style={{ background: "#030c18", width: "100%", height: "100%" }}
+          gl={{ antialias: true, alpha: true }}
+          style={{ width: "100%", height: "100%", position: "relative", zIndex: 1 }}
         >
           <directionalLight position={[0.8, 0.4, 5]} intensity={0.75} color="#f0f4ff" />
           <ambientLight intensity={0.75} color="#c8d4e8" />
