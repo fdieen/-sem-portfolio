@@ -28,10 +28,10 @@ export default function Satellite() {
       const rx = 300;
       const ry = 168;
 
-      const x = cx + Math.cos(angle) * rx - 56;
-      const y = cy + Math.sin(angle) * ry - 56;
+      const x = cx + Math.cos(angle) * rx - 60;
+      const y = cy + Math.sin(angle) * ry - 60;
 
-      const offscreen = x < -112 || x > w || y < -112 || y > h;
+      const offscreen = x < -120 || x > w || y < -120 || y > h;
       const target = offscreen ? 0.022 : 0.005;
       speed += (target - speed) * 0.08;
 
@@ -58,145 +58,153 @@ export default function Satellite() {
         top: 0,
         left: 0,
         zIndex: 2,
-        opacity: 0.92,
-        width: 112,
-        height: 112,
+        opacity: 0.93,
+        width: 120,
+        height: 120,
         willChange: "transform",
       }}
     >
-      <svg width="112" height="112" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          {/* Soft glow filter */}
-          <filter id="sat-glow" x="-60%" y="-60%" width="220%" height="220%">
-            <feGaussianBlur stdDeviation="1.8" result="blur" />
-            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-          </filter>
-          <filter id="sat-glow-strong" x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur stdDeviation="3" result="blur" />
-            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          <filter id="sg" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="1.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
 
-          {/* Body gradient — gold MLI foil */}
-          <linearGradient id="bodyGold" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#d4a843" />
-            <stop offset="35%" stopColor="#c8932a" />
-            <stop offset="65%" stopColor="#7a5010" />
-            <stop offset="100%" stopColor="#3a2208" />
+          {/* Body — gold MLI with lit side / shadow side */}
+          <linearGradient id="bLit" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"   stopColor="#e8b84b"/>
+            <stop offset="30%"  stopColor="#c9922a"/>
+            <stop offset="70%"  stopColor="#7d4e0e"/>
+            <stop offset="100%" stopColor="#3b1f05"/>
           </linearGradient>
-          <linearGradient id="bodyHighlight" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#fff" stopOpacity="0.18" />
-            <stop offset="100%" stopColor="#fff" stopOpacity="0" />
-          </linearGradient>
-
-          {/* Solar panel — dark blue photovoltaic cells */}
-          <linearGradient id="panelBase" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#1b3a6b" />
-            <stop offset="50%" stopColor="#0e2244" />
-            <stop offset="100%" stopColor="#060f22" />
-          </linearGradient>
-          <linearGradient id="panelSheen" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#4a90d9" stopOpacity="0.22" />
-            <stop offset="40%" stopColor="#6eb8f7" stopOpacity="0.1" />
-            <stop offset="100%" stopColor="#1a5a9a" stopOpacity="0.05" />
-          </linearGradient>
-          <linearGradient id="panelFrame" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#8ab4cc" />
-            <stop offset="100%" stopColor="#3a6280" />
+          <linearGradient id="bEdge" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#fff" stopOpacity="0.12"/>
+            <stop offset="100%" stopColor="#fff" stopOpacity="0"/>
           </linearGradient>
 
-          {/* Strut gradient */}
-          <linearGradient id="strutGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#c0c8d8" />
-            <stop offset="50%" stopColor="#7a8898" />
-            <stop offset="100%" stopColor="#3a4858" />
+          {/* Solar panel base */}
+          <linearGradient id="pBase" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"   stopColor="#1c3d70"/>
+            <stop offset="50%"  stopColor="#0c2040"/>
+            <stop offset="100%" stopColor="#060e1e"/>
+          </linearGradient>
+          {/* Panel sheen — sunlight glint */}
+          <linearGradient id="pSheen" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stopColor="#5aaaf0" stopOpacity="0.18"/>
+            <stop offset="35%"  stopColor="#82c8ff" stopOpacity="0.08"/>
+            <stop offset="100%" stopColor="#1a6aaa" stopOpacity="0"/>
+          </linearGradient>
+          {/* Panel frame (aluminium) */}
+          <linearGradient id="pFrame" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"   stopColor="#9ab8cc"/>
+            <stop offset="100%" stopColor="#324e62"/>
           </linearGradient>
 
-          {/* Antenna dish */}
-          <radialGradient id="dishGrad" cx="45%" cy="35%" r="60%">
-            <stop offset="0%" stopColor="#d0d8e8" />
-            <stop offset="60%" stopColor="#8898b0" />
-            <stop offset="100%" stopColor="#3a4858" />
+          {/* Strut */}
+          <linearGradient id="strut" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stopColor="#c8d0de"/>
+            <stop offset="50%"  stopColor="#6e7d90"/>
+            <stop offset="100%" stopColor="#303c4a"/>
+          </linearGradient>
+
+          {/* Dish */}
+          <radialGradient id="dish" cx="40%" cy="35%" r="65%">
+            <stop offset="0%"   stopColor="#d8e0f0"/>
+            <stop offset="55%"  stopColor="#8898b8"/>
+            <stop offset="100%" stopColor="#2e3a4a"/>
           </radialGradient>
 
-          {/* Solar panel cell grid pattern */}
-          <pattern id="cellGrid" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
-            <rect width="5" height="5" fill="none" />
-            <line x1="0" y1="0" x2="5" y2="0" stroke="#4a80b8" strokeWidth="0.4" opacity="0.5" />
-            <line x1="0" y1="0" x2="0" y2="5" stroke="#4a80b8" strokeWidth="0.4" opacity="0.5" />
+          {/* Cell pattern */}
+          <pattern id="cells" x="0" y="0" width="5.5" height="5" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="5.5" y2="0" stroke="#3a70b8" strokeWidth="0.45" opacity="0.55"/>
+            <line x1="0" y1="0" x2="0"   y2="5" stroke="#3a70b8" strokeWidth="0.45" opacity="0.55"/>
           </pattern>
         </defs>
 
-        {/* ── LEFT SOLAR PANEL ── */}
-        {/* Frame */}
-        <rect x="2" y="38" width="34" height="26" rx="2.5" fill="url(#panelFrame)" />
-        {/* Panel surface */}
-        <rect x="3.5" y="39.5" width="31" height="23" rx="1.5" fill="url(#panelBase)" />
-        {/* Cell grid */}
-        <rect x="3.5" y="39.5" width="31" height="23" rx="1.5" fill="url(#cellGrid)" />
-        {/* Sheen */}
-        <rect x="3.5" y="39.5" width="31" height="23" rx="1.5" fill="url(#panelSheen)" />
-        {/* Main dividers */}
-        <line x1="19" y1="39.5" x2="19" y2="62.5" stroke="#4a80b8" strokeWidth="0.9" opacity="0.7" />
-        <line x1="10" y1="39.5" x2="10" y2="62.5" stroke="#4a80b8" strokeWidth="0.5" opacity="0.4" />
-        <line x1="28" y1="39.5" x2="28" y2="62.5" stroke="#4a80b8" strokeWidth="0.5" opacity="0.4" />
-        <line x1="3.5" y1="51" x2="34.5" y2="51" stroke="#4a80b8" strokeWidth="0.9" opacity="0.7" />
-        {/* Light reflection sparkle */}
-        <ellipse cx="9" cy="43" rx="3.5" ry="1.5" fill="#a8d4f8" opacity="0.18" transform="rotate(-15 9 43)" />
+        {/* ── LEFT PANEL ── */}
+        {/* Outer frame */}
+        <rect x="2" y="42" width="36" height="28" rx="2.5" fill="url(#pFrame)"/>
+        {/* Panel fill */}
+        <rect x="3.5" y="43.5" width="33" height="25" rx="1.5" fill="url(#pBase)"/>
+        <rect x="3.5" y="43.5" width="33" height="25" rx="1.5" fill="url(#cells)"/>
+        <rect x="3.5" y="43.5" width="33" height="25" rx="1.5" fill="url(#pSheen)"/>
+        {/* Sub-panel dividers */}
+        <line x1="20" y1="43.5" x2="20" y2="68.5" stroke="#4a80c0" strokeWidth="1.1" opacity="0.6"/>
+        <line x1="11.5" y1="43.5" x2="11.5" y2="68.5" stroke="#3a6090" strokeWidth="0.5" opacity="0.4"/>
+        <line x1="28.5" y1="43.5" x2="28.5" y2="68.5" stroke="#3a6090" strokeWidth="0.5" opacity="0.4"/>
+        <line x1="3.5" y1="56" x2="36.5" y2="56" stroke="#4a80c0" strokeWidth="1.1" opacity="0.6"/>
+        <line x1="3.5" y1="49.7" x2="36.5" y2="49.7" stroke="#3a6090" strokeWidth="0.4" opacity="0.3"/>
+        <line x1="3.5" y1="62.3" x2="36.5" y2="62.3" stroke="#3a6090" strokeWidth="0.4" opacity="0.3"/>
+        {/* Sunlight glint */}
+        <ellipse cx="10" cy="47" rx="5" ry="2" fill="#b8deff" opacity="0.14" transform="rotate(-18 10 47)"/>
 
         {/* ── LEFT STRUT ── */}
-        <rect x="36" y="49" width="8" height="4" rx="1.5" fill="url(#strutGrad)" />
+        <rect x="38" y="53" width="9" height="6" rx="2" fill="url(#strut)"/>
+        <line x1="39" y1="56" x2="46" y2="56" stroke="#fff" strokeWidth="0.4" opacity="0.3"/>
 
-        {/* ── MAIN BODY ── */}
-        {/* Body shadow/depth */}
-        <rect x="43" y="30" width="26" height="42" rx="4" fill="#1a0d02" opacity="0.6" transform="translate(2,2)" />
-        {/* Body gold MLI */}
-        <rect x="43" y="30" width="26" height="42" rx="4" fill="url(#bodyGold)" />
-        {/* Body highlight */}
-        <rect x="43" y="30" width="26" height="18" rx="4" fill="url(#bodyHighlight)" />
-        {/* Body edge border */}
-        <rect x="43" y="30" width="26" height="42" rx="4" fill="none" stroke="#d4a843" strokeWidth="0.8" opacity="0.5" />
-        {/* MLI foil lines horizontal */}
-        <line x1="43" y1="37" x2="69" y2="37" stroke="#7a5010" strokeWidth="0.6" opacity="0.6" />
-        <line x1="43" y1="44" x2="69" y2="44" stroke="#7a5010" strokeWidth="0.6" opacity="0.6" />
-        <line x1="43" y1="51" x2="69" y2="51" stroke="#7a5010" strokeWidth="0.6" opacity="0.6" />
-        <line x1="43" y1="58" x2="69" y2="58" stroke="#7a5010" strokeWidth="0.6" opacity="0.6" />
-        <line x1="43" y1="65" x2="69" y2="65" stroke="#7a5010" strokeWidth="0.6" opacity="0.6" />
-        {/* Dark instrument panel inset */}
-        <rect x="47" y="34" width="18" height="14" rx="2" fill="#0a0402" opacity="0.75" />
-        <rect x="48.5" y="35.5" width="15" height="11" rx="1.2" fill="none" stroke="#d4a843" strokeWidth="0.5" opacity="0.5" />
-        {/* Thruster nozzle bottom */}
-        <ellipse cx="56" cy="71" rx="6" ry="3" fill="#2a1808" />
-        <ellipse cx="56" cy="71" rx="4" ry="2" fill="#3a2208" />
-        <ellipse cx="56" cy="71" rx="2" ry="1" fill="#1a0d02" />
+        {/* ── BODY ── */}
+        {/* Drop shadow */}
+        <rect x="47" y="33" width="26" height="46" rx="4.5" fill="#000" opacity="0.45" transform="translate(2.5 2.5)"/>
+        {/* Gold MLI body */}
+        <rect x="47" y="33" width="26" height="46" rx="4.5" fill="url(#bLit)"/>
+        {/* Top edge highlight */}
+        <rect x="47" y="33" width="26" height="20" rx="4.5" fill="url(#bEdge)"/>
+        {/* Body border */}
+        <rect x="47" y="33" width="26" height="46" rx="4.5" fill="none" stroke="#c8902a" strokeWidth="0.7" opacity="0.6"/>
+        {/* MLI foil seams */}
+        {[40,47,54,61,68].map(y => (
+          <line key={y} x1="47" y1={y} x2="73" y2={y} stroke="#5a3008" strokeWidth="0.55" opacity="0.65"/>
+        ))}
+        {/* Instrument panel window */}
+        <rect x="51" y="37" width="18" height="14" rx="2.5" fill="#080402" opacity="0.82"/>
+        <rect x="52.5" y="38.5" width="15" height="11" rx="1.5" fill="none" stroke="#c89030" strokeWidth="0.55" opacity="0.6"/>
+        {/* LED indicators */}
+        <circle cx="55" cy="44" r="1" fill="#30ff80" opacity="0.85" filter="url(#sg)"/>
+        <circle cx="60" cy="44" r="1" fill="#ffaa20" opacity="0.7" filter="url(#sg)"/>
+        <circle cx="65" cy="44" r="1" fill="#ff3030" opacity="0.6" filter="url(#sg)"/>
+        {/* Thruster cone */}
+        <ellipse cx="60" cy="78" rx="7" ry="3.5" fill="#1e0e02"/>
+        <ellipse cx="60" cy="78" rx="5" ry="2.5" fill="#2e1804"/>
+        <ellipse cx="60" cy="78" rx="3" ry="1.5" fill="#100800"/>
+        <ellipse cx="60" cy="78" rx="1.2" ry="0.7" fill="#40200a" opacity="0.8"/>
+        {/* Side thruster ports */}
+        <rect x="46" y="55" width="2.5" height="6" rx="1" fill="#2a1508"/>
+        <rect x="71.5" y="55" width="2.5" height="6" rx="1" fill="#2a1508"/>
 
         {/* ── RIGHT STRUT ── */}
-        <rect x="68" y="49" width="8" height="4" rx="1.5" fill="url(#strutGrad)" />
+        <rect x="73" y="53" width="9" height="6" rx="2" fill="url(#strut)"/>
+        <line x1="74" y1="56" x2="81" y2="56" stroke="#fff" strokeWidth="0.4" opacity="0.3"/>
 
-        {/* ── RIGHT SOLAR PANEL ── */}
-        <rect x="76" y="38" width="34" height="26" rx="2.5" fill="url(#panelFrame)" />
-        <rect x="77.5" y="39.5" width="31" height="23" rx="1.5" fill="url(#panelBase)" />
-        <rect x="77.5" y="39.5" width="31" height="23" rx="1.5" fill="url(#cellGrid)" />
-        <rect x="77.5" y="39.5" width="31" height="23" rx="1.5" fill="url(#panelSheen)" />
-        <line x1="93" y1="39.5" x2="93" y2="62.5" stroke="#4a80b8" strokeWidth="0.9" opacity="0.7" />
-        <line x1="84" y1="39.5" x2="84" y2="62.5" stroke="#4a80b8" strokeWidth="0.5" opacity="0.4" />
-        <line x1="102" y1="39.5" x2="102" y2="62.5" stroke="#4a80b8" strokeWidth="0.5" opacity="0.4" />
-        <line x1="77.5" y1="51" x2="108.5" y2="51" stroke="#4a80b8" strokeWidth="0.9" opacity="0.7" />
-        <ellipse cx="103" cy="43" rx="3.5" ry="1.5" fill="#a8d4f8" opacity="0.15" transform="rotate(-15 103 43)" />
+        {/* ── RIGHT PANEL ── */}
+        <rect x="82" y="42" width="36" height="28" rx="2.5" fill="url(#pFrame)"/>
+        <rect x="83.5" y="43.5" width="33" height="25" rx="1.5" fill="url(#pBase)"/>
+        <rect x="83.5" y="43.5" width="33" height="25" rx="1.5" fill="url(#cells)"/>
+        <rect x="83.5" y="43.5" width="33" height="25" rx="1.5" fill="url(#pSheen)"/>
+        <line x1="100" y1="43.5" x2="100" y2="68.5" stroke="#4a80c0" strokeWidth="1.1" opacity="0.6"/>
+        <line x1="91.5" y1="43.5" x2="91.5" y2="68.5" stroke="#3a6090" strokeWidth="0.5" opacity="0.4"/>
+        <line x1="108.5" y1="43.5" x2="108.5" y2="68.5" stroke="#3a6090" strokeWidth="0.5" opacity="0.4"/>
+        <line x1="83.5" y1="56" x2="116.5" y2="56" stroke="#4a80c0" strokeWidth="1.1" opacity="0.6"/>
+        <line x1="83.5" y1="49.7" x2="116.5" y2="49.7" stroke="#3a6090" strokeWidth="0.4" opacity="0.3"/>
+        <line x1="83.5" y1="62.3" x2="116.5" y2="62.3" stroke="#3a6090" strokeWidth="0.4" opacity="0.3"/>
+        <ellipse cx="110" cy="47" rx="5" ry="2" fill="#b8deff" opacity="0.11" transform="rotate(-18 110 47)"/>
 
-        {/* ── ANTENNA ── */}
-        {/* Antenna mast */}
-        <line x1="56" y1="30" x2="56" y2="16" stroke="#b0b8c8" strokeWidth="1.2" />
-        {/* Dish (parabolic) */}
-        <ellipse cx="56" cy="14" rx="7" ry="3.5" fill="url(#dishGrad)" />
-        <ellipse cx="56" cy="14" rx="7" ry="3.5" fill="none" stroke="#8898b0" strokeWidth="0.7" />
-        {/* Dish center dot */}
-        <circle cx="56" cy="14" r="1.2" fill="#d0d8e8" />
-        {/* Feed arm */}
-        <line x1="56" y1="14" x2="56" y2="10" stroke="#8898b0" strokeWidth="0.6" />
-        <circle cx="56" cy="10" r="1.5" fill="#a0aabb" />
-
-        {/* ── SUNLIT HIGHLIGHT on body ── */}
-        <rect x="43" y="30" width="8" height="42" rx="3" fill="#fff" opacity="0.04" />
+        {/* ── ANTENNA ASSEMBLY ── */}
+        {/* Main mast */}
+        <line x1="60" y1="33" x2="60" y2="17" stroke="#a0aaba" strokeWidth="1.3"/>
+        {/* Dish bowl */}
+        <path d="M51 17 Q60 10 69 17" stroke="#9aaac0" strokeWidth="1.2" fill="none"/>
+        <path d="M51 17 Q60 22 69 17" fill="url(#dish)" opacity="0.9"/>
+        <path d="M51 17 Q60 22 69 17" fill="none" stroke="#7888a0" strokeWidth="0.7"/>
+        {/* Dish rim */}
+        <line x1="51" y1="17" x2="69" y2="17" stroke="#9aaac0" strokeWidth="0.8" opacity="0.7"/>
+        {/* Feed arm + feedhorn */}
+        <line x1="60" y1="17" x2="60" y2="11" stroke="#8898b0" strokeWidth="0.7"/>
+        <circle cx="60" cy="10.5" r="2" fill="#b0bcc8"/>
+        <circle cx="60" cy="10.5" r="1" fill="#d0dae8"/>
+        {/* Secondary strut arm on body */}
+        <line x1="54" y1="33" x2="51" y2="17" stroke="#7888a0" strokeWidth="0.6" opacity="0.5"/>
+        <line x1="66" y1="33" x2="69" y2="17" stroke="#7888a0" strokeWidth="0.6" opacity="0.5"/>
       </svg>
     </div>
   );
