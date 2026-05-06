@@ -35,118 +35,191 @@ export default function RocketLaunch() {
             : { duration: 1.05, ease: [0.4, 0.0, 0.2, 1] }
         }
       >
-        <svg width="100" height="240" viewBox="0 0 100 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="160" height="290" viewBox="0 0 160 290" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="nose" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#e0ecff"/>
-              <stop offset="100%" stopColor="#8aacd8"/>
+            {/* External Tank — orange */}
+            <linearGradient id="et" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#a03c08"/>
+              <stop offset="35%" stopColor="#d86018"/>
+              <stop offset="65%" stopColor="#e87828"/>
+              <stop offset="100%" stopColor="#7a2e06"/>
             </linearGradient>
-            <linearGradient id="body" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#c8d8f0"/>
+            {/* SRB — white/silver */}
+            <linearGradient id="srb" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#9aaabb"/>
+              <stop offset="40%" stopColor="#eef2f8"/>
+              <stop offset="100%" stopColor="#6a7a8a"/>
+            </linearGradient>
+            {/* Orbiter fuselage */}
+            <linearGradient id="orb" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#b0bcd0"/>
               <stop offset="40%" stopColor="#f0f4ff"/>
-              <stop offset="100%" stopColor="#8090b0"/>
+              <stop offset="100%" stopColor="#7888a0"/>
             </linearGradient>
-            <linearGradient id="fin" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#6ee7f7"/>
-              <stop offset="100%" stopColor="#1a5080"/>
+            {/* Wings top */}
+            <linearGradient id="wingTop" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#d8e0f0"/>
+              <stop offset="100%" stopColor="#9aaac0"/>
             </linearGradient>
-            <radialGradient id="window" cx="40%" cy="35%" r="60%">
-              <stop offset="0%" stopColor="#a0d8ff"/>
-              <stop offset="60%" stopColor="#1a5090"/>
-              <stop offset="100%" stopColor="#050f1f"/>
-            </radialGradient>
-            <linearGradient id="stripe" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#6ee7f7" stopOpacity="0.6"/>
-              <stop offset="100%" stopColor="#6ee7f7" stopOpacity="0.1"/>
+            {/* Wing belly (heat tiles) */}
+            <linearGradient id="wingBelly" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#1a1e2a"/>
+              <stop offset="100%" stopColor="#0a0c14"/>
             </linearGradient>
-            {/* Flame gradients */}
-            <radialGradient id="flameOuter" cx="50%" cy="0%" r="80%">
-              <stop offset="0%" stopColor="#ff8c00"/>
-              <stop offset="60%" stopColor="#ff4400"/>
+            {/* Flame */}
+            <radialGradient id="flameOut" cx="50%" cy="0%" r="85%">
+              <stop offset="0%" stopColor="#ff9900"/>
+              <stop offset="55%" stopColor="#ff4400"/>
               <stop offset="100%" stopColor="#cc1100" stopOpacity="0"/>
             </radialGradient>
-            <radialGradient id="flameInner" cx="50%" cy="0%" r="70%">
-              <stop offset="0%" stopColor="#ffe060"/>
-              <stop offset="50%" stopColor="#ffaa00"/>
-              <stop offset="100%" stopColor="#ff5500" stopOpacity="0"/>
+            <radialGradient id="flameIn" cx="50%" cy="0%" r="70%">
+              <stop offset="0%" stopColor="#ffee88"/>
+              <stop offset="45%" stopColor="#ffbb00"/>
+              <stop offset="100%" stopColor="#ff6600" stopOpacity="0"/>
             </radialGradient>
-            <radialGradient id="glowPulse" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#6ee7f7" stopOpacity="0.18"/>
+            <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#6ee7f7" stopOpacity="0.10"/>
               <stop offset="100%" stopColor="#6ee7f7" stopOpacity="0"/>
             </radialGradient>
-            <filter id="flameBlur">
-              <feGaussianBlur stdDeviation="2.5"/>
-            </filter>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="b"/>
-              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
+            <filter id="fb"><feGaussianBlur stdDeviation="3"/></filter>
+            <filter id="gs"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
           </defs>
 
-          {/* Glow behind rocket */}
-          <ellipse cx="50" cy="120" rx="44" ry="120" fill="url(#glowPulse)"/>
+          {/* Background glow */}
+          <ellipse cx="80" cy="145" rx="68" ry="130" fill="url(#bgGlow)"/>
 
-          {/* === ROCKET BODY === */}
-          {/* Nose cone */}
-          <path d="M50 8 C50 8 30 50 28 72 L72 72 C70 50 50 8 50 8Z" fill="url(#nose)"/>
-          <path d="M50 8 C50 8 38 50 38 72 L50 72 L50 8Z" fill="#fff" opacity="0.18"/>
+          {/* ── LEFT SRB ── */}
+          {/* Nose */}
+          <path d="M26 22 L18 52 L34 52 Z" fill="url(#srb)"/>
+          <path d="M26 22 L21 52 L26 52 Z" fill="#fff" opacity="0.2"/>
+          {/* Body */}
+          <rect x="18" y="49" width="16" height="170" rx="2.5" fill="url(#srb)"/>
+          <rect x="18" y="49" width="6" height="170" rx="2" fill="#fff" opacity="0.08"/>
+          {/* USA text line */}
+          <rect x="20" y="110" width="12" height="2" rx="1" fill="#cc1111" opacity="0.7"/>
+          {/* Separation ring */}
+          <rect x="18" y="145" width="16" height="3" rx="1" fill="#8090a0" opacity="0.6"/>
+          {/* Nozzle */}
+          <path d="M18 219 Q15 232 17 238 L35 238 Q37 232 34 219 Z" fill="#1a2030"/>
+          <ellipse cx="26" cy="238" rx="9" ry="3" fill="#080e18"/>
 
-          {/* Main body */}
-          <rect x="28" y="68" width="44" height="110" rx="3" fill="url(#body)"/>
-          {/* Body highlight */}
-          <rect x="28" y="68" width="16" height="110" rx="3" fill="#fff" opacity="0.09"/>
-          {/* Body shadow */}
-          <rect x="66" y="68" width="6" height="110" rx="2" fill="#000" opacity="0.12"/>
+          {/* ── RIGHT SRB ── */}
+          <path d="M134 22 L126 52 L142 52 Z" fill="url(#srb)"/>
+          <path d="M134 22 L129 52 L134 52 Z" fill="#fff" opacity="0.2"/>
+          <rect x="126" y="49" width="16" height="170" rx="2.5" fill="url(#srb)"/>
+          <rect x="126" y="49" width="6" height="170" rx="2" fill="#fff" opacity="0.08"/>
+          <rect x="128" y="110" width="12" height="2" rx="1" fill="#cc1111" opacity="0.7"/>
+          <rect x="126" y="145" width="16" height="3" rx="1" fill="#8090a0" opacity="0.6"/>
+          <path d="M126 219 Q123 232 125 238 L143 238 Q145 232 142 219 Z" fill="#1a2030"/>
+          <ellipse cx="134" cy="238" rx="9" ry="3" fill="#080e18"/>
 
-          {/* Cyan accent stripe */}
-          <rect x="28" y="95" width="44" height="5" rx="1" fill="url(#stripe)"/>
-          <rect x="28" y="148" width="44" height="4" rx="1" fill="url(#stripe)"/>
+          {/* ── EXTERNAL TANK ── */}
+          {/* Top dome */}
+          <path d="M80 18 Q60 18 58 42 L102 42 Q100 18 80 18Z" fill="#c05010"/>
+          <path d="M80 18 Q68 18 66 42 L80 42 Z" fill="#e06818" opacity="0.35"/>
+          {/* Body */}
+          <rect x="58" y="38" width="44" height="188" rx="2" fill="url(#et)"/>
+          {/* ET highlight */}
+          <rect x="58" y="38" width="14" height="188" rx="2" fill="#fff" opacity="0.06"/>
+          {/* Bottom dome */}
+          <path d="M58 226 Q58 240 80 242 Q102 240 102 226 Z" fill="#8a3006"/>
 
-          {/* Porthole window */}
-          <circle cx="50" cy="120" r="14" fill="#0a1828" stroke="#6ee7f7" strokeWidth="1.5"/>
-          <circle cx="50" cy="120" r="11" fill="url(#window)"/>
-          <ellipse cx="46" cy="115" rx="4" ry="2.5" fill="#fff" opacity="0.22" transform="rotate(-20 46 115)"/>
-          {/* Window glow */}
-          <circle cx="50" cy="120" r="14" fill="none" stroke="#6ee7f7" strokeWidth="0.7" opacity="0.5" filter="url(#glow)"/>
+          {/* ── STRUTS ── */}
+          <line x1="34" y1="105" x2="58" y2="108" stroke="#a0b0c0" strokeWidth="2" opacity="0.5"/>
+          <line x1="126" y1="105" x2="102" y2="108" stroke="#a0b0c0" strokeWidth="2" opacity="0.5"/>
+          <line x1="34" y1="175" x2="58" y2="178" stroke="#a0b0c0" strokeWidth="1.5" opacity="0.4"/>
+          <line x1="126" y1="175" x2="102" y2="178" stroke="#a0b0c0" strokeWidth="1.5" opacity="0.4"/>
 
-          {/* Engine section */}
-          <rect x="30" y="175" width="40" height="8" rx="2" fill="#1a2840"/>
-          <rect x="33" y="181" width="34" height="6" rx="2" fill="#0e1828"/>
+          {/* ── ORBITER ── */}
+          {/* Vertical tail fin */}
+          <path d="M77 24 L83 24 L83 115 L77 115 Z" fill="#c8d0e0"/>
+          <path d="M79 24 L83 24 L83 100 Z" fill="#e8ecf8" opacity="0.25"/>
+          <rect x="79" y="24" width="4" height="4" rx="1" fill="#6ee7f7" opacity="0.4"/>
 
-          {/* Left fin */}
-          <path d="M28 158 L8 188 L28 178 Z" fill="url(#fin)" opacity="0.9"/>
-          <path d="M28 158 L18 180 L28 178 Z" fill="#fff" opacity="0.12"/>
+          {/* Orbiter nose */}
+          <path d="M80 16 C74 16 64 32 63 50 L97 50 C96 32 86 16 80 16Z" fill="url(#orb)"/>
+          <path d="M80 16 C76 16 68 32 68 50 L80 50 Z" fill="#fff" opacity="0.15"/>
+          {/* Orbiter nose tip — heat shield */}
+          <path d="M80 16 C77 20 74 32 73 44 L80 44 L87 44 C86 32 83 20 80 16Z" fill="#2a1818" opacity="0.55"/>
 
-          {/* Right fin */}
-          <path d="M72 158 L92 188 L72 178 Z" fill="url(#fin)" opacity="0.9"/>
+          {/* Cockpit / flight deck windows */}
+          <rect x="68" y="54" width="24" height="10" rx="2.5" fill="#1a3060"/>
+          <rect x="70" y="55.5" width="9" height="7" rx="1.5" fill="#2a4a90" opacity="0.9"/>
+          <rect x="81" y="55.5" width="9" height="7" rx="1.5" fill="#2a4a90" opacity="0.9"/>
+          <rect x="71" y="56.5" width="3" height="4" rx="0.8" fill="#4a70c0" opacity="0.6"/>
+          <rect x="82" y="56.5" width="3" height="4" rx="0.8" fill="#4a70c0" opacity="0.6"/>
 
-          {/* Engine nozzle */}
-          <path d="M36 187 Q33 200 35 205 L65 205 Q67 200 64 187 Z" fill="#0e1828"/>
-          <ellipse cx="50" cy="205" rx="15" ry="4" fill="#060e1a"/>
+          {/* Orbiter payload bay / fuselage */}
+          <rect x="63" y="50" width="34" height="140" rx="3" fill="url(#orb)"/>
+          <rect x="63" y="50" width="10" height="140" rx="3" fill="#fff" opacity="0.07"/>
+          {/* Payload bay doors line */}
+          <line x1="80" y1="65" x2="80" y2="185" stroke="#8090a8" strokeWidth="0.8" opacity="0.5"/>
+          <line x1="63" y1="120" x2="97" y2="120" stroke="#8090a8" strokeWidth="0.7" opacity="0.35"/>
 
-          {/* === FLAME (only when launching) === */}
+          {/* Heat tiles on belly */}
+          <rect x="63" y="155" width="34" height="35" rx="2" fill="#1a1828"/>
+          <rect x="63" y="185" width="34" height="8" rx="1" fill="#0e1020"/>
+
+          {/* OMS engine pods */}
+          <ellipse cx="68" cy="162" rx="5" ry="9" fill="#9aaabb"/>
+          <ellipse cx="92" cy="162" rx="5" ry="9" fill="#9aaabb"/>
+
+          {/* ── DELTA WINGS ── */}
+          {/* Left wing — top face */}
+          <path d="M63 125 L63 195 L8 220 L12 188 Z" fill="url(#wingTop)"/>
+          {/* Left wing — belly (heat tiles) */}
+          <path d="M63 165 L63 195 L8 220 L10 205 Z" fill="url(#wingBelly)"/>
+          {/* Left wing leading edge */}
+          <path d="M63 125 L12 188 L8 184 L63 120 Z" fill="#c8d4e8" opacity="0.5"/>
+
+          {/* Right wing — top face */}
+          <path d="M97 125 L97 195 L152 220 L148 188 Z" fill="url(#wingTop)"/>
+          {/* Right wing — belly */}
+          <path d="M97 165 L97 195 L152 220 L150 205 Z" fill="url(#wingBelly)"/>
+          {/* Right wing leading edge */}
+          <path d="M97 125 L148 188 L152 184 L97 120 Z" fill="#c8d4e8" opacity="0.5"/>
+
+          {/* ── SSME NOZZLES (3 main engines) ── */}
+          <path d="M69 193 Q65 205 67 210 L77 210 Q79 205 75 193 Z" fill="#0e1828"/>
+          <ellipse cx="72" cy="210" rx="5.5" ry="2" fill="#060c18"/>
+          <path d="M80 193 Q77 207 79 212 L89 212 Q91 207 88 193 Z" fill="#0e1828"/>
+          <ellipse cx="84" cy="212" rx="5.5" ry="2" fill="#060c18"/>
+          <path d="M74 199 Q70 213 72 218 L88 218 Q90 213 86 199 Z" fill="#1a2438"/>
+          <ellipse cx="80" cy="218" rx="8" ry="2.5" fill="#060c18"/>
+
+          {/* ── FLAMES (launching) ── */}
           <AnimatePresence>
             {state === "launching" && (
               <>
-                {/* Outer flame */}
-                <motion.path
-                  d="M36 205 Q30 230 32 250 Q40 275 50 270 Q60 275 68 250 Q70 230 64 205 Z"
-                  fill="url(#flameOuter)"
-                  initial={{ scaleY: 0, opacity: 0 }}
-                  animate={{ scaleY: [0.6, 1.4, 1.1], opacity: [0, 1, 0.9] }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                  style={{ transformOrigin: "50px 205px" }}
-                  filter="url(#flameBlur)"
-                />
-                {/* Inner flame */}
-                <motion.path
-                  d="M41 205 Q38 222 40 238 Q45 258 50 255 Q55 258 60 238 Q62 222 59 205 Z"
-                  fill="url(#flameInner)"
-                  initial={{ scaleY: 0, opacity: 0 }}
-                  animate={{ scaleY: [0.5, 1.3, 1.0], opacity: [0, 1, 1] }}
-                  transition={{ duration: 0.3, ease: "easeOut", delay: 0.05 }}
-                  style={{ transformOrigin: "50px 205px" }}
-                />
+                {/* SRB left flame */}
+                <motion.path d="M20 238 Q16 258 18 272 Q26 288 26 285 Q26 288 34 272 Q36 258 32 238Z"
+                  fill="url(#flameOut)" filter="url(#fb)"
+                  initial={{scaleY:0,opacity:0}} animate={{scaleY:[0.5,1.3,1.1],opacity:[0,1,0.85]}}
+                  transition={{duration:0.3,ease:"easeOut"}} style={{transformOrigin:"26px 238px"}}/>
+                <motion.path d="M22 238 Q20 252 22 263 Q26 276 26 273 Q26 276 30 263 Q32 252 30 238Z"
+                  fill="url(#flameIn)"
+                  initial={{scaleY:0,opacity:0}} animate={{scaleY:[0.4,1.2,1.0],opacity:[0,1,1]}}
+                  transition={{duration:0.28,ease:"easeOut",delay:0.04}} style={{transformOrigin:"26px 238px"}}/>
+
+                {/* SRB right flame */}
+                <motion.path d="M128 238 Q124 258 126 272 Q134 288 134 285 Q134 288 142 272 Q144 258 140 238Z"
+                  fill="url(#flameOut)" filter="url(#fb)"
+                  initial={{scaleY:0,opacity:0}} animate={{scaleY:[0.5,1.3,1.1],opacity:[0,1,0.85]}}
+                  transition={{duration:0.3,ease:"easeOut"}} style={{transformOrigin:"134px 238px"}}/>
+                <motion.path d="M130 238 Q128 252 130 263 Q134 276 134 273 Q134 276 138 263 Q140 252 138 238Z"
+                  fill="url(#flameIn)"
+                  initial={{scaleY:0,opacity:0}} animate={{scaleY:[0.4,1.2,1.0],opacity:[0,1,1]}}
+                  transition={{duration:0.28,ease:"easeOut",delay:0.04}} style={{transformOrigin:"134px 238px"}}/>
+
+                {/* SSME center flame */}
+                <motion.path d="M68 218 Q62 242 64 260 Q72 285 80 282 Q88 285 96 260 Q98 242 92 218Z"
+                  fill="url(#flameOut)" filter="url(#fb)"
+                  initial={{scaleY:0,opacity:0}} animate={{scaleY:[0.4,1.5,1.2],opacity:[0,1,0.9]}}
+                  transition={{duration:0.35,ease:"easeOut",delay:0.06}} style={{transformOrigin:"80px 218px"}}/>
+                <motion.path d="M72 218 Q69 238 71 252 Q77 272 80 270 Q83 272 89 252 Q91 238 88 218Z"
+                  fill="url(#flameIn)"
+                  initial={{scaleY:0,opacity:0}} animate={{scaleY:[0.3,1.4,1.1],opacity:[0,1,1]}}
+                  transition={{duration:0.3,ease:"easeOut",delay:0.1}} style={{transformOrigin:"80px 218px"}}/>
               </>
             )}
           </AnimatePresence>
