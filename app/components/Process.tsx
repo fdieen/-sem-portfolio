@@ -1,12 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
-import MarsGlobe from "./MarsGlobe";
+import RocketLaunch from "./RocketLaunch";
 
 export default function Process() {
-  const router = useRouter();
-
   return (
     <section id="werkproces" className="relative py-28 px-6 overflow-hidden border-t border-white/5">
       <div className="absolute inset-0 pointer-events-none">
@@ -19,6 +16,7 @@ export default function Process() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="mb-14"
         >
           <span className="text-xs text-[#6ee7f7]/70 uppercase tracking-[0.3em] font-medium">
             Werkproces
@@ -26,29 +24,18 @@ export default function Process() {
           <h2 className="text-4xl lg:text-6xl font-bold mt-4 mb-3 tracking-tight">
             Hoe werkt het?
           </h2>
-          <p className="text-white/35 text-base max-w-xs mx-auto leading-relaxed mb-12">
-            Klik op de globe om het te ontdekken.
+          <p className="text-white/35 text-base max-w-xs mx-auto leading-relaxed">
+            Druk op launch en ontdek de stappen.
           </p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.92 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <MarsGlobe onClick={() => router.push("/werkproces")} size={340} />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-6 flex flex-col items-center gap-2 cursor-pointer"
-          onClick={() => router.push("/werkproces")}
-        >
-          <span className="text-white/20 text-xs tracking-[0.2em] uppercase">Klik op de globe</span>
+          <RocketLaunch />
         </motion.div>
       </div>
     </section>
