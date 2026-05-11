@@ -5,12 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { projects } from "../data/projects";
 
-function screenshotUrl(url: string) {
-  // Lokale screenshots — voeg per project toe aan /public/
-  const screenshots: Record<string, string> = {
-    "https://beletteringbestellen.nl": "/belettering-screenshot.jpg",
-  };
-  return screenshots[url] ?? `https://image.thum.io/get/width/1200/crop/800/${url}`;
+function screenshotUrl(project: (typeof projects)[0]) {
+  if (project.screenshot) return project.screenshot;
+  return `https://image.thum.io/get/width/1200/crop/800/${project.url}`;
 }
 
 function ActiveProjectCard({ project, index }: { project: (typeof projects)[0]; index: number }) {
@@ -40,7 +37,7 @@ function ActiveProjectCard({ project, index }: { project: (typeof projects)[0]; 
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={screenshotUrl(project.url)}
+            src={screenshotUrl(project)}
             alt={`Screenshot van ${project.name}`}
             className="w-full h-full object-cover object-top mt-8 group-hover:scale-105 transition-transform duration-500"
             loading="lazy"

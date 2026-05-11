@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { projects } from "../data/projects";
 
+
 function ProjectCard({
   project,
   index,
@@ -25,7 +26,7 @@ function ProjectCard({
       <div className="relative w-full h-44 overflow-hidden bg-[#111]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/belettering-screenshot.jpg"
+          src={project.screenshot}
           alt={`Preview ${project.name}`}
           className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
         />
@@ -138,7 +139,7 @@ export default function Projects() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {projects.filter(p => !p.comingSoon).slice(0, 3).map((project, i) => (
+          {projects.filter(p => p.featured).slice(0, 3).map((project, i) => (
             <ProjectCard key={project.name} project={project} index={i} />
           ))}
 
