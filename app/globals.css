@@ -58,17 +58,6 @@ body::before {
   border-radius: 2px;
 }
 
-@keyframes moonScan {
-  0%   { top: -2px; opacity: 0; }
-  10%  { opacity: 1; }
-  90%  { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
-}
-@keyframes moonFloat {
-  0%, 100% { transform: translate(0px, 0px) rotate(-2deg); }
-  35%      { transform: translate(6px, -12px) rotate(1deg); }
-  65%      { transform: translate(-4px, -7px) rotate(-3deg); }
-}
 @keyframes coinWild {
   0%   { transform: translate(0, 0) rotateY(0deg) scale(1); }
   15%  { transform: translate(-8px, -20px) rotateY(180deg) scale(1.2); }

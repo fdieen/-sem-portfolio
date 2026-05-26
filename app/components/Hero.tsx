@@ -1,58 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useRef, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
-import * as THREE from "three";
 import SpaceGlobe from "./SpaceGlobe";
 import Satellite from "./Satellite";
 import StarField from "./StarField";
-
-useTexture.preload(["/moon-texture.jpg"]);
-
-function MoonMesh() {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const [moonMap] = useTexture(["/moon-texture.jpg"]);
-  useFrame((_, delta) => {
-    if (meshRef.current) meshRef.current.rotation.y += delta * 0.018;
-  });
-  return (
-    <mesh ref={meshRef}>
-      <sphereGeometry args={[1, 96, 96]} />
-      <meshStandardMaterial map={moonMap} roughness={0.55} metalness={0.0} />
-    </mesh>
-  );
-}
-
-function MoonGlobe() {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.4, delay: 0.5 }}
-      className="hidden lg:block absolute pointer-events-none"
-      style={{ top: "-60px", left: "-80px", animation: "moonFloat 11s ease-in-out infinite", zIndex: 2, width: 320, height: 320, filter: "blur(0.7px)" }}
-    >
-      <div style={{
-        width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden",
-        boxShadow: "0 0 30px 6px rgba(210,220,240,0.07), 0 0 60px 15px rgba(190,205,230,0.04)"
-      }}>
-        <Canvas
-          camera={{ position: [0, 0, 2.55], fov: 42 }}
-          gl={{ antialias: true, alpha: false }}
-          style={{ background: "#030c18", width: "100%", height: "100%" }}
-        >
-          <directionalLight position={[0.8, 0.4, 5]} intensity={0.75} color="#f0f4ff" />
-          <ambientLight intensity={0.75} color="#c8d4e8" />
-          <Suspense fallback={null}>
-            <MoonMesh />
-          </Suspense>
-        </Canvas>
-      </div>
-    </motion.div>
-  );
-}
 
 export default function Hero() {
   return (
@@ -120,8 +71,6 @@ export default function Hero() {
       </div>
 
 
-
-      <MoonGlobe />
 
       {/* Sterren + globe + satelliet */}
       <StarField />
