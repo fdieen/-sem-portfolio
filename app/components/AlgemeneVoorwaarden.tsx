@@ -8,15 +8,15 @@ const sections = [
     title: "Definities en toepasselijkheid",
     body: [
       "In deze algemene voorwaarden wordt verstaan onder: ‘opdrachtnemer’: SVD WebDesign, gevestigd in Nederland, eigendom van Sem van Dieen. ‘opdrachtgever’: de natuurlijke of rechtspersoon die met opdrachtnemer een overeenkomst sluit of wenst te sluiten.",
-      "Deze voorwaarden zijn van toepassing op alle offertes, aanbiedingen, overeenkomsten en leveringen van diensten door SVD WebDesign, tenzij schriftelijk uitdrukkelijk anders is overeengekomen.",
+      "Deze voorwaarden zijn van toepassing op alle offertes, overeenkomsten en leveringen van diensten door SVD WebDesign, tenzij schriftelijk uitdrukkelijk anders is overeengekomen.",
       "Eventuele inkoop- of andere voorwaarden van opdrachtgever zijn niet van toepassing, tenzij deze door opdrachtnemer uitdrukkelijk schriftelijk zijn aanvaard.",
     ],
   },
   {
     nr: "02",
-    title: "Offertes en aanbiedingen",
+    title: "Offertes",
     body: [
-      "Alle offertes en aanbiedingen van SVD WebDesign zijn vrijblijvend, tenzij in de offerte een termijn voor aanvaarding is gesteld. Een offerte is geldig gedurende 30 dagen na dagtekening, daarna heeft zij slechts een informatieve waarde.",
+      "Alle offertes van SVD WebDesign zijn vrijblijvend, tenzij in de offerte een termijn voor aanvaarding is gesteld. Een offerte is geldig gedurende 30 dagen na dagtekening, daarna heeft zij slechts een informatieve waarde.",
       "Opdrachtnemer kan niet aan zijn offerte worden gehouden indien opdrachtgever redelijkerwijs kan begrijpen dat de offerte een kennelijke vergissing of verschrijving bevat.",
       "De in een offerte vermelde prijzen zijn exclusief btw en eventuele kosten van derden (zoals hosting, domeinregistratie, licenties of stockmateriaal), tenzij anders aangegeven.",
     ],
