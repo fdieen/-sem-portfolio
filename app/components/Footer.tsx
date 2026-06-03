@@ -68,6 +68,12 @@ export default function Footer() {
           <p className="text-white/20 text-xs">
             © 2026 Sem van Dieen. Alle rechten voorbehouden.
           </p>
+          <a
+            href="/algemene-voorwaarden"
+            className="text-white/30 hover:text-[#6ee7f7] transition-colors duration-200 text-xs"
+          >
+            Algemene voorwaarden
+          </a>
         </div>
 
         <div className="flex items-center gap-4">
