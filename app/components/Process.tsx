@@ -24,9 +24,6 @@ export default function Process() {
           <h2 className="text-4xl lg:text-6xl font-bold mt-4 mb-3 tracking-tight">
             Hoe werkt het?
           </h2>
-          <p className="text-white/35 text-base max-w-xs mx-auto leading-relaxed">
-            Druk op launch en ontdek de stappen.
-          </p>
         </motion.div>
 
         <motion.div
