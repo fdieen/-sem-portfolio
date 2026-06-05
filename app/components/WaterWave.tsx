@@ -3,61 +3,100 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const DURATION_MS = 3200;
+const DURATION_MS = 3600;
 const COOLDOWN_MS = 800;
 
-type Drop = {
-  left: string;
-  size: number;
+type Stream = {
+  d: string;
+  strokeWidth: number;
+  duration: number;
   delay: number;
-  startY: string;
-  fall: number;
-  drift: number;
 };
 
-// Druppels spatten vanaf de onderkant van de golf naarmate die voorbij rolt.
-// startY = ongeveer de y-positie van de golf-onderkant op tijdstip `delay`.
-const drops: Drop[] = [
-  { left: "9%",  size: 13, delay: 0.70, startY: "30vh", fall: 1.5, drift:  6 },
-  { left: "17%", size: 10, delay: 0.95, startY: "42vh", fall: 1.4, drift: -5 },
-  { left: "26%", size: 17, delay: 0.75, startY: "33vh", fall: 1.5, drift:  8 },
-  { left: "35%", size: 12, delay: 1.05, startY: "47vh", fall: 1.4, drift: -7 },
-  { left: "43%", size: 9,  delay: 0.85, startY: "38vh", fall: 1.5, drift:  5 },
-  { left: "52%", size: 16, delay: 0.65, startY: "28vh", fall: 1.6, drift: -8 },
-  { left: "60%", size: 11, delay: 1.10, startY: "49vh", fall: 1.4, drift:  6 },
-  { left: "68%", size: 18, delay: 0.80, startY: "35vh", fall: 1.5, drift: -9 },
-  { left: "76%", size: 12, delay: 1.00, startY: "44vh", fall: 1.4, drift:  7 },
-  { left: "84%", size: 15, delay: 0.78, startY: "34vh", fall: 1.5, drift: -6 },
-  { left: "92%", size: 10, delay: 1.02, startY: "45vh", fall: 1.4, drift:  5 },
+// 4 verticale golfstromen — viewBox 1000x1000, lichte slingering links/rechts
+const streams: Stream[] = [
+  {
+    d: "M 160 -60 Q 110 220 160 440 Q 210 660 160 880 L 160 1060",
+    strokeWidth: 16,
+    duration: 2.6,
+    delay: 0.0,
+  },
+  {
+    d: "M 390 -60 Q 430 240 390 460 Q 350 680 390 900 L 390 1060",
+    strokeWidth: 13,
+    duration: 2.85,
+    delay: 0.18,
+  },
+  {
+    d: "M 620 -60 Q 575 250 620 470 Q 665 690 620 910 L 620 1060",
+    strokeWidth: 18,
+    duration: 2.5,
+    delay: 0.08,
+  },
+  {
+    d: "M 850 -60 Q 895 220 850 440 Q 805 660 850 880 L 850 1060",
+    strokeWidth: 14,
+    duration: 2.95,
+    delay: 0.25,
+  },
 ];
 
-function Droplet({ d, idx }: { d: Drop; idx: number }) {
-  const w = d.size;
-  const h = d.size * 1.32;
-  const gradId = `drop-grad-${idx}`;
+type Splash = {
+  left: string;
+  startY: string;
+  delay: number;
+  fall: number;
+  drift: number;
+  size: number;
+};
+
+// Spetters vanaf elke golfstroom — timing ongeveer afgestemd op golfkop-positie
+const splashes: Splash[] = [
+  // Golf 1 (~16%)
+  { left: "17.5%", startY: "22vh", delay: 0.55, fall: 1.3, drift:  10, size: 11 },
+  { left: "14%",   startY: "52vh", delay: 1.20, fall: 1.2, drift: -12, size: 13 },
+  { left: "17%",   startY: "78vh", delay: 1.85, fall: 1.1, drift:   8, size:  9 },
+  // Golf 2 (~39%)
+  { left: "40.5%", startY: "26vh", delay: 0.75, fall: 1.3, drift: -11, size: 10 },
+  { left: "37%",   startY: "55vh", delay: 1.40, fall: 1.2, drift:   9, size: 12 },
+  { left: "40%",   startY: "80vh", delay: 2.05, fall: 1.0, drift:  -7, size:  9 },
+  // Golf 3 (~62%)
+  { left: "60.5%", startY: "24vh", delay: 0.60, fall: 1.3, drift:  12, size: 13 },
+  { left: "63.5%", startY: "54vh", delay: 1.25, fall: 1.2, drift: -10, size: 11 },
+  { left: "61%",   startY: "82vh", delay: 1.90, fall: 1.1, drift:   8, size: 12 },
+  // Golf 4 (~85%)
+  { left: "83%",   startY: "28vh", delay: 0.85, fall: 1.3, drift: -12, size: 10 },
+  { left: "86%",   startY: "58vh", delay: 1.50, fall: 1.2, drift:   9, size: 13 },
+  { left: "82.5%", startY: "82vh", delay: 2.15, fall: 1.0, drift:  -7, size:  9 },
+];
+
+function SplashDroplet({ s, idx }: { s: Splash; idx: number }) {
+  const w = s.size;
+  const h = s.size * 1.32;
+  const gradId = `splash-grad-${idx}`;
 
   return (
     <motion.div
       className="absolute top-0"
-      style={{ left: d.left, width: w, transform: "translateX(-50%)" }}
-      initial={{ y: d.startY, x: 0, opacity: 0, scale: 0.4 }}
+      style={{ left: s.left, width: w, transform: "translateX(-50%)" }}
+      initial={{ y: s.startY, x: 0, opacity: 0, scale: 0.35 }}
       animate={{
         y: "115vh",
-        x: d.drift,
-        opacity: [0, 1, 1, 0.85, 0],
+        x: s.drift,
+        opacity: [0, 1, 1, 0.8, 0],
         scale: 1,
       }}
       transition={{
-        duration: d.fall,
-        delay: d.delay,
+        duration: s.fall,
+        delay: s.delay,
         ease: [0.4, 0, 0.65, 1],
-        x: { duration: d.fall, delay: d.delay, ease: "easeInOut" },
+        x: { duration: s.fall, delay: s.delay, ease: "easeInOut" },
         opacity: {
-          duration: d.fall,
-          delay: d.delay,
-          times: [0, 0.12, 0.7, 0.88, 1],
+          duration: s.fall,
+          delay: s.delay,
+          times: [0, 0.14, 0.7, 0.88, 1],
         },
-        scale: { duration: 0.25, delay: d.delay, ease: "easeOut" },
+        scale: { duration: 0.22, delay: s.delay, ease: "easeOut" },
       }}
     >
       <svg
@@ -67,7 +106,7 @@ function Droplet({ d, idx }: { d: Drop; idx: number }) {
         style={{
           display: "block",
           filter:
-            "drop-shadow(0 0 6px rgba(103,232,249,0.95)) drop-shadow(0 0 14px rgba(6,182,212,0.7))",
+            "drop-shadow(0 0 6px rgba(110,231,247,0.95)) drop-shadow(0 0 14px rgba(6,182,212,0.7))",
         }}
       >
         <defs>
@@ -157,69 +196,43 @@ export default function WaterWave() {
             }}
           />
 
-          {/* De golf zelf — een gebogen waterband die van boven naar beneden rolt */}
-          <motion.div
-            className="absolute left-0 right-0"
-            style={{ top: 0 }}
-            initial={{ y: "-35vh" }}
-            animate={{ y: "120vh" }}
-            transition={{ duration: 2.4, ease: [0.42, 0, 0.55, 1] }}
+          {/* 4 verticale golfstromen */}
+          <svg
+            className="absolute inset-0"
+            style={{
+              width: "100%",
+              height: "100%",
+              filter:
+                "drop-shadow(0 0 8px rgba(110,231,247,0.95)) drop-shadow(0 0 22px rgba(6,182,212,0.55)) drop-shadow(0 0 50px rgba(6,182,212,0.3))",
+            }}
+            viewBox="0 0 1000 1000"
+            preserveAspectRatio="none"
           >
-            <svg
-              width="100%"
-              height="220"
-              viewBox="0 0 1600 220"
-              preserveAspectRatio="none"
-              style={{
-                display: "block",
-                filter:
-                  "drop-shadow(0 0 28px rgba(103,232,249,0.75)) drop-shadow(0 0 60px rgba(6,182,212,0.55)) drop-shadow(0 0 110px rgba(6,182,212,0.3))",
-              }}
-            >
-              <defs>
-                <linearGradient id="wave-body" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="rgba(186,247,255,0.0)" />
-                  <stop offset="15%" stopColor="rgba(186,247,255,0.55)" />
-                  <stop offset="50%" stopColor="rgba(103,232,249,0.65)" />
-                  <stop offset="100%" stopColor="rgba(6,182,212,0.7)" />
-                </linearGradient>
-                <linearGradient id="wave-crest" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="rgba(255,255,255,0.85)" />
-                  <stop offset="100%" stopColor="rgba(186,247,255,0)" />
-                </linearGradient>
-              </defs>
-
-              {/* Hoofd-waterlichaam met golvende boven- en onderkant */}
-              <path
-                d="M 0 40
-                   C 200 5  400 70  600 35
-                   C 800 0  1000 65 1200 30
-                   C 1400 0  1600 60 1600 35
-                   L 1600 165
-                   C 1400 215 1200 140 1000 180
-                   C 800 215  600 135 400 175
-                   C 200 215  0 140  0 175
-                   Z"
-                fill="url(#wave-body)"
-              />
-
-              {/* Schitterende crest-lijn bovenop */}
-              <path
-                d="M 0 40
-                   C 200 5  400 70  600 35
-                   C 800 0  1000 65 1200 30
-                   C 1400 0  1600 60 1600 35"
+            {streams.map((stream, i) => (
+              <motion.path
+                key={i}
+                d={stream.d}
+                stroke="rgba(110,231,247,0.9)"
+                strokeWidth={stream.strokeWidth}
+                strokeLinecap="round"
                 fill="none"
-                stroke="url(#wave-crest)"
-                strokeWidth="2"
-                opacity="0.9"
+                vectorEffect="non-scaling-stroke"
+                pathLength={1}
+                strokeDasharray="0.35 2"
+                initial={{ strokeDashoffset: 0.4 }}
+                animate={{ strokeDashoffset: -1.05 }}
+                transition={{
+                  duration: stream.duration,
+                  delay: stream.delay,
+                  ease: [0.4, 0, 0.6, 1],
+                }}
               />
-            </svg>
-          </motion.div>
+            ))}
+          </svg>
 
-          {/* Druppels die loslaten naarmate de golf voorbij rolt */}
-          {drops.map((d, i) => (
-            <Droplet key={i} d={d} idx={i} />
+          {/* Spetters die loslaten van de golven */}
+          {splashes.map((s, i) => (
+            <SplashDroplet key={i} s={s} idx={i} />
           ))}
         </motion.div>
       )}
