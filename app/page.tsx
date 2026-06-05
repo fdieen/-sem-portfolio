@@ -7,13 +7,11 @@ import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import SeoFooter from "./components/SeoFooter";
 import Footer from "./components/Footer";
-import WaterWave from "./components/WaterWave";
 
 export default function Home() {
   return (
     <main>
       <Navbar />
-      <WaterWave />
       <Hero />
       <Projects />
       <Process />
