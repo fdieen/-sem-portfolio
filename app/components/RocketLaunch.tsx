@@ -35,6 +35,29 @@ export default function RocketLaunch() {
             : { duration: 1.05, ease: [0.4, 0.0, 0.2, 1] }
         }
       >
+        <motion.div
+          style={{ transformOrigin: "50% 90%" }}
+          animate={
+            state === "idle"
+              ? {
+                  y: [0, -4.5, 2.8, -1.6, 0.6, 0],
+                  x: [0, 1.4, -1.6, 0.7, -0.3, 0],
+                  rotate: [0, -1.8, 1.4, -0.6, 0.25, 0],
+                }
+              : { y: 0, x: 0, rotate: 0 }
+          }
+          transition={
+            state === "idle"
+              ? {
+                  duration: 1.0,
+                  repeat: Infinity,
+                  repeatDelay: 14,
+                  ease: "easeOut",
+                  times: [0, 0.18, 0.38, 0.6, 0.85, 1],
+                }
+              : { duration: 0.2 }
+          }
+        >
         <svg width="160" height="290" viewBox="0 0 160 290" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             {/* External Tank — orange */}
@@ -224,6 +247,7 @@ export default function RocketLaunch() {
             )}
           </AnimatePresence>
         </svg>
+        </motion.div>
 
         {/* Exhaust smoke particles when launching */}
         <AnimatePresence>
