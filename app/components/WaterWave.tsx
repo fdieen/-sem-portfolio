@@ -10,68 +10,56 @@ type Drop = {
   left: string;
   size: number;
   delay: number;
+  startY: string;
   fall: number;
-  wobble: number;
+  drift: number;
 };
 
+// Druppels spatten vanaf de onderkant van de golf naarmate die voorbij rolt.
+// startY = ongeveer de y-positie van de golf-onderkant op tijdstip `delay`.
 const drops: Drop[] = [
-  { left: "6%",  size: 22, delay: 0.05, fall: 1.7, wobble: -8 },
-  { left: "14%", size: 14, delay: 0.45, fall: 2.0, wobble: 6 },
-  { left: "22%", size: 30, delay: 0.20, fall: 1.5, wobble: -10 },
-  { left: "31%", size: 18, delay: 0.65, fall: 1.9, wobble: 5 },
-  { left: "40%", size: 26, delay: 0.10, fall: 1.6, wobble: -7 },
-  { left: "48%", size: 16, delay: 0.55, fall: 2.0, wobble: 9 },
-  { left: "56%", size: 34, delay: 0.30, fall: 1.55, wobble: -6 },
-  { left: "64%", size: 20, delay: 0.0, fall: 1.85, wobble: 7 },
-  { left: "73%", size: 24, delay: 0.50, fall: 1.7, wobble: -9 },
-  { left: "81%", size: 16, delay: 0.15, fall: 2.0, wobble: 5 },
-  { left: "89%", size: 28, delay: 0.40, fall: 1.65, wobble: -8 },
-  { left: "96%", size: 14, delay: 0.25, fall: 1.95, wobble: 6 },
+  { left: "9%",  size: 13, delay: 0.70, startY: "30vh", fall: 1.5, drift:  6 },
+  { left: "17%", size: 10, delay: 0.95, startY: "42vh", fall: 1.4, drift: -5 },
+  { left: "26%", size: 17, delay: 0.75, startY: "33vh", fall: 1.5, drift:  8 },
+  { left: "35%", size: 12, delay: 1.05, startY: "47vh", fall: 1.4, drift: -7 },
+  { left: "43%", size: 9,  delay: 0.85, startY: "38vh", fall: 1.5, drift:  5 },
+  { left: "52%", size: 16, delay: 0.65, startY: "28vh", fall: 1.6, drift: -8 },
+  { left: "60%", size: 11, delay: 1.10, startY: "49vh", fall: 1.4, drift:  6 },
+  { left: "68%", size: 18, delay: 0.80, startY: "35vh", fall: 1.5, drift: -9 },
+  { left: "76%", size: 12, delay: 1.00, startY: "44vh", fall: 1.4, drift:  7 },
+  { left: "84%", size: 15, delay: 0.78, startY: "34vh", fall: 1.5, drift: -6 },
+  { left: "92%", size: 10, delay: 1.02, startY: "45vh", fall: 1.4, drift:  5 },
 ];
 
-function Droplet({ d }: { d: Drop }) {
+function Droplet({ d, idx }: { d: Drop; idx: number }) {
   const w = d.size;
   const h = d.size * 1.32;
-  const trailH = d.size * 2.6;
+  const gradId = `drop-grad-${idx}`;
 
   return (
     <motion.div
       className="absolute top-0"
-      style={{ left: d.left, width: w, transform: `translateX(-50%)` }}
-      initial={{ y: "-20vh", x: 0, opacity: 0 }}
+      style={{ left: d.left, width: w, transform: "translateX(-50%)" }}
+      initial={{ y: d.startY, x: 0, opacity: 0, scale: 0.4 }}
       animate={{
         y: "115vh",
-        x: [0, d.wobble, -d.wobble * 0.6, 0],
+        x: d.drift,
         opacity: [0, 1, 1, 0.85, 0],
+        scale: 1,
       }}
       transition={{
         duration: d.fall,
         delay: d.delay,
-        ease: [0.42, 0, 0.6, 1],
+        ease: [0.4, 0, 0.65, 1],
         x: { duration: d.fall, delay: d.delay, ease: "easeInOut" },
         opacity: {
           duration: d.fall,
           delay: d.delay,
-          times: [0, 0.12, 0.75, 0.9, 1],
+          times: [0, 0.12, 0.7, 0.88, 1],
         },
+        scale: { duration: 0.25, delay: d.delay, ease: "easeOut" },
       }}
     >
-      {/* Soft trail behind */}
-      <div
-        className="absolute left-1/2"
-        style={{
-          top: -trailH,
-          width: w * 0.55,
-          height: trailH,
-          transform: "translateX(-50%)",
-          background:
-            "linear-gradient(to bottom, rgba(103,232,249,0) 0%, rgba(103,232,249,0.35) 70%, rgba(186,247,255,0.65) 100%)",
-          filter: "blur(5px)",
-          borderRadius: "50%",
-        }}
-      />
-
-      {/* Teardrop body */}
       <svg
         width={w}
         height={h}
@@ -79,32 +67,19 @@ function Droplet({ d }: { d: Drop }) {
         style={{
           display: "block",
           filter:
-            "drop-shadow(0 0 8px rgba(103,232,249,0.95)) drop-shadow(0 0 18px rgba(6,182,212,0.7)) drop-shadow(0 0 32px rgba(6,182,212,0.35))",
+            "drop-shadow(0 0 6px rgba(103,232,249,0.95)) drop-shadow(0 0 14px rgba(6,182,212,0.7))",
         }}
       >
         <defs>
-          <radialGradient
-            id={`drop-grad-${d.left.replace("%", "")}-${d.size}`}
-            cx="38%"
-            cy="62%"
-            r="62%"
-          >
+          <radialGradient id={gradId} cx="38%" cy="62%" r="62%">
             <stop offset="0%" stopColor="rgba(220,250,255,0.95)" />
-            <stop offset="40%" stopColor="rgba(103,232,249,0.9)" />
+            <stop offset="45%" stopColor="rgba(103,232,249,0.9)" />
             <stop offset="100%" stopColor="rgba(6,182,212,0.85)" />
           </radialGradient>
         </defs>
         <path
           d="M12 2 C 12 2, 3 14, 3 21 C 3 27, 7 31, 12 31 C 17 31, 21 27, 21 21 C 21 14, 12 2, 12 2 Z"
-          fill={`url(#drop-grad-${d.left.replace("%", "")}-${d.size})`}
-        />
-        {/* Glossy highlight */}
-        <ellipse
-          cx="8.5"
-          cy="22"
-          rx="2.4"
-          ry="3.8"
-          fill="rgba(255,255,255,0.75)"
+          fill={`url(#${gradId})`}
         />
       </svg>
     </motion.div>
@@ -155,7 +130,7 @@ export default function WaterWave() {
     <AnimatePresence>
       {show && (
         <motion.div
-          key="water-drops"
+          key="water-wave"
           aria-hidden
           className="fixed inset-0 pointer-events-none z-40 overflow-hidden"
           style={{ mixBlendMode: "screen" }}
@@ -164,14 +139,14 @@ export default function WaterWave() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4 }}
         >
-          {/* Source glow — turquoise haze raining down from above */}
+          {/* Turquoise haze bovenaan — de bron */}
           <motion.div
             className="absolute top-0 left-0 right-0"
             style={{
-              height: "55vh",
+              height: "45vh",
               background:
-                "radial-gradient(ellipse 70% 100% at 50% 0%, rgba(103,232,249,0.45) 0%, rgba(6,182,212,0.22) 35%, rgba(6,182,212,0) 70%)",
-              filter: "blur(10px)",
+                "radial-gradient(ellipse 65% 100% at 50% 0%, rgba(103,232,249,0.4) 0%, rgba(6,182,212,0.2) 35%, rgba(6,182,212,0) 70%)",
+              filter: "blur(8px)",
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: [0, 1, 1, 0] }}
@@ -182,9 +157,69 @@ export default function WaterWave() {
             }}
           />
 
-          {/* Falling droplets */}
+          {/* De golf zelf — een gebogen waterband die van boven naar beneden rolt */}
+          <motion.div
+            className="absolute left-0 right-0"
+            style={{ top: 0 }}
+            initial={{ y: "-35vh" }}
+            animate={{ y: "120vh" }}
+            transition={{ duration: 2.4, ease: [0.42, 0, 0.55, 1] }}
+          >
+            <svg
+              width="100%"
+              height="220"
+              viewBox="0 0 1600 220"
+              preserveAspectRatio="none"
+              style={{
+                display: "block",
+                filter:
+                  "drop-shadow(0 0 28px rgba(103,232,249,0.75)) drop-shadow(0 0 60px rgba(6,182,212,0.55)) drop-shadow(0 0 110px rgba(6,182,212,0.3))",
+              }}
+            >
+              <defs>
+                <linearGradient id="wave-body" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="rgba(186,247,255,0.0)" />
+                  <stop offset="15%" stopColor="rgba(186,247,255,0.55)" />
+                  <stop offset="50%" stopColor="rgba(103,232,249,0.65)" />
+                  <stop offset="100%" stopColor="rgba(6,182,212,0.7)" />
+                </linearGradient>
+                <linearGradient id="wave-crest" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="rgba(255,255,255,0.85)" />
+                  <stop offset="100%" stopColor="rgba(186,247,255,0)" />
+                </linearGradient>
+              </defs>
+
+              {/* Hoofd-waterlichaam met golvende boven- en onderkant */}
+              <path
+                d="M 0 40
+                   C 200 5  400 70  600 35
+                   C 800 0  1000 65 1200 30
+                   C 1400 0  1600 60 1600 35
+                   L 1600 165
+                   C 1400 215 1200 140 1000 180
+                   C 800 215  600 135 400 175
+                   C 200 215  0 140  0 175
+                   Z"
+                fill="url(#wave-body)"
+              />
+
+              {/* Schitterende crest-lijn bovenop */}
+              <path
+                d="M 0 40
+                   C 200 5  400 70  600 35
+                   C 800 0  1000 65 1200 30
+                   C 1400 0  1600 60 1600 35"
+                fill="none"
+                stroke="url(#wave-crest)"
+                strokeWidth="2"
+                opacity="0.9"
+              />
+            </svg>
+          </motion.div>
+
+          {/* Druppels die loslaten naarmate de golf voorbij rolt */}
           {drops.map((d, i) => (
-            <Droplet key={i} d={d} />
+            <Droplet key={i} d={d} idx={i} />
           ))}
         </motion.div>
       )}
