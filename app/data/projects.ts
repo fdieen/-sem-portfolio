@@ -13,7 +13,25 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    name: "BeletteringBestellen.nl",
+    name: "Hoek Las- en Montagebedrijf",
+    url: "https://hoekmontagebedrijf.nl",
+    type: "Website",
+    screenshot: "/hoek-drone-still.jpg",
+    description: "Een complete bedrijfswebsite voor Hoek Las- en Montagebedrijf B.V. uit Rotterdam, gespecialiseerd in verbouwingen, dakkapellen en las- en constructiewerk. Inclusief projecten-galerij, contactformulier, privacyverklaring en algemene voorwaarden. Volledig door mij opgezet en opgeleverd.",
+    tags: [],
+    year: "2026",
+  },
+  {
+    name: "Donatues",
+    url: "https://donatues.com",
+    type: "Website",
+    screenshot: "https://api.microlink.io/?url=https://donatues.com&screenshot=true&meta=false&embed=screenshot.url&viewport.width=1920&viewport.height=900&waitUntil=networkidle0",
+    description: "De volledige website voor Stichting Donatues, een community gericht op studenten. Van opzet tot oplevering volledig door mij gebouwd. De website laat bezoekers zien wat Donatues precies inhoudt en biedt studenten de mogelijkheid om zich aan te sluiten bij de community.",
+    tags: [],
+    year: "2026",
+  },
+  {
+    name: "Belettering Bestellen",
     url: "https://beletteringbestellen.nl",
     type: "Webshop",
     featured: true,
@@ -24,25 +42,7 @@ export const projects: Project[] = [
     year: "2026",
   },
   {
-    name: "Donatues",
-    url: "https://donatues.com",
-    type: "Website",
-    screenshot: "https://api.microlink.io/?url=https://donatues.com&screenshot=true&meta=false&embed=screenshot.url",
-    description: "De volledige website voor Stichting Donatues, een community gericht op studenten. Van opzet tot oplevering volledig door mij gebouwd. De website laat bezoekers zien wat Donatues precies inhoudt en biedt studenten de mogelijkheid om zich aan te sluiten bij de community.",
-    tags: [],
-    year: "2026",
-  },
-  {
-    name: "Hoek Las en Montagebedrijf",
-    url: "",
-    type: "Website",
-    description: "",
-    tags: [],
-    year: "2026",
-    comingSoon: true,
-  },
-  {
-    name: "Future Trust and Investment",
+    name: "Stem Barometer",
     url: "",
     type: "Website",
     description: "",

@@ -119,18 +119,24 @@ function ProjectCard({
 export default function Projects() {
   return (
     <section id="projecten" className="relative py-28 px-6 overflow-hidden">
-      {/* Blobs */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-[#4f46e5]/10 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[350px] h-[350px] bg-[#7c3aed]/8 blur-[100px] rounded-full pointer-events-none" />
+      {/* Blobs — bewust naar binnen geschoven zodat blur niet door overflow-hidden wordt afgekapt */}
+      <div className="absolute top-32 left-1/2 -translate-x-1/2 w-[800px] h-[380px] bg-[#4f46e5]/20 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-60 left-0 w-[450px] h-[450px] bg-[#6ee7f7]/10 blur-[130px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-20 right-0 w-[500px] h-[500px] bg-[#7c3aed]/15 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/3 left-1/4 w-[400px] h-[400px] bg-[#6ee7f7]/8 blur-[140px] rounded-full pointer-events-none" />
       <div className="relative z-10 max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-16"
+          className="mb-16 relative"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold tracking-tight text-[#6ee7f7]">
+          <div className="absolute -inset-x-8 -inset-y-12 bg-[radial-gradient(ellipse_at_left,_rgba(110,231,247,0.18),_transparent_60%)] pointer-events-none" />
+          <h2
+            className="relative text-4xl lg:text-5xl font-bold tracking-tight text-[#6ee7f7]"
+            style={{ textShadow: "0 0 30px rgba(110,231,247,0.45), 0 0 60px rgba(110,231,247,0.2)" }}
+          >
             Mijn werk
           </h2>
           <p className="text-white/60 mt-4 max-w-xl">

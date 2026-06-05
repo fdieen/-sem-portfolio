@@ -5,8 +5,12 @@ import RocketLaunch from "./RocketLaunch";
 
 export default function Process() {
   return (
-    <section id="werkproces" className="relative py-28 px-6 overflow-hidden border-t border-white/5">
-      <div className="absolute inset-0 pointer-events-none">
+    <section id="werkproces" className="relative py-28 px-6 border-t border-white/5">
+      {/* Ambient halo — allowed to bleed softly across section borders so the
+          glow fades naturally into the neighbouring sections. Pinned at
+          zIndex 11 so it sits above neighbouring sections' z-10 content
+          (e.g. the Projects copy) which would otherwise cover the bleed. */}
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 11 }}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#06b6d4]/4 blur-[140px]" />
       </div>
 

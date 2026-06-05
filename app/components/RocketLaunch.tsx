@@ -1,12 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 export default function RocketLaunch() {
   const router = useRouter();
-  const [state, setState] = useState<"idle" | "launching" | "gone">("idle");
+  const [state, setState] = useState<"idle" | "launching" | "gone" | "returning">("idle");
+
+  // If the user just came back from /werkproces, fly the rocket back down
+  // onto the launch pad instead of having it suddenly appear at rest.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (sessionStorage.getItem("rocketReturning") === "true") {
+      sessionStorage.removeItem("rocketReturning");
+      setState("returning");
+    }
+  }, []);
 
   const handleLaunch = () => {
     if (state !== "idle") return;
@@ -19,21 +29,33 @@ export default function RocketLaunch() {
 
   return (
     <div className="flex flex-col items-center gap-10">
-      {/* Rocket */}
+      {/* Rocket — lifts above every other section (incl. the fixed navbar at
+          z-50) while launching or returning, so it visibly flies up/down over
+          the page instead of disappearing behind whatever's above the
+          Werkproces section. */}
       <motion.div
         className="relative"
+        style={{ zIndex: state === "launching" || state === "returning" ? 60 : "auto" }}
+        initial={state === "returning" ? { y: -700, opacity: 0 } : false}
         animate={
           state === "idle"
-            ? { y: [0, -10, 0] }
+            ? { y: [0, -10, 0], opacity: 1 }
             : state === "launching"
             ? { y: -700, opacity: 0 }
+            : state === "returning"
+            ? { y: 0, opacity: 1 }
             : {}
         }
         transition={
           state === "idle"
             ? { duration: 2.8, repeat: Infinity, ease: "easeInOut" }
+            : state === "returning"
+            ? { duration: 1.3, ease: [0.2, 0.0, 0.25, 1] }
             : { duration: 1.05, ease: [0.4, 0.0, 0.2, 1] }
         }
+        onAnimationComplete={() => {
+          if (state === "returning") setState("idle");
+        }}
       >
         <motion.div
           style={{ transformOrigin: "50% 90%" }}
@@ -292,7 +314,11 @@ export default function RocketLaunch() {
           <span className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-500 skew-x-12 pointer-events-none" />
         )}
         <span className="relative z-10">
-          {state === "idle" ? "Launch" : "Launching..."}
+          {state === "idle"
+            ? "Launch"
+            : state === "returning"
+            ? "Landing..."
+            : "Launching..."}
         </span>
       </motion.button>
 

@@ -46,9 +46,23 @@ const socials = [
   },
 ];
 
-export default function Footer() {
+type FooterProps = {
+  /** Renders bg + border transparent — used when a wrapper provides its own background. */
+  transparent?: boolean;
+  /** Hides the top border so the footer flows seamlessly into the section above it (e.g. SeoFooter on homepage). */
+  seamlessTop?: boolean;
+};
+
+export default function Footer({ transparent = false, seamlessTop = false }: FooterProps = {}) {
   return (
-    <footer className="py-10 px-6 border-t" style={{ background: "#05060f", borderColor: "rgba(255,255,255,0.06)" }}>
+    <footer
+      className="py-10 px-6 border-t"
+      style={{
+        background: transparent ? "transparent" : "#05060f",
+        borderColor:
+          transparent || seamlessTop ? "transparent" : "rgba(255,255,255,0.06)",
+      }}
+    >
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
 
         {/* Logo + copyright links */}

@@ -1,10 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
+import QuoteRequestModal from "./QuoteRequestModal";
 
 export default function Contact() {
+  const [showQuote, setShowQuote] = useState(false);
+
   return (
-    <section id="contact" className="relative py-28 px-6 overflow-hidden"
+    <section id="contact" className="relative pt-16 pb-28 px-6 overflow-hidden"
       style={{ background: "linear-gradient(to bottom, #0a0f28, #05060f)" }}
     >
       {/* Cyaan glow */}
@@ -14,7 +18,7 @@ export default function Contact() {
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="max-w-2xl lg:max-w-4xl mx-auto text-center">
 
-          {/* Mail icoon */}
+          {/* Twee mensen — communicatie/samen */}
           <motion.div
             animate={{
               rotateY: [0, 15, 0, -15, 0],
@@ -32,9 +36,13 @@ export default function Contact() {
                 boxShadow: "0 0 50px rgba(110,231,247,0.18), 0 20px 40px rgba(0,0,0,0.3)",
               }}
             >
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#6ee7f7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6ee7f7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                {/* Linker persoon */}
+                <circle cx="6" cy="9" r="3" />
+                <path d="M2 20v-0.5a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3V20" />
+                {/* Rechter persoon */}
+                <circle cx="18" cy="9" r="3" />
+                <path d="M14 20v-0.5a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3V20" />
               </svg>
             </div>
           </motion.div>
@@ -52,49 +60,135 @@ export default function Contact() {
               Laten we praten.
             </h2>
             <p className="text-white/40 text-lg leading-relaxed mb-12">
-              Wilt u een website of webshop laten maken? Stuur mij een mail,
-              ik reageer snel en stuur u een vrijblijvende offerte.
+              Wilt u een website of webshop laten maken? Vraag vrijblijvend
+              een offerte aan. Ik denk graag met u mee en kom met een
+              eerlijk voorstel op maat.
             </p>
           </motion.div>
 
-          {/* Mail — primair */}
+          {/* Offerte (primair) + mail (subtiel alternatief) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex flex-col items-center justify-center gap-3"
+            className="flex flex-col items-center gap-5"
           >
-            <a
-              href="mailto:semvdwebdesign@gmail.com"
-              className="group flex items-center gap-4 rounded-2xl px-8 lg:px-14 py-5 lg:py-6 transition-all duration-200 w-full sm:w-auto"
+            <div className="relative w-full sm:w-auto">
+              {/* Pulsing aura behind — lives outside the button so blur isn't clipped */}
+              <motion.span
+                aria-hidden
+                className="absolute -inset-1 rounded-[1.7rem] pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #6ee7f7, #a78bfa 50%, #f0abfc)",
+                  filter: "blur(16px)",
+                  opacity: 0.16,
+                }}
+                animate={{ opacity: [0.12, 0.22, 0.12], scale: [1, 1.025, 1] }}
+                transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+              />
+            <motion.button
+              type="button"
+              onClick={() => setShowQuote(true)}
+              className="group relative flex items-center gap-5 rounded-2xl px-10 lg:px-14 py-6 lg:py-7 w-full sm:w-auto overflow-hidden text-left cursor-pointer"
               style={{
-                background: "linear-gradient(135deg, rgba(110,231,247,0.12) 0%, rgba(99,102,241,0.08) 100%)",
-                border: "1px solid rgba(110,231,247,0.3)",
-                boxShadow: "0 0 32px rgba(110,231,247,0.15)",
+                background:
+                  "linear-gradient(135deg, #6ee7f7 0%, #a78bfa 50%, #f0abfc 100%)",
+                boxShadow:
+                  "0 0 0 1px rgba(255,255,255,0.16) inset, 0 1px 0 rgba(255,255,255,0.4) inset, 0 8px 22px rgba(167,139,250,0.16), 0 0 30px rgba(110,231,247,0.08)",
               }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(110,231,247,0.6)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 0 48px rgba(110,231,247,0.28)";
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(110,231,247,0.3)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 0 32px rgba(110,231,247,0.15)";
-              }}
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 320, damping: 18 }}
             >
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-[#6ee7f7]"
-                style={{ background: "rgba(110,231,247,0.12)" }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="4" width="20" height="16" rx="2"/>
-                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              {/* Diagonal shimmer sweep */}
+              <motion.span
+                aria-hidden
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(110deg, transparent 35%, rgba(255,255,255,0.3) 50%, transparent 65%)",
+                  mixBlendMode: "overlay",
+                }}
+                animate={{ x: ["-120%", "120%"] }}
+                transition={{
+                  duration: 2.6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  repeatDelay: 2.4,
+                }}
+              />
+
+              {/* Top-edge highlight */}
+              <span
+                aria-hidden
+                className="absolute inset-x-6 top-0 h-px pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(to right, transparent, rgba(255,255,255,0.85), transparent)",
+                }}
+              />
+
+              <div
+                className="relative w-14 h-14 lg:w-16 lg:h-16 rounded-xl flex items-center justify-center shrink-0 text-[#1a0f3d]"
+                style={{
+                  background: "rgba(255,255,255,0.92)",
+                  boxShadow:
+                    "0 6px 16px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.9)",
+                }}
+              >
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="9" y1="15" x2="15" y2="15" />
+                  <line x1="9" y1="11" x2="15" y2="11" />
                 </svg>
               </div>
-              <div className="text-left">
-                <p className="text-xs text-white/40 mb-0.5">Stuur mij een mail</p>
-                <p className="text-base lg:text-lg font-semibold text-white group-hover:text-[#6ee7f7] transition-colors">
-                  semvdwebdesign@gmail.com
+              <div className="relative text-left">
+                <p className="text-xs lg:text-sm uppercase tracking-[0.2em] text-white/95 font-semibold mb-1 drop-shadow-[0_1px_2px_rgba(60,20,90,0.4)]">
+                  Vrijblijvend &amp; persoonlijk
+                </p>
+                <p className="text-lg lg:text-2xl font-bold text-white flex items-center gap-2.5 drop-shadow-[0_1px_3px_rgba(60,20,90,0.45)]">
+                  Offerte aanvragen
+                  <motion.span
+                    aria-hidden
+                    className="inline-block"
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    →
+                  </motion.span>
                 </p>
               </div>
+            </motion.button>
+            </div>
+
+            {/* Subtle mail alternative below the primary CTA */}
+            <a
+              href="mailto:semvdwebdesign@gmail.com"
+              className="group inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 text-sm transition-all duration-200"
+              style={{
+                background: "rgba(110,231,247,0.05)",
+                border: "1px solid rgba(110,231,247,0.18)",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(110,231,247,0.45)";
+                (e.currentTarget as HTMLElement).style.background = "rgba(110,231,247,0.09)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(110,231,247,0.18)";
+                (e.currentTarget as HTMLElement).style.background = "rgba(110,231,247,0.05)";
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-[#6ee7f7]">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+              <span className="text-white/50">Of mail direct</span>
+              <span className="text-white/85 font-medium group-hover:text-[#6ee7f7] transition-colors">
+                semvdwebdesign@gmail.com
+              </span>
             </a>
           </motion.div>
 
@@ -150,6 +244,8 @@ export default function Contact() {
 
         </div>
       </div>
+
+      <QuoteRequestModal open={showQuote} onClose={() => setShowQuote(false)} />
     </section>
   );
 }

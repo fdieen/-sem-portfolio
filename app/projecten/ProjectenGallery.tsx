@@ -22,7 +22,7 @@ function ActiveProjectCard({ project, index }: { project: (typeof projects)[0]; 
     >
       {/* Screenshot */}
       <a href={project.url} target="_blank" rel="noopener noreferrer" className="block shrink-0">
-        <div className="relative w-full h-[220px] bg-[#111] overflow-hidden">
+        <div className="relative w-full h-[400px] bg-[#111] overflow-hidden">
           {/* Browser chrome */}
           <div className="absolute top-0 left-0 right-0 bg-[#1a1a1a] z-10 flex items-center gap-2 px-3 py-2 border-b border-white/5">
             <div className="flex gap-1">
@@ -135,7 +135,7 @@ export default function ProjectenGallery() {
 
         {/* Grid */}
         <div className="grid md:grid-cols-2 gap-8 auto-rows-fr">
-          {projects.map((project, i) => (
+          {[...projects].sort((a, b) => Number(!!a.comingSoon) - Number(!!b.comingSoon)).map((project, i) => (
             project.comingSoon ? (
               <motion.div
                 key={project.name}
@@ -145,13 +145,83 @@ export default function ProjectenGallery() {
                 className="flex flex-col bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden cursor-default h-full"
               >
                 {/* Placeholder preview */}
-                <div className="relative w-full h-[220px] bg-[#0d0d0d] overflow-hidden flex items-center justify-center shrink-0">
+                <div className="relative w-full h-[400px] bg-[#0d0d0d] overflow-hidden flex flex-col items-center justify-center gap-5 shrink-0">
                   <div className="absolute inset-0 opacity-[0.03]"
                     style={{
                       backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
                       backgroundSize: "40px 40px",
                     }}
                   />
+                  <motion.svg
+                    width="72"
+                    height="72"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#6ee7f7"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ filter: "drop-shadow(0 0 14px rgba(110,231,247,0.35))", transformOrigin: "50% 50%" }}
+                    initial={{ rotate: 0 }}
+                    animate={{ rotate: [0, 0, 180, 180, 360] }}
+                    transition={{
+                      duration: 18,
+                      times: [0, 0.444, 0.5, 0.944, 1],
+                      ease: ["linear", "easeInOut", "linear", "easeInOut"],
+                      repeat: Infinity,
+                    }}
+                  >
+                    <defs>
+                      <clipPath id="hourglass-top-sand">
+                        <motion.rect
+                          x="6"
+                          width="12"
+                          height="10"
+                          initial={{ y: 2 }}
+                          animate={{ y: [2, 12, 12, 2, 2] }}
+                          transition={{
+                            duration: 18,
+                            times: [0, 0.444, 0.5, 0.944, 1],
+                            ease: "linear",
+                            repeat: Infinity,
+                          }}
+                        />
+                      </clipPath>
+                      <clipPath id="hourglass-bottom-sand">
+                        <motion.rect
+                          x="6"
+                          width="12"
+                          height="10"
+                          initial={{ y: 22 }}
+                          animate={{ y: [22, 12, 12, 2, 2] }}
+                          transition={{
+                            duration: 18,
+                            times: [0, 0.444, 0.5, 0.944, 1],
+                            ease: "linear",
+                            repeat: Infinity,
+                          }}
+                        />
+                      </clipPath>
+                    </defs>
+                    <path d="M7 2 V6.172 A2 2 0 0 0 7.586 7.586 L12 12 L16.414 7.586 A2 2 0 0 0 17 6.172 V2 Z" fill="#6ee7f7" fillOpacity="0.55" stroke="none" clipPath="url(#hourglass-top-sand)" />
+                    <path d="M7 22 V17.828 A2 2 0 0 1 7.586 16.414 L12 12 L16.414 16.414 A2 2 0 0 1 17 17.828 V22 Z" fill="#6ee7f7" fillOpacity="0.55" stroke="none" clipPath="url(#hourglass-bottom-sand)" />
+                    <motion.line
+                      x1="12" x2="12" y1="11.6" y2="13.4"
+                      stroke="#6ee7f7" strokeWidth="0.6" strokeOpacity="0.9"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: [1, 1, 0, 0, 1, 1, 0, 0] }}
+                      transition={{
+                        duration: 18,
+                        times: [0, 0.43, 0.456, 0.5, 0.51, 0.93, 0.956, 1],
+                        ease: "linear",
+                        repeat: Infinity,
+                      }}
+                    />
+                    <path d="M5 22h14" />
+                    <path d="M5 2h14" />
+                    <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
+                    <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
+                  </motion.svg>
                   <span className="text-xs font-semibold tracking-widest uppercase px-3 py-1.5 rounded-full border"
                     style={{ color: "#6ee7f7", borderColor: "rgba(110,231,247,0.2)", background: "rgba(110,231,247,0.05)" }}
                   >
