@@ -3,8 +3,113 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const DURATION_MS = 2600;
-const COOLDOWN_MS = 600;
+const DURATION_MS = 3200;
+const COOLDOWN_MS = 800;
+
+type Drop = {
+  left: string;
+  size: number;
+  delay: number;
+  fall: number;
+  wobble: number;
+};
+
+const drops: Drop[] = [
+  { left: "6%",  size: 22, delay: 0.05, fall: 1.7, wobble: -8 },
+  { left: "14%", size: 14, delay: 0.45, fall: 2.0, wobble: 6 },
+  { left: "22%", size: 30, delay: 0.20, fall: 1.5, wobble: -10 },
+  { left: "31%", size: 18, delay: 0.65, fall: 1.9, wobble: 5 },
+  { left: "40%", size: 26, delay: 0.10, fall: 1.6, wobble: -7 },
+  { left: "48%", size: 16, delay: 0.55, fall: 2.0, wobble: 9 },
+  { left: "56%", size: 34, delay: 0.30, fall: 1.55, wobble: -6 },
+  { left: "64%", size: 20, delay: 0.0, fall: 1.85, wobble: 7 },
+  { left: "73%", size: 24, delay: 0.50, fall: 1.7, wobble: -9 },
+  { left: "81%", size: 16, delay: 0.15, fall: 2.0, wobble: 5 },
+  { left: "89%", size: 28, delay: 0.40, fall: 1.65, wobble: -8 },
+  { left: "96%", size: 14, delay: 0.25, fall: 1.95, wobble: 6 },
+];
+
+function Droplet({ d }: { d: Drop }) {
+  const w = d.size;
+  const h = d.size * 1.32;
+  const trailH = d.size * 2.6;
+
+  return (
+    <motion.div
+      className="absolute top-0"
+      style={{ left: d.left, width: w, transform: `translateX(-50%)` }}
+      initial={{ y: "-20vh", x: 0, opacity: 0 }}
+      animate={{
+        y: "115vh",
+        x: [0, d.wobble, -d.wobble * 0.6, 0],
+        opacity: [0, 1, 1, 0.85, 0],
+      }}
+      transition={{
+        duration: d.fall,
+        delay: d.delay,
+        ease: [0.42, 0, 0.6, 1],
+        x: { duration: d.fall, delay: d.delay, ease: "easeInOut" },
+        opacity: {
+          duration: d.fall,
+          delay: d.delay,
+          times: [0, 0.12, 0.75, 0.9, 1],
+        },
+      }}
+    >
+      {/* Soft trail behind */}
+      <div
+        className="absolute left-1/2"
+        style={{
+          top: -trailH,
+          width: w * 0.55,
+          height: trailH,
+          transform: "translateX(-50%)",
+          background:
+            "linear-gradient(to bottom, rgba(103,232,249,0) 0%, rgba(103,232,249,0.35) 70%, rgba(186,247,255,0.65) 100%)",
+          filter: "blur(5px)",
+          borderRadius: "50%",
+        }}
+      />
+
+      {/* Teardrop body */}
+      <svg
+        width={w}
+        height={h}
+        viewBox="0 0 24 32"
+        style={{
+          display: "block",
+          filter:
+            "drop-shadow(0 0 8px rgba(103,232,249,0.95)) drop-shadow(0 0 18px rgba(6,182,212,0.7)) drop-shadow(0 0 32px rgba(6,182,212,0.35))",
+        }}
+      >
+        <defs>
+          <radialGradient
+            id={`drop-grad-${d.left.replace("%", "")}-${d.size}`}
+            cx="38%"
+            cy="62%"
+            r="62%"
+          >
+            <stop offset="0%" stopColor="rgba(220,250,255,0.95)" />
+            <stop offset="40%" stopColor="rgba(103,232,249,0.9)" />
+            <stop offset="100%" stopColor="rgba(6,182,212,0.85)" />
+          </radialGradient>
+        </defs>
+        <path
+          d="M12 2 C 12 2, 3 14, 3 21 C 3 27, 7 31, 12 31 C 17 31, 21 27, 21 21 C 21 14, 12 2, 12 2 Z"
+          fill={`url(#drop-grad-${d.left.replace("%", "")}-${d.size})`}
+        />
+        {/* Glossy highlight */}
+        <ellipse
+          cx="8.5"
+          cy="22"
+          rx="2.4"
+          ry="3.8"
+          fill="rgba(255,255,255,0.75)"
+        />
+      </svg>
+    </motion.div>
+  );
+}
 
 export default function WaterWave() {
   const [show, setShow] = useState(false);
@@ -50,96 +155,37 @@ export default function WaterWave() {
     <AnimatePresence>
       {show && (
         <motion.div
-          key="water-wave"
+          key="water-drops"
           aria-hidden
           className="fixed inset-0 pointer-events-none z-40 overflow-hidden"
           style={{ mixBlendMode: "screen" }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.45 }}
+          transition={{ duration: 0.4 }}
         >
-          {/* Diffuse glowing current — the body of water */}
+          {/* Source glow — turquoise haze raining down from above */}
           <motion.div
-            className="absolute"
+            className="absolute top-0 left-0 right-0"
             style={{
-              top: "28%",
-              height: "44%",
-              width: "70%",
-              left: 0,
+              height: "55vh",
               background:
-                "radial-gradient(ellipse at center, rgba(103,232,249,0.55) 0%, rgba(6,182,212,0.32) 35%, rgba(6,182,212,0) 70%)",
-              filter: "blur(24px)",
+                "radial-gradient(ellipse 70% 100% at 50% 0%, rgba(103,232,249,0.45) 0%, rgba(6,182,212,0.22) 35%, rgba(6,182,212,0) 70%)",
+              filter: "blur(10px)",
             }}
-            initial={{ x: "-110%" }}
-            animate={{ x: "160%" }}
-            transition={{ duration: 2.6, ease: [0.5, 0, 0.5, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 1, 1, 0] }}
+            transition={{
+              duration: DURATION_MS / 1000,
+              times: [0, 0.12, 0.7, 1],
+              ease: "easeInOut",
+            }}
           />
 
-          {/* Main rolling wave */}
-          <motion.svg
-            className="absolute left-0"
-            style={{
-              top: "42%",
-              width: "220%",
-              height: "200px",
-              filter: "drop-shadow(0 0 22px rgba(103,232,249,0.75))",
-            }}
-            viewBox="0 0 1600 200"
-            preserveAspectRatio="none"
-            initial={{ x: "-110%" }}
-            animate={{ x: "110%" }}
-            transition={{ duration: 2.4, ease: [0.55, 0, 0.45, 1] }}
-          >
-            <path
-              d="M0,100 C200,40 400,160 600,100 C800,40 1000,160 1200,100 C1400,40 1600,160 1600,100 L1600,200 L0,200 Z"
-              fill="rgba(103,232,249,0.28)"
-            />
-          </motion.svg>
-
-          {/* Deeper undercurrent — slower, offset */}
-          <motion.svg
-            className="absolute left-0"
-            style={{
-              top: "54%",
-              width: "220%",
-              height: "220px",
-              filter: "drop-shadow(0 0 30px rgba(6,182,212,0.55))",
-            }}
-            viewBox="0 0 1600 220"
-            preserveAspectRatio="none"
-            initial={{ x: "-115%" }}
-            animate={{ x: "100%" }}
-            transition={{ duration: 2.7, ease: [0.55, 0, 0.45, 1], delay: 0.12 }}
-          >
-            <path
-              d="M0,110 C250,50 500,180 800,110 C1100,50 1350,180 1600,110 L1600,220 L0,220 Z"
-              fill="rgba(6,182,212,0.22)"
-            />
-          </motion.svg>
-
-          {/* Top highlight — the glistening surface line */}
-          <motion.svg
-            className="absolute left-0"
-            style={{
-              top: "46%",
-              width: "220%",
-              height: "60px",
-              filter: "drop-shadow(0 0 14px rgba(186,247,255,0.9))",
-            }}
-            viewBox="0 0 1600 60"
-            preserveAspectRatio="none"
-            initial={{ x: "-110%" }}
-            animate={{ x: "110%" }}
-            transition={{ duration: 2.4, ease: [0.55, 0, 0.45, 1], delay: 0.05 }}
-          >
-            <path
-              d="M0,30 C300,8 600,52 900,30 C1200,8 1500,52 1600,30"
-              fill="none"
-              stroke="rgba(186,247,255,0.85)"
-              strokeWidth="1.5"
-            />
-          </motion.svg>
+          {/* Falling droplets */}
+          {drops.map((d, i) => (
+            <Droplet key={i} d={d} />
+          ))}
         </motion.div>
       )}
     </AnimatePresence>
