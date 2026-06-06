@@ -2,8 +2,10 @@
 
 import { motion } from "framer-motion";
 import RocketLaunch from "./RocketLaunch";
+import { useDeviceCapabilities } from "../hooks/useDeviceCapabilities";
 
 export default function Process() {
+  const { isCompact } = useDeviceCapabilities();
   return (
     <section id="werkproces" className="relative py-28 px-6 border-t border-white/5">
       {/* Ambient halo — allowed to bleed softly across section borders so the
@@ -36,7 +38,17 @@ export default function Process() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <RocketLaunch />
+          {isCompact ? (
+            <a
+              href="/werkproces"
+              className="inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-sm font-semibold bg-[#6ee7f7] text-[#080808] hover:bg-white transition-colors"
+            >
+              Bekijk het werkproces
+              <span aria-hidden>→</span>
+            </a>
+          ) : (
+            <RocketLaunch />
+          )}
         </motion.div>
       </div>
     </section>

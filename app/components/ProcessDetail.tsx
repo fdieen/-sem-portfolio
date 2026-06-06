@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import IslandScene from "./IslandScene";
 import LiquidGlass from "./LiquidGlass";
 import RocketLanding, { RocketPhase } from "./RocketLanding";
+import { useDeviceCapabilities } from "../hooks/useDeviceCapabilities";
 
 const steps = [
   {
@@ -104,6 +105,7 @@ function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
 
 export default function ProcessDetail() {
   const router = useRouter();
+  const { isCompact } = useDeviceCapabilities();
   const [phase, setPhase] = useState<RocketPhase>("descending");
   const [flashShore, setFlashShore] = useState(false);
   const [rocketBlur, setRocketBlur] = useState(false);
@@ -122,6 +124,13 @@ export default function ProcessDetail() {
     };
   }, []);
 
+  useEffect(() => {
+    /* On compact viewports there's no RocketLanding to advance the phase
+       to "idle", which would otherwise block the back link. Fast-forward
+       so the Terug interaction works immediately. */
+    if (isCompact && phase === "descending") setPhase("idle");
+  }, [isCompact, phase]);
+
   const handleBack = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (phase !== "idle") return;
@@ -137,39 +146,54 @@ export default function ProcessDetail() {
 
   return (
     <section className="relative min-h-screen py-32 px-6 overflow-hidden">
-      {/* Island background — slightly blurred so it recedes behind the timeline */}
-      <div className="absolute inset-0" style={{ filter: "blur(2px)" }}>
-        <IslandScene landingFlash={flashShore} landingTopVh={60} />
-      </div>
+      {/* Heavy 3D scenery only on devices that can run it without sweating.
+          Mobile/compact viewports get a simple dark gradient instead so the
+          cards still pop without the cost of two extra WebGL canvases. */}
+      {!isCompact ? (
+        <>
+          {/* Island background — slightly blurred so it recedes behind the timeline */}
+          <div className="absolute inset-0" style={{ filter: "blur(2px)" }}>
+            <IslandScene landingFlash={flashShore} landingTopVh={60} />
+          </div>
 
-      {/* Warm golden glow blooming from the timeline itself, like the lanterns
-          are casting light outward into the scene around them. */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 42% 62% at 48% 50%, rgba(255,180,75,0.38) 0%, rgba(255,150,55,0.22) 22%, rgba(245,125,45,0.10) 45%, rgba(220,100,35,0.04) 65%, transparent 80%)",
-          mixBlendMode: "screen",
-          zIndex: 1,
-        }}
-      />
+          {/* Warm golden glow blooming from the timeline itself, like the lanterns
+              are casting light outward into the scene around them. */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(ellipse 42% 62% at 48% 50%, rgba(255,180,75,0.38) 0%, rgba(255,150,55,0.22) 22%, rgba(245,125,45,0.10) 45%, rgba(220,100,35,0.04) 65%, transparent 80%)",
+              mixBlendMode: "screen",
+              zIndex: 1,
+            }}
+          />
 
-      {/* Rocket — sharp during descent/ascent (in the spotlight), then
-          eases into the same subtle blur as the island when it sits idle on
-          the platform so it recedes back into the scene. */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          filter: `blur(${rocketBlur && phase !== "ascending" ? 2 : 0}px)`,
-          transition: "filter 0.7s ease-in-out",
-        }}
-      >
-        <RocketLanding
-          phase={phase}
-          onDescentComplete={() => setPhase("idle")}
-          landingTopVh={60}
+          {/* Rocket — sharp during descent/ascent (in the spotlight), then
+              eases into the same subtle blur as the island when it sits idle on
+              the platform so it recedes back into the scene. */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              filter: `blur(${rocketBlur && phase !== "ascending" ? 2 : 0}px)`,
+              transition: "filter 0.7s ease-in-out",
+            }}
+          >
+            <RocketLanding
+              phase={phase}
+              onDescentComplete={() => setPhase("idle")}
+              landingTopVh={60}
+            />
+          </div>
+        </>
+      ) : (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 60% at 50% 30%, rgba(110,231,247,0.08) 0%, transparent 70%)",
+          }}
         />
-      </div>
+      )}
 
       <motion.div
         initial={{ opacity: 0, y: 16 }}

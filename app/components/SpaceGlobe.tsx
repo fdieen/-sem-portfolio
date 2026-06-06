@@ -1,45 +1,9 @@
 "use client";
 
-import { useRef, useMemo, Suspense } from "react";
+import { useRef, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
-
-const vertexShader = `
-  varying vec2 vUv;
-  varying vec3 vWorldNormal;
-  void main() {
-    vUv = uv;
-    vWorldNormal = normalize(mat3(modelMatrix) * normal);
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
-
-const fragmentShader = `
-  uniform sampler2D dayTexture;
-  uniform sampler2D nightTexture;
-  uniform sampler2D cloudsTexture;
-  uniform vec3 sunDirection;
-  varying vec2 vUv;
-  varying vec3 vWorldNormal;
-  // De earth-JPGs zijn sRGB encoded; Three.js' texture.colorSpace setting is
-  // wisselvallig met cached drei textures, dus we decoderen hier handmatig
-  // naar linear voor de shading-math. Renderer's outputColorSpace doet de
-  // sRGB-encode op de output weer terug.
-  vec3 srgbToLinear(vec3 c) {
-    return pow(c, vec3(2.2));
-  }
-  void main() {
-    float sunDot = dot(vWorldNormal, normalize(sunDirection));
-    float blend = smoothstep(-0.3, 0.3, sunDot);
-    vec3 day = srgbToLinear(texture2D(dayTexture, vUv).rgb) * 1.1;
-    vec3 night = srgbToLinear(texture2D(nightTexture, vUv).rgb) * 2.2;
-    vec3 earth = mix(night, day, blend);
-    float cloud = texture2D(cloudsTexture, vUv).r;
-    earth = mix(earth, vec3(1.0), cloud * 0.45 * blend);
-    gl_FragColor = vec4(earth, 1.0);
-  }
-`;
 
 const atmVertexShader = `
   varying vec3 vNormal;
@@ -58,37 +22,57 @@ const atmFragmentShader = `
   }
 `;
 
-const SUN_DIR = new THREE.Vector3(4, 2, 3).normalize();
 useTexture.preload(["/earth-texture.jpg", "/earth-night.jpg", "/earth-clouds.jpg"]);
 
 function EarthScene() {
   const meshRef = useRef<THREE.Mesh>(null);
+  const cloudsRef = useRef<THREE.Mesh>(null);
   const [dayMap, nightMap, cloudsMap] = useTexture([
     "/earth-texture.jpg",
     "/earth-night.jpg",
     "/earth-clouds.jpg",
   ]);
-  // colorSpace bewust NIET ge-overruled — de shader doet de sRGB→linear
-  // decode zelf zodat de pipeline niet afhangt van drei's texture-cache.
+  // Built-in materials respecteren texture.colorSpace correct, dus zet 'm
+  // hier zodat de sRGB-JPGs niet als linear gesampled worden (=zwart).
+  dayMap.colorSpace = THREE.SRGBColorSpace;
+  nightMap.colorSpace = THREE.SRGBColorSpace;
+  // cloudsMap blijft alpha — geen color decode nodig
   useFrame((_, delta) => {
     if (meshRef.current) meshRef.current.rotation.y += delta * 0.055;
+    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.063;
   });
   return (
     <>
+      {/* Earth — meshStandardMaterial krijgt z'n dag/nacht-shading automatisch
+          van de directionalLight die op zonpositie staat. emissiveMap = de
+          night-texture (city lights), die alleen zichtbaar wordt waar het
+          dag-licht weg is. */}
       <mesh ref={meshRef}>
         <sphereGeometry args={[1, 96, 96]} />
-        <shaderMaterial
-          vertexShader={vertexShader}
-          fragmentShader={fragmentShader}
-          uniforms={{
-            dayTexture: { value: dayMap },
-            nightTexture: { value: nightMap },
-            cloudsTexture: { value: cloudsMap },
-            sunDirection: { value: SUN_DIR },
-          }}
+        <meshStandardMaterial
+          map={dayMap}
+          emissiveMap={nightMap}
+          emissive={new THREE.Color(0xffd07a)}
+          emissiveIntensity={1.4}
+          roughness={1}
+          metalness={0}
         />
       </mesh>
-      <mesh scale={[1.025, 1.025, 1.025]}>
+      {/* Clouds — losse iets snellere sphere met cloudsMap als alpha. */}
+      <mesh ref={cloudsRef} scale={[1.012, 1.012, 1.012]}>
+        <sphereGeometry args={[1, 64, 64]} />
+        <meshStandardMaterial
+          alphaMap={cloudsMap}
+          color={new THREE.Color(0xffffff)}
+          transparent
+          opacity={0.55}
+          roughness={1}
+          metalness={0}
+          depthWrite={false}
+        />
+      </mesh>
+      {/* Atmosphere rim — onveranderd. */}
+      <mesh scale={[1.04, 1.04, 1.04]}>
         <sphereGeometry args={[1, 64, 64]} />
         <shaderMaterial
           vertexShader={atmVertexShader}
@@ -117,10 +101,15 @@ export default function SpaceGlobe() {
         camera={{ position: [0, 0, 2.55], fov: 42 }}
         gl={{ antialias: true, alpha: false }}
         style={{ background: "#030c18", borderRadius: "50%" }}
+        onCreated={({ gl }) => {
+          // Forceer SRGB output zodat linear-shading correct terug naar
+          // sRGB encoded wordt — anders blijft alles pikzwart.
+          gl.outputColorSpace = THREE.SRGBColorSpace;
+        }}
       >
-        <directionalLight position={[4, 2, 3]} intensity={2.2} color="#fff8f0" />
-        <directionalLight position={[-2, -1, -2]} intensity={0.04} color="#224488" />
-        <ambientLight intensity={0.05} />
+        <directionalLight position={[4, 2, 3]} intensity={2.4} color="#fff8f0" />
+        <directionalLight position={[-2, -1, -2]} intensity={0.06} color="#224488" />
+        <ambientLight intensity={0.18} />
         <Suspense fallback={null}>
           <EarthScene />
         </Suspense>

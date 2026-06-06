@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useDeviceCapabilities } from "../hooks/useDeviceCapabilities";
 
 /* ──────────────────────────────────────────────────────────────────────
    Port of dashersw/liquid-glass-js — WebGL-driven iOS 26 liquid glass.
@@ -327,10 +328,26 @@ export default function LiquidGlass({
   const [hovered, setHovered] = useState(false);
   const hoverTargetRef = useRef(0);
   const hoverProgressRef = useRef(0);
+  const requestTickRef = useRef<(() => void) | null>(null);
+  const { supportsHover, reducedMotion } = useDeviceCapabilities();
+  /* Refs so the WebGL loop, which captures the props at setup time, can
+     read the live capability values without rebuilding the pipeline. */
+  const supportsHoverRef = useRef(supportsHover);
+  const reducedMotionRef = useRef(reducedMotion);
+  useEffect(() => {
+    supportsHoverRef.current = supportsHover;
+  }, [supportsHover]);
+  useEffect(() => {
+    reducedMotionRef.current = reducedMotion;
+  }, [reducedMotion]);
 
   useEffect(() => {
-    hoverTargetRef.current = hovered ? 1 : 0;
-  }, [hovered]);
+    /* On a touch device there's no real hover, so freeze the target at
+       0 and skip the entire scale/twist ramp. */
+    hoverTargetRef.current = supportsHover && hovered ? 1 : 0;
+    /* Wake the rAF loop in case it parked itself (reduced-motion mode). */
+    requestTickRef.current?.();
+  }, [hovered, supportsHover]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -518,22 +535,44 @@ export default function LiquidGlass({
     }
 
     function tick() {
+      rafId = 0;
       if (cancelled) return;
       const target = hoverTargetRef.current;
       const current = hoverProgressRef.current;
       const diff = target - current;
+      let hoverChanging = false;
       if (Math.abs(diff) > 0.001) {
         hoverProgressRef.current = current + diff * 0.12;
+        hoverChanging = true;
       } else if (current !== target) {
         hoverProgressRef.current = target;
+        hoverChanging = true;
       }
-      /* Always redraw — the shader is now animated by u_time so each
-         frame produces a slightly different ripple / caustic, even when
-         the user isn't hovering. */
-      draw();
-      needsDraw = false;
+
+      /* Idle-animation policy:
+         - reduced-motion users or no-hover devices (mobile/touch) only
+           get redraws when something actually changed (scroll, resize,
+           snapshot refresh, or a hover ramp). The rAF loop stops itself
+           when there's nothing to animate, freeing the main thread.
+         - On desktop with motion enabled, we keep the loop alive so the
+           time-driven swirl/caustic keeps breathing. */
+      const wantIdleAnimation =
+        !reducedMotionRef.current && supportsHoverRef.current;
+      const shouldDraw = wantIdleAnimation || hoverChanging || needsDraw;
+      if (shouldDraw) {
+        draw();
+        needsDraw = false;
+      }
+      if (wantIdleAnimation || hoverChanging) {
+        rafId = window.requestAnimationFrame(tick);
+      }
+    }
+
+    function ensureTick() {
+      if (rafId || cancelled) return;
       rafId = window.requestAnimationFrame(tick);
     }
+    requestTickRef.current = ensureTick;
 
     compile();
     resize();
@@ -543,12 +582,14 @@ export default function LiquidGlass({
     if (typeof ResizeObserver !== "undefined") {
       resizeObserver = new ResizeObserver(() => {
         resize();
+        ensureTick();
       });
       resizeObserver.observe(root);
     }
 
     const onScroll = () => {
       needsDraw = true;
+      ensureTick();
     };
     window.addEventListener("scroll", onScroll, { passive: true });
 
@@ -557,6 +598,7 @@ export default function LiquidGlass({
         if (cancelled) return;
         uploadTexture(img);
         needsDraw = true;
+        ensureTick();
       });
     };
     instanceCallbacks.add(onSnapshotInvalidated);
@@ -565,7 +607,7 @@ export default function LiquidGlass({
       if (cancelled) return;
       uploadTexture(img);
       needsDraw = true;
-      tick();
+      ensureTick();
     });
 
     return () => {
@@ -574,6 +616,7 @@ export default function LiquidGlass({
       window.removeEventListener("scroll", onScroll);
       instanceCallbacks.delete(onSnapshotInvalidated);
       resizeObserver?.disconnect();
+      requestTickRef.current = null;
       if (texture) gl.deleteTexture(texture);
       if (positionBuffer) gl.deleteBuffer(positionBuffer);
       if (texcoordBuffer) gl.deleteBuffer(texcoordBuffer);
@@ -594,12 +637,17 @@ export default function LiquidGlass({
     twist,
   ]);
 
+  /* No real hover on touch — skip hover state changes entirely so we
+     don't trigger pointless re-renders or layout shifts. The static
+     glass look still works because the WebGL canvas renders once. */
+  const hoverActive = supportsHover && hovered;
+
   return (
     <div
       ref={rootRef}
       className={`liquid-glass-root ${className}`}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={supportsHover ? () => setHovered(true) : undefined}
+      onMouseLeave={supportsHover ? () => setHovered(false) : undefined}
       style={{
         position: "relative",
         isolation: "isolate",
@@ -609,10 +657,10 @@ export default function LiquidGlass({
         // and the bezel highlight stripe.
         background: "transparent",
         border: "1px solid rgba(255,255,255,0.18)",
-        boxShadow: hovered
+        boxShadow: hoverActive
           ? "0 14px 38px rgba(0,0,0,0.34), 0 0 0 1px rgba(255,255,255,0.10), inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.28)"
           : "0 8px 28px rgba(0,0,0,0.22), inset 0 0 0 1px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.25)",
-        transform: hovered
+        transform: hoverActive
           ? `scale(${twist ? 1.03 : 1.012}) rotate(${twist ? 1.4 : 0.5}deg)`
           : "scale(1) rotate(0deg)",
         transition:
