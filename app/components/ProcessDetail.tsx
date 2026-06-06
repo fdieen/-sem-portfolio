@@ -86,7 +86,7 @@ function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
       transition={{ duration: 0.55, delay: index * 0.12 + 0.08 }}
       className="relative mb-6 group"
     >
-      <LiquidGlass borderRadius={20} style={{ padding: "1.5rem" }}>
+      <LiquidGlass borderRadius={20} twist={false} style={{ padding: "1.5rem" }}>
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-xl"
             style={{ background: step.color + "0c", color: step.color }}>

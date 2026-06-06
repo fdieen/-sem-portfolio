@@ -299,6 +299,10 @@ type LiquidGlassProps = {
   baseDistance?: number;
   cornerBoost?: number;
   rippleEffect?: number;
+  /** When false, hover skips the swirl-rotation, spiral-arms and
+   *  ripple-bleed. Refraction, scale and shadow still respond. Use this
+   *  on larger content cards where the intense twist reads as too busy. */
+  twist?: boolean;
 };
 
 export default function LiquidGlass({
@@ -316,6 +320,7 @@ export default function LiquidGlass({
   baseDistance = 0.1,
   cornerBoost = 0.08,
   rippleEffect = 0.18,
+  twist = true,
 }: LiquidGlassProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -501,8 +506,10 @@ export default function LiquidGlass({
       if (cornerBoostLoc) gl.uniform1f(cornerBoostLoc, cornerBoost * cornerMul);
       if (rippleEffectLoc) gl.uniform1f(rippleEffectLoc, rippleEffect * rippleMul);
       if (timeLoc) gl.uniform1f(timeLoc, t);
-      if (twistAmountLoc) gl.uniform1f(twistAmountLoc, p * 2.2);
-      if (causticAmountLoc) gl.uniform1f(causticAmountLoc, 0.2 + p * 1.1);
+      /* twist={false} nuls out the twist-driven uniforms so larger cards
+         keep a calm refraction-only hover without the spiral arms. */
+      if (twistAmountLoc) gl.uniform1f(twistAmountLoc, twist ? p * 2.2 : 0);
+      if (causticAmountLoc) gl.uniform1f(causticAmountLoc, twist ? 0.2 + p * 1.1 : 0.2);
 
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -584,6 +591,7 @@ export default function LiquidGlass({
     baseDistance,
     cornerBoost,
     rippleEffect,
+    twist,
   ]);
 
   return (
