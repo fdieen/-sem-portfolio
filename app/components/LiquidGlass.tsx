@@ -140,6 +140,18 @@ void main() {
   vec2 shapeNormal = normalize(coord - vec2(0.5));
   float normalizedDistance = distFromEdgeShape;
 
+  /* Swirl: rotate the refraction direction by an angle that varies
+     with distance to the rim and with time. At u_twistAmount = 0 this
+     is a no-op. On hover it cranks up and the whole shape spirals. */
+  float swirlAngle = u_twistAmount * (1.6 + 0.6 * sin(u_time * 0.7))
+                   * exp(-distFromEdgeShape * 0.04);
+  float swCos = cos(swirlAngle);
+  float swSin = sin(swirlAngle);
+  shapeNormal = vec2(
+    shapeNormal.x * swCos - shapeNormal.y * swSin,
+    shapeNormal.x * swSin + shapeNormal.y * swCos
+  );
+
   /* Three falloff bands of refraction: a soft "lensing" through the
      centre, an edge bend, and a tight rim bend at the very perimeter. */
   float baseIntensity = 1.0 - exp(-normalizedDistance * u_baseDistance);
@@ -460,14 +472,15 @@ export default function LiquidGlass({
       if (containerPositionLoc) gl.uniform2f(containerPositionLoc, centerX, centerY);
       if (scrollYLoc) gl.uniform1f(scrollYLoc, window.scrollY);
 
-      /* Hover ramps the refraction up; ripple gets the strongest boost so
-         the rim shimmer reads as a deliberate "twist" under the cursor.
-         twistAmount lets the ripple bleed off the rim into the body of
-         the glass, and causticAmount drives the bright moving highlight. */
+      /* On hover everything cranks: refraction, ripple, corner bend.
+         twistAmount drives both the swirl rotation in the shader and
+         how far the ripple bleeds from the rim into the body — at
+         max it dominates the whole glass. causticAmount drives the
+         bright moving highlights along the rim. */
       const p = hoverProgressRef.current;
-      const intensityMul = 1 + p * 2.5;
-      const rippleMul = 1 + p * 7.0;
-      const cornerMul = 1 + p * 3.5;
+      const intensityMul = 1 + p * 4.0;
+      const rippleMul = 1 + p * 16.0;
+      const cornerMul = 1 + p * 5.0;
       const t = (performance.now() - startTime) / 1000;
       if (rimIntensityLoc) gl.uniform1f(rimIntensityLoc, rimIntensity * intensityMul);
       if (edgeIntensityLoc) gl.uniform1f(edgeIntensityLoc, edgeIntensity * intensityMul);
@@ -475,8 +488,8 @@ export default function LiquidGlass({
       if (cornerBoostLoc) gl.uniform1f(cornerBoostLoc, cornerBoost * cornerMul);
       if (rippleEffectLoc) gl.uniform1f(rippleEffectLoc, rippleEffect * rippleMul);
       if (timeLoc) gl.uniform1f(timeLoc, t);
-      if (twistAmountLoc) gl.uniform1f(twistAmountLoc, p * 0.6);
-      if (causticAmountLoc) gl.uniform1f(causticAmountLoc, 0.18 + p * 0.55);
+      if (twistAmountLoc) gl.uniform1f(twistAmountLoc, p * 2.2);
+      if (causticAmountLoc) gl.uniform1f(causticAmountLoc, 0.2 + p * 1.1);
 
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, texture);
