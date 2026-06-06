@@ -22,17 +22,22 @@ const fragmentShader = `
   uniform vec3 sunDirection;
   varying vec2 vUv;
   varying vec3 vWorldNormal;
+  // De earth-JPGs zijn sRGB encoded; Three.js' texture.colorSpace setting is
+  // wisselvallig met cached drei textures, dus we decoderen hier handmatig
+  // naar linear voor de shading-math. Renderer's outputColorSpace doet de
+  // sRGB-encode op de output weer terug.
+  vec3 srgbToLinear(vec3 c) {
+    return pow(c, vec3(2.2));
+  }
   void main() {
     float sunDot = dot(vWorldNormal, normalize(sunDirection));
     float blend = smoothstep(-0.3, 0.3, sunDot);
-    vec4 day = texture2D(dayTexture, vUv);
-    vec4 night = texture2D(nightTexture, vUv);
-    night.rgb *= 2.2;
-    day.rgb *= 1.1;
-    vec4 earth = mix(night, day, blend);
+    vec3 day = srgbToLinear(texture2D(dayTexture, vUv).rgb) * 1.1;
+    vec3 night = srgbToLinear(texture2D(nightTexture, vUv).rgb) * 2.2;
+    vec3 earth = mix(night, day, blend);
     float cloud = texture2D(cloudsTexture, vUv).r;
-    earth.rgb = mix(earth.rgb, vec3(1.0), cloud * 0.45 * blend);
-    gl_FragColor = earth;
+    earth = mix(earth, vec3(1.0), cloud * 0.45 * blend);
+    gl_FragColor = vec4(earth, 1.0);
   }
 `;
 
@@ -63,16 +68,8 @@ function EarthScene() {
     "/earth-night.jpg",
     "/earth-clouds.jpg",
   ]);
-  // Three.js r152+ leest texture defaults als linear, maar deze JPGs zijn
-  // sRGB. Zonder deze conversie shaden ze (bijna) pikzwart.
-  useMemo(() => {
-    dayMap.colorSpace = THREE.SRGBColorSpace;
-    nightMap.colorSpace = THREE.SRGBColorSpace;
-    cloudsMap.colorSpace = THREE.SRGBColorSpace;
-    dayMap.needsUpdate = true;
-    nightMap.needsUpdate = true;
-    cloudsMap.needsUpdate = true;
-  }, [dayMap, nightMap, cloudsMap]);
+  // colorSpace bewust NIET ge-overruled — de shader doet de sRGB→linear
+  // decode zelf zodat de pipeline niet afhangt van drei's texture-cache.
   useFrame((_, delta) => {
     if (meshRef.current) meshRef.current.rotation.y += delta * 0.055;
   });
