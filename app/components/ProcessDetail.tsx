@@ -106,12 +106,20 @@ export default function ProcessDetail() {
   const router = useRouter();
   const [phase, setPhase] = useState<RocketPhase>("descending");
   const [flashShore, setFlashShore] = useState(false);
+  const [rocketBlur, setRocketBlur] = useState(false);
 
   useEffect(() => {
     // Trigger the shore flash slightly before the rocket fully settles,
     // so the bioluminescent burst feels like a reaction to the landing.
     const flashTimer = setTimeout(() => setFlashShore(true), 1850);
-    return () => clearTimeout(flashTimer);
+    // Kick the rocket into its ambient blur partway through the descent —
+    // by the time it touches down it's already receding into the scene,
+    // instead of waiting for phase==="idle" at 4.6s.
+    const blurTimer = setTimeout(() => setRocketBlur(true), 1000);
+    return () => {
+      clearTimeout(flashTimer);
+      clearTimeout(blurTimer);
+    };
   }, []);
 
   const handleBack = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -152,7 +160,7 @@ export default function ProcessDetail() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          filter: `blur(${phase === "idle" ? 2 : 0}px)`,
+          filter: `blur(${rocketBlur && phase !== "ascending" ? 2 : 0}px)`,
           transition: "filter 0.7s ease-in-out",
         }}
       >
