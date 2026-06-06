@@ -94,8 +94,18 @@ function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
             {step.icon}
           </div>
           <div>
-            <h3 className="font-semibold text-white text-lg mb-2 leading-snug">{step.title}</h3>
-            <p className="text-white/45 text-sm leading-relaxed">{step.description}</p>
+            <h3
+              className="font-semibold text-white text-lg mb-2 leading-snug"
+              style={{ textShadow: "0 0 14px rgba(255,255,255,0.18), 0 1px 2px rgba(0,0,0,0.45)" }}
+            >
+              {step.title}
+            </h3>
+            <p
+              className="text-white/75 text-sm leading-relaxed"
+              style={{ textShadow: "0 1px 2px rgba(0,0,0,0.5)" }}
+            >
+              {step.description}
+            </p>
           </div>
         </div>
       </LiquidGlass>
