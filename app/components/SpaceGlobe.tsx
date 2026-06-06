@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, Suspense } from "react";
+import { useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
@@ -63,6 +63,16 @@ function EarthScene() {
     "/earth-night.jpg",
     "/earth-clouds.jpg",
   ]);
+  // Three.js r152+ leest texture defaults als linear, maar deze JPGs zijn
+  // sRGB. Zonder deze conversie shaden ze (bijna) pikzwart.
+  useMemo(() => {
+    dayMap.colorSpace = THREE.SRGBColorSpace;
+    nightMap.colorSpace = THREE.SRGBColorSpace;
+    cloudsMap.colorSpace = THREE.SRGBColorSpace;
+    dayMap.needsUpdate = true;
+    nightMap.needsUpdate = true;
+    cloudsMap.needsUpdate = true;
+  }, [dayMap, nightMap, cloudsMap]);
   useFrame((_, delta) => {
     if (meshRef.current) meshRef.current.rotation.y += delta * 0.055;
   });
