@@ -273,6 +273,12 @@ export default function LiquidGlass({
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [hovered, setHovered] = useState(false);
+  const hoverTargetRef = useRef(0);
+  const hoverProgressRef = useRef(0);
+
+  useEffect(() => {
+    hoverTargetRef.current = hovered ? 1 : 0;
+  }, [hovered]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -424,6 +430,19 @@ export default function LiquidGlass({
       gl.useProgram(program);
       if (containerPositionLoc) gl.uniform2f(containerPositionLoc, centerX, centerY);
       if (scrollYLoc) gl.uniform1f(scrollYLoc, window.scrollY);
+
+      /* Hover ramps the refraction up; ripple gets the strongest boost so
+         the rim shimmer reads as a deliberate "twist" under the cursor. */
+      const p = hoverProgressRef.current;
+      const intensityMul = 1 + p * 2.2;
+      const rippleMul = 1 + p * 5.0;
+      const cornerMul = 1 + p * 3.0;
+      if (rimIntensityLoc) gl.uniform1f(rimIntensityLoc, rimIntensity * intensityMul);
+      if (edgeIntensityLoc) gl.uniform1f(edgeIntensityLoc, edgeIntensity * intensityMul);
+      if (baseIntensityLoc) gl.uniform1f(baseIntensityLoc, baseIntensity * intensityMul);
+      if (cornerBoostLoc) gl.uniform1f(cornerBoostLoc, cornerBoost * cornerMul);
+      if (rippleEffectLoc) gl.uniform1f(rippleEffectLoc, rippleEffect * rippleMul);
+
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, texture);
       gl.clear(gl.COLOR_BUFFER_BIT);
@@ -432,6 +451,16 @@ export default function LiquidGlass({
 
     function tick() {
       if (cancelled) return;
+      const target = hoverTargetRef.current;
+      const current = hoverProgressRef.current;
+      const diff = target - current;
+      if (Math.abs(diff) > 0.001) {
+        hoverProgressRef.current = current + diff * 0.12;
+        needsDraw = true;
+      } else if (current !== target) {
+        hoverProgressRef.current = target;
+        needsDraw = true;
+      }
       if (needsDraw) {
         draw();
         needsDraw = false;
