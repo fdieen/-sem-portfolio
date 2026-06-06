@@ -31,8 +31,8 @@ export default function SeoFooter() {
 
   const regio = [
     "Webdesign Nederland",
-    "Webdesign Eindhoven",
-    "Website laten maken Noord-Brabant",
+    "Webdesign heel Nederland",
+    "Online webdesigner",
     "Webdesign freelancer",
     "Goedkope website laten maken",
     "Professionele webdesigner",
