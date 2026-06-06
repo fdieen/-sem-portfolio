@@ -654,10 +654,11 @@ export default function LiquidGlass({
         position: "relative",
         isolation: "isolate",
         borderRadius,
-        /* twist=false content cards prioritize readability: a near-opaque
-           dark substrate plus a dimmed refraction canvas keeps text crisp.
-           Small CTAs (twist=true) stay fully transparent for clear-glass. */
-        background: twist ? "transparent" : "rgba(8, 12, 22, 0.78)",
+        /* twist=false content cards keep a light dark wash for substrate
+           stability — the text-shadow on titles/body anchors readability
+           so the wash can stay glassy. Small CTAs (twist=true) stay
+           fully transparent for clear-glass. */
+        background: twist ? "transparent" : "rgba(8, 12, 22, 0.28)",
         border: "1px solid rgba(255,255,255,0.18)",
         boxShadow: hoverActive
           ? "0 12px 32px rgba(0,0,0,0.22), 0 0 0 1px rgba(255,255,255,0.10), inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -1px 0 rgba(0,0,0,0.10)"
@@ -685,10 +686,10 @@ export default function LiquidGlass({
           borderRadius: "inherit",
           pointerEvents: "none",
           zIndex: 0,
-          /* On twist=false content cards, dim the refraction layer hard
-             so the colored bend doesn't bleed under the text. The card
-             still reads as glass thanks to the border + glare + shadow. */
-          opacity: twist ? 1 : 0.22,
+          /* On twist=false content cards keep the refraction visible but
+             a touch softened so it still reads as glass without competing
+             with the text. */
+          opacity: twist ? 1 : 0.6,
         }}
       />
 
