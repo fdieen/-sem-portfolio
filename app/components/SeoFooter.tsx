@@ -17,7 +17,7 @@ export default function SeoFooter() {
     },
     {
       v: "Hoe lang duurt het bouwen van een website?",
-      a: "Een eenvoudige website is vaak binnen 1–2 weken klaar. Een webshop duurt gemiddeld 2–4 weken.",
+      a: "Een eenvoudige website is vaak binnen 4–6 weken klaar. Een webshop duurt gemiddeld 6–8 weken.",
     },
     {
       v: "Bouw je ook webshops met online betalen?",
