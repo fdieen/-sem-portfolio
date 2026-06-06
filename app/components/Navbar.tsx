@@ -146,7 +146,7 @@ export default function Navbar() {
         scrolled
           ? "bg-[#0a1628]/75 backdrop-blur-md"
           : "bg-transparent"
-      }`}
+      } ${menuOpen ? "max-md:!bg-[#080808]/95 max-md:!backdrop-blur-md" : ""}`}
     >
       <div className={`w-full px-6 flex items-center justify-between transition-all duration-300 ${scrolled ? "py-2" : "py-4"}`}>
         <a href="/" className="flex items-center hover:opacity-90 transition-opacity">
