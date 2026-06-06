@@ -4,6 +4,71 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import LiquidGlass from "./LiquidGlass";
+
+const GLASS_PROPS = {
+  tintOpacity: 0.2,
+  blurRadius: 5,
+  rimIntensity: 0.05,
+  edgeIntensity: 0.01,
+  baseIntensity: 0.01,
+  edgeDistance: 0.15,
+  rimDistance: 0.8,
+  baseDistance: 0.1,
+  cornerBoost: 0.02,
+  rippleEffect: 0.1,
+} as const;
+
+const GLASS_DEFAULT_SHADOW =
+  "0 8px 28px rgba(0,0,0,0.22), inset 0 0 0 1px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.25)";
+
+type Social = {
+  label: string;
+  href: string;
+  color: string;
+  glow: string;
+  shadow?: string;
+  shadowHover?: string;
+  icon: React.ReactNode;
+};
+
+function SocialGlassIcon({ s }: { s: Social }) {
+  const [hover, setHover] = useState(false);
+  const baseGlow =
+    s.shadow ??
+    `0 0 16px 2px ${s.glow.replace("0.4", "0.2")}, 0 0 6px ${s.glow.replace("0.4", "0.15")}`;
+  const hoverGlow =
+    s.shadowHover ??
+    `0 0 24px 4px ${s.glow.replace("0.4", "0.35")}, 0 0 10px ${s.glow.replace("0.4", "0.25")}`;
+  return (
+    <div
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{ display: "inline-block", transition: "filter 0.2s" }}
+    >
+      <LiquidGlass
+        {...GLASS_PROPS}
+        borderRadius={10}
+        style={{
+          display: "inline-block",
+          boxShadow: `${hover ? hoverGlow : baseGlow}, ${GLASS_DEFAULT_SHADOW}`,
+          transition: "box-shadow 0.2s",
+        }}
+      >
+        <a
+          href={s.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={s.label}
+          className="flex items-center justify-center w-8 h-8 transition-colors"
+          style={{ color: s.color }}
+        >
+          <span className="scale-75">{s.icon}</span>
+        </a>
+      </LiquidGlass>
+    </div>
+  );
+}
 
 const socials = [
   {
@@ -142,53 +207,42 @@ export default function Navbar() {
         </a>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-2">
           {links.map((link) => (
-            <a
+            <LiquidGlass
               key={link.href}
-              href={link.href}
-              className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+              {...GLASS_PROPS}
+              borderRadius={20}
+              style={{ display: "inline-block" }}
             >
-              {link.label}
-            </a>
+              <a
+                href={link.href}
+                className="block px-4 py-2 text-sm text-white/70 hover:text-white transition-colors"
+              >
+                {link.label}
+              </a>
+            </LiquidGlass>
           ))}
 
           {/* Desktop socials */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 ml-2">
             {socials.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={s.label}
-                className="flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-200"
-                style={{
-                  color: s.color,
-                  background: `${s.glow.replace("0.4", "0.06")}`,
-                  border: `1px solid ${s.glow.replace("0.4", "0.18")}`,
-                  boxShadow: s.shadow ?? `0 0 16px 2px ${s.glow.replace("0.4", "0.2")}, 0 0 6px ${s.glow.replace("0.4", "0.15")}`,
-                }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = s.shadowHover ?? `0 0 24px 4px ${s.glow.replace("0.4", "0.35")}, 0 0 10px ${s.glow.replace("0.4", "0.25")}`;
-                  (e.currentTarget as HTMLElement).style.borderColor = s.glow.replace("0.4", "0.45");
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.boxShadow = s.shadow ?? `0 0 16px 2px ${s.glow.replace("0.4", "0.2")}, 0 0 6px ${s.glow.replace("0.4", "0.15")}`;
-                  (e.currentTarget as HTMLElement).style.borderColor = s.glow.replace("0.4", "0.18");
-                }}
-              >
-                <span className="scale-75">{s.icon}</span>
-              </a>
+              <SocialGlassIcon key={s.label} s={s} />
             ))}
           </div>
 
-          <a
-            href="/#contact"
-            className="text-sm bg-[#6ee7f7] text-[#080808] font-medium px-4 py-2 rounded-full hover:bg-white transition-colors duration-200"
+          <LiquidGlass
+            {...GLASS_PROPS}
+            borderRadius={22}
+            style={{ display: "inline-block", marginLeft: "0.5rem" }}
           >
-            Contact
-          </a>
+            <a
+              href="/#contact"
+              className="block px-5 py-2 text-sm text-[#6ee7f7] hover:text-white font-medium transition-colors"
+            >
+              Contact
+            </a>
+          </LiquidGlass>
         </div>
 
         {/* Mobile hamburger */}
