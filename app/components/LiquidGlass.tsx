@@ -231,6 +231,19 @@ void main() {
   float caustic = max(0.0, sin(causticPhase) - 0.25) * 1.33;
   color.rgb = mix(color.rgb, vec3(1.0), caustic * rimZone * u_causticAmount);
 
+  /* Visible spiral arms — bright streaks that spin through the glass on
+     hover. Drawn procedurally so they show up regardless of what's
+     behind the card. Fades to nothing at u_twistAmount = 0. */
+  vec2 swirlCoord = coord - vec2(0.5);
+  float swirlR = length(swirlCoord);
+  float swirlA = atan(swirlCoord.y, swirlCoord.x);
+  float armPattern = sin(swirlA * 3.0 + swirlR * 22.0 - u_time * 2.2);
+  armPattern = pow(max(0.0, armPattern), 3.0);
+  /* Stay inside the shape — fade to 0 right at the rim. */
+  float armBodyMask = smoothstep(0.0, 12.0, distFromEdgeShape);
+  float armHoverMask = smoothstep(0.0, 0.4, u_twistAmount);
+  color.rgb = mix(color.rgb, vec3(1.0), armPattern * armBodyMask * armHoverMask * 0.55);
+
   /* Anti-aliased rounded-rect alpha mask. */
   float maskDistance = roundedRectDistance(coord, u_resolution, u_borderRadius);
   float mask = 1.0 - smoothstep(-1.0, 1.0, maskDistance);
@@ -591,9 +604,11 @@ export default function LiquidGlass({
         boxShadow: hovered
           ? "0 14px 38px rgba(0,0,0,0.34), 0 0 0 1px rgba(255,255,255,0.10), inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.28)"
           : "0 8px 28px rgba(0,0,0,0.22), inset 0 0 0 1px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.25)",
-        transform: hovered ? "scale(1.025)" : "scale(1)",
+        transform: hovered
+          ? "scale(1.03) rotate(1.4deg)"
+          : "scale(1) rotate(0deg)",
         transition:
-          "transform 280ms cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 280ms ease",
+          "transform 360ms cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 280ms ease",
         willChange: "transform",
         overflow: "hidden",
         ...style,
