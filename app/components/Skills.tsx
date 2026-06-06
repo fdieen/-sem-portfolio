@@ -111,9 +111,9 @@ export default function Skills() {
             Wat ik bied
           </span>
           <h2 className="text-4xl lg:text-5xl font-bold mt-3 tracking-tight">
-            <span className="cursor-default transition-all duration-300 hover:text-[#6ee7f7]">Divers.</span>{" "}
+            <span className="cursor-default">Divers.</span>{" "}
             <span className="inline-flex items-center gap-3">
-              <span className="cursor-default transition-all duration-300 hover:text-[#6ee7f7]">Aanpasbaar.</span>
+              <span className="cursor-default">Aanpasbaar.</span>
               <GoldenCoin />
             </span><br />
             <span className="text-[#6ee7f7] cursor-default">Altijd op maat.</span>
