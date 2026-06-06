@@ -91,7 +91,7 @@ export default function Contact() {
             <motion.button
               type="button"
               onClick={() => setShowQuote(true)}
-              className="group relative flex items-center gap-5 rounded-2xl px-10 lg:px-14 py-6 lg:py-7 w-full sm:w-auto overflow-hidden text-left cursor-pointer"
+              className="group relative flex items-center gap-4 rounded-2xl px-8 lg:px-11 py-5 lg:py-6 w-full sm:w-auto overflow-hidden text-left cursor-pointer"
               style={{
                 background:
                   "linear-gradient(135deg, #6ee7f7 0%, #a78bfa 50%, #f0abfc 100%)",
@@ -131,14 +131,14 @@ export default function Contact() {
               />
 
               <div
-                className="relative w-14 h-14 lg:w-16 lg:h-16 rounded-xl flex items-center justify-center shrink-0 text-[#1a0f3d]"
+                className="relative w-12 h-12 lg:w-14 lg:h-14 rounded-xl flex items-center justify-center shrink-0 text-[#1a0f3d]"
                 style={{
                   background: "rgba(255,255,255,0.92)",
                   boxShadow:
                     "0 6px 16px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.9)",
                 }}
               >
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                   <polyline points="14 2 14 8 20 8" />
                   <line x1="9" y1="15" x2="15" y2="15" />
@@ -149,7 +149,7 @@ export default function Contact() {
                 <p className="text-xs lg:text-sm uppercase tracking-[0.2em] text-white/95 font-semibold mb-1 drop-shadow-[0_1px_2px_rgba(60,20,90,0.4)]">
                   Vrijblijvend &amp; persoonlijk
                 </p>
-                <p className="text-lg lg:text-2xl font-bold text-white flex items-center gap-2.5 drop-shadow-[0_1px_3px_rgba(60,20,90,0.45)]">
+                <p className="text-base lg:text-xl font-bold text-white flex items-center gap-2.5 drop-shadow-[0_1px_3px_rgba(60,20,90,0.45)]">
                   Offerte aanvragen
                   <motion.span
                     aria-hidden
