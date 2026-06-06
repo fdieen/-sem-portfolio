@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { useRouter } from "next/navigation";
 import IslandScene from "./IslandScene";
+import LiquidGlass from "./LiquidGlass";
 import RocketLanding, { RocketPhase } from "./RocketLanding";
 
 const steps = [
@@ -76,137 +77,41 @@ const steps = [
 function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
-  const isEven = index % 2 === 0;
-  const swayDuration = 6.5 + (index % 3) * 0.9;
-  const swayDelay = index * 0.55;
-  const flickerDuration = 2.8 + (index % 4) * 0.35;
-  // Slightly asymmetric keyframes so each lantern sways like it's caught in a
-  // light breeze instead of swinging like a metronome.
-  const swayKeyframes = [
-    -0.9 - (index % 2) * 0.2,
-     1.1 + (index % 3) * 0.15,
-    -0.5,
-     1.3 - (index % 2) * 0.15,
-    -0.9 - (index % 2) * 0.2,
-  ];
 
   return (
-    <div ref={ref} className="relative flex items-stretch gap-0">
-      {/* Timeline node — hanging lantern */}
-      <div className="flex flex-col items-center" style={{ width: 56, flexShrink: 0 }}>
-        <motion.div
-          initial={{ scale: 0, opacity: 0, y: -8 }}
-          animate={inView ? { scale: 1, opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55, delay: index * 0.12, ease: [0.2, 0.7, 0.3, 1] }}
-          className="relative z-10"
-          style={{ width: 48, height: 64 }}
-        >
-          {/* Soft outer halo — kept very faint so the orb doesn't glow loudly */}
-          <div
-            className="absolute pointer-events-none"
-            style={{
-              left: "50%",
-              top: "50%",
-              width: 56,
-              height: 56,
-              transform: "translate(-50%, -50%)",
-              background: `radial-gradient(circle, ${step.color}14 0%, ${step.color}06 45%, transparent 75%)`,
-              filter: "blur(6px)",
-            }}
-          />
-
-          {/* Gentle sway — the whole orb drifts on its string in the breeze */}
-          <motion.div
-            className="absolute inset-0"
-            style={{ transformOrigin: "50% 2px" }}
-            animate={{ rotate: swayKeyframes }}
-            transition={{
-              duration: swayDuration,
-              delay: swayDelay,
-              repeat: Infinity,
-              ease: "easeInOut",
-              times: [0, 0.28, 0.5, 0.74, 1],
-            }}
-          >
-            <svg width="48" height="64" viewBox="0 0 48 64" style={{ overflow: "visible", display: "block" }}>
-              <defs>
-                <radialGradient id={`lantern-core-${index}`} cx="50%" cy="50%" r="55%">
-                  <stop offset="0%" stopColor={step.color} stopOpacity="0.22" />
-                  <stop offset="75%" stopColor={step.color} stopOpacity="0.08" />
-                  <stop offset="100%" stopColor={step.color} stopOpacity="0" />
-                </radialGradient>
-              </defs>
-
-              {/* Hanging string */}
-              <line x1="24" y1="0" x2="24" y2="14" stroke={`${step.color}44`} strokeWidth="0.7" />
-
-              {/* Orb */}
-              <circle
-                cx="24"
-                cy="30"
-                r="14"
-                fill={`url(#lantern-core-${index})`}
-                stroke={`${step.color}55`}
-                strokeWidth="0.8"
-              />
-
-              {/* Phase number */}
-              <text
-                x="24"
-                y="33"
-                textAnchor="middle"
-                fontSize="9"
-                fontWeight="700"
-                fill={step.color}
-                style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}
-              >
-                {step.phase}
-              </text>
-            </svg>
-          </motion.div>
-        </motion.div>
-        {index < steps.length - 1 && (
-          <motion.div
-            initial={{ scaleY: 0 }}
-            animate={inView ? { scaleY: 1 } : {}}
-            transition={{ duration: 0.6, delay: index * 0.12 + 0.3 }}
-            className="origin-top flex-1 w-px mt-1"
-            style={{
-              background: `linear-gradient(to bottom, ${step.color}66, ${steps[index + 1].color}33)`,
-              boxShadow: `0 0 4px ${step.color}55`,
-            }}
-          />
-        )}
-      </div>
-
-      {/* Card */}
-      <motion.div
-        initial={{ opacity: 0, x: isEven ? -24 : 24 }}
-        animate={inView ? { opacity: 1, x: 0 } : {}}
-        transition={{ duration: 0.55, delay: index * 0.12 + 0.08 }}
-        className="relative ml-6 mb-10 flex-1 group"
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 16 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.55, delay: index * 0.12 + 0.08 }}
+      className="relative mb-6 group"
+    >
+      <LiquidGlass
+        borderRadius={20}
+        tintOpacity={0.2}
+        blurRadius={5}
+        rimIntensity={0.05}
+        edgeIntensity={0.01}
+        baseIntensity={0.01}
+        edgeDistance={0.15}
+        rimDistance={0.8}
+        baseDistance={0.1}
+        cornerBoost={0.02}
+        rippleEffect={0.1}
+        style={{ padding: "1.5rem" }}
       >
-        <div
-          className="relative p-6 rounded-2xl border transition-colors duration-300"
-          style={{
-            background: "rgba(8,12,22,0.7)",
-            borderColor: "rgba(255,255,255,0.08)",
-            backdropFilter: "blur(12px)",
-          }}
-        >
-          <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-xl"
-              style={{ background: step.color + "0c", color: step.color }}>
-              {step.icon}
-            </div>
-            <div>
-              <h3 className="font-semibold text-white text-lg mb-2 leading-snug">{step.title}</h3>
-              <p className="text-white/45 text-sm leading-relaxed">{step.description}</p>
-            </div>
+        <div className="flex items-start gap-4">
+          <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-xl"
+            style={{ background: step.color + "0c", color: step.color }}>
+            {step.icon}
+          </div>
+          <div>
+            <h3 className="font-semibold text-white text-lg mb-2 leading-snug">{step.title}</h3>
+            <p className="text-white/45 text-sm leading-relaxed">{step.description}</p>
           </div>
         </div>
-      </motion.div>
-    </div>
+      </LiquidGlass>
+    </motion.div>
   );
 }
 
@@ -311,15 +216,49 @@ export default function ProcessDetail() {
           transition={{ duration: 0.5 }}
           className="mt-4 flex flex-wrap gap-4"
         >
-          <a href="/#contact"
-            className="bg-[#6ee7f7] text-[#080808] font-semibold px-7 py-3.5 rounded-full hover:bg-white transition-colors duration-200 text-sm">
-            Start jouw project
-          </a>
-          <a href="mailto:sem.vdwebdesign@gmail.com"
-            className="text-white/50 hover:text-white transition-colors text-sm flex items-center gap-2 group">
-            Of stuur een mail
-            <span className="group-hover:translate-x-1 transition-transform">→</span>
-          </a>
+          <LiquidGlass
+            borderRadius={28}
+            tintOpacity={0.2}
+            blurRadius={5}
+            rimIntensity={0.05}
+            edgeIntensity={0.01}
+            baseIntensity={0.01}
+            edgeDistance={0.15}
+            rimDistance={0.8}
+            baseDistance={0.1}
+            cornerBoost={0.02}
+            rippleEffect={0.1}
+            style={{ display: "inline-block" }}
+          >
+            <a
+              href="/#contact"
+              className="block font-semibold px-7 py-3.5 text-sm text-white hover:text-white/90 transition-colors"
+            >
+              Start jouw project
+            </a>
+          </LiquidGlass>
+          <LiquidGlass
+            borderRadius={28}
+            tintOpacity={0.2}
+            blurRadius={5}
+            rimIntensity={0.05}
+            edgeIntensity={0.01}
+            baseIntensity={0.01}
+            edgeDistance={0.15}
+            rimDistance={0.8}
+            baseDistance={0.1}
+            cornerBoost={0.02}
+            rippleEffect={0.1}
+            style={{ display: "inline-block" }}
+          >
+            <a
+              href="mailto:sem.vdwebdesign@gmail.com"
+              className="flex items-center gap-2 px-6 py-3.5 text-sm text-white/70 hover:text-white transition-colors group"
+            >
+              Of stuur een mail
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
+            </a>
+          </LiquidGlass>
         </motion.div>
       </motion.div>
     </section>
