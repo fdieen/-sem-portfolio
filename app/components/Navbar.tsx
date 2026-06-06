@@ -4,20 +4,6 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import LiquidGlass from "./LiquidGlass";
-
-const GLASS_PROPS = {
-  tintOpacity: 0.2,
-  blurRadius: 5,
-  rimIntensity: 0.05,
-  edgeIntensity: 0.01,
-  baseIntensity: 0.01,
-  edgeDistance: 0.15,
-  rimDistance: 0.8,
-  baseDistance: 0.1,
-  cornerBoost: 0.02,
-  rippleEffect: 0.1,
-} as const;
 
 const socials = [
   {
@@ -156,25 +142,19 @@ export default function Navbar() {
         </a>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-2">
+        <div className="hidden md:flex items-center gap-8">
           {links.map((link) => (
-            <LiquidGlass
+            <a
               key={link.href}
-              {...GLASS_PROPS}
-              borderRadius={20}
-              style={{ display: "inline-block" }}
+              href={link.href}
+              className="text-sm text-white/60 hover:text-white transition-colors duration-200"
             >
-              <a
-                href={link.href}
-                className="block px-4 py-2 text-sm text-white/70 hover:text-white transition-colors"
-              >
-                {link.label}
-              </a>
-            </LiquidGlass>
+              {link.label}
+            </a>
           ))}
 
           {/* Desktop socials */}
-          <div className="flex items-center gap-2 ml-4">
+          <div className="flex items-center gap-2">
             {socials.map((s) => (
               <a
                 key={s.label}
