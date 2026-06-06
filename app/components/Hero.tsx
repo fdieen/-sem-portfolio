@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import SpaceGlobe from "./SpaceGlobe";
 import Satellite from "./Satellite";
 import StarField from "./StarField";
+import LiquidGlass from "./LiquidGlass";
 
 export default function Hero() {
   return (
@@ -53,19 +54,49 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.5 }}
             className="flex flex-wrap items-center gap-4"
           >
-            <a
-              href="/projecten"
-              className="bg-[#6ee7f7] text-[#080808] font-semibold px-7 py-3.5 rounded-full hover:bg-white transition-colors duration-200 text-sm"
+            <LiquidGlass
+              borderRadius={28}
+              tintOpacity={0.2}
+              blurRadius={5}
+              rimIntensity={0.05}
+              edgeIntensity={0.01}
+              baseIntensity={0.01}
+              edgeDistance={0.15}
+              rimDistance={0.8}
+              baseDistance={0.1}
+              cornerBoost={0.02}
+              rippleEffect={0.1}
+              style={{ display: "inline-block" }}
             >
-              Bekijk mijn werk
-            </a>
-            <a
-              href="#contact"
-              className="text-white/60 hover:text-white transition-colors text-sm flex items-center gap-2 group"
+              <a
+                href="/projecten"
+                className="block font-semibold px-7 py-3.5 text-sm text-[#6ee7f7] hover:text-white transition-colors"
+              >
+                Bekijk mijn werk
+              </a>
+            </LiquidGlass>
+            <LiquidGlass
+              borderRadius={28}
+              tintOpacity={0.2}
+              blurRadius={5}
+              rimIntensity={0.05}
+              edgeIntensity={0.01}
+              baseIntensity={0.01}
+              edgeDistance={0.15}
+              rimDistance={0.8}
+              baseDistance={0.1}
+              cornerBoost={0.02}
+              rippleEffect={0.1}
+              style={{ display: "inline-block" }}
             >
-              Neem contact op
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </a>
+              <a
+                href="#contact"
+                className="flex items-center gap-2 px-6 py-3.5 text-sm text-white/70 hover:text-white transition-colors group"
+              >
+                Neem contact op
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </a>
+            </LiquidGlass>
           </motion.div>
         </div>
       </div>
