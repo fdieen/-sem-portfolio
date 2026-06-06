@@ -245,10 +245,12 @@ void main() {
   float armHoverMask = smoothstep(0.0, 0.4, u_twistAmount);
   color.rgb = mix(color.rgb, vec3(1.0), armPattern * armBodyMask * armHoverMask * 0.3);
 
-  /* Anti-aliased rounded-rect alpha mask. */
+  /* Anti-aliased rounded-rect alpha mask. The 0.55 multiplier lets the
+     real page bleed through behind the refracted snapshot so the card
+     reads as clear glass rather than a tinted block. */
   float maskDistance = roundedRectDistance(coord, u_resolution, u_borderRadius);
   float mask = 1.0 - smoothstep(-1.0, 1.0, maskDistance);
-  gl_FragColor = vec4(color.rgb, mask);
+  gl_FragColor = vec4(color.rgb, mask * 0.55);
 }
 `;
 
@@ -658,8 +660,8 @@ export default function LiquidGlass({
         background: "transparent",
         border: "1px solid rgba(255,255,255,0.18)",
         boxShadow: hoverActive
-          ? "0 14px 38px rgba(0,0,0,0.34), 0 0 0 1px rgba(255,255,255,0.10), inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.28)"
-          : "0 8px 28px rgba(0,0,0,0.22), inset 0 0 0 1px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.25)",
+          ? "0 12px 32px rgba(0,0,0,0.22), 0 0 0 1px rgba(255,255,255,0.10), inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -1px 0 rgba(0,0,0,0.10)"
+          : "0 6px 22px rgba(0,0,0,0.14), inset 0 0 0 1px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -1px 0 rgba(0,0,0,0.08)",
         transform: hoverActive
           ? `scale(${twist ? 1.03 : 1.012}) rotate(${twist ? 1.4 : 0.5}deg)`
           : "scale(1) rotate(0deg)",
@@ -695,7 +697,7 @@ export default function LiquidGlass({
           inset: 0,
           borderRadius: "inherit",
           background:
-            "linear-gradient(135deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.10) 22%, rgba(255,255,255,0) 45%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.06) 80%, rgba(0,0,0,0.20) 100%)",
+            "linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 22%, rgba(255,255,255,0) 45%, rgba(255,255,255,0) 65%, rgba(255,255,255,0.04) 85%, rgba(0,0,0,0.06) 100%)",
           pointerEvents: "none",
           zIndex: 1,
         }}
