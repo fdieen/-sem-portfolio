@@ -691,15 +691,18 @@ export default function LiquidGlass({
       />
 
       {/* Strong directional glare — light sweeping from upper-left down
-          to lower-right, creating the classic glossy-glass sheen. */}
+          to lower-right, creating the classic glossy-glass sheen. On
+          twist=false content cards we tone the upper-left lobe down so
+          it doesn't haze the title area. */}
       <span
         aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
           borderRadius: "inherit",
-          background:
-            "linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 22%, rgba(255,255,255,0) 45%, rgba(255,255,255,0) 65%, rgba(255,255,255,0.04) 85%, rgba(0,0,0,0.06) 100%)",
+          background: twist
+            ? "linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 22%, rgba(255,255,255,0) 45%, rgba(255,255,255,0) 65%, rgba(255,255,255,0.04) 85%, rgba(0,0,0,0.06) 100%)"
+            : "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 22%, rgba(255,255,255,0) 45%, rgba(255,255,255,0) 65%, rgba(255,255,255,0.03) 85%, rgba(0,0,0,0.04) 100%)",
           pointerEvents: "none",
           zIndex: 1,
         }}
@@ -725,23 +728,27 @@ export default function LiquidGlass({
       />
 
       {/* Secondary inner glare — softer, mid-card highlight that adds
-          the "wet glass" sparkle near the upper-left corner. */}
-      <span
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "10%",
-          left: "8%",
-          width: "30%",
-          height: "20%",
-          borderRadius: "50%",
-          background:
-            "radial-gradient(ellipse at center, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 70%)",
-          filter: "blur(8px)",
-          pointerEvents: "none",
-          zIndex: 2,
-        }}
-      />
+          the "wet glass" sparkle near the upper-left corner. Skipped on
+          twist=false cards: the blurred white blob sat exactly on top of
+          the title and read as a wash over the text. */}
+      {twist && (
+        <span
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: "10%",
+            left: "8%",
+            width: "30%",
+            height: "20%",
+            borderRadius: "50%",
+            background:
+              "radial-gradient(ellipse at center, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 70%)",
+            filter: "blur(8px)",
+            pointerEvents: "none",
+            zIndex: 2,
+          }}
+        />
+      )}
 
       {/* Content sits on top of every glass layer. */}
       <div style={{ position: "relative", zIndex: 3 }}>{children}</div>
