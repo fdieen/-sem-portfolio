@@ -131,7 +131,7 @@ export default function ProcessDetail() {
     <section className="relative min-h-screen py-32 px-6 overflow-hidden">
       {/* Island background — slightly blurred so it recedes behind the timeline */}
       <div className="absolute inset-0" style={{ filter: "blur(2px)" }}>
-        <IslandScene landingFlash={flashShore} />
+        <IslandScene landingFlash={flashShore} landingTopVh={60} />
       </div>
 
       {/* Warm golden glow blooming from the timeline itself, like the lanterns
@@ -159,6 +159,7 @@ export default function ProcessDetail() {
         <RocketLanding
           phase={phase}
           onDescentComplete={() => setPhase("idle")}
+          landingTopVh={60}
         />
       </div>
 
