@@ -613,7 +613,7 @@ export default function LiquidGlass({
           ? "0 14px 38px rgba(0,0,0,0.34), 0 0 0 1px rgba(255,255,255,0.10), inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(0,0,0,0.28)"
           : "0 8px 28px rgba(0,0,0,0.22), inset 0 0 0 1px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.25)",
         transform: hovered
-          ? `scale(${twist ? 1.03 : 1.012}) rotate(1.4deg)`
+          ? `scale(${twist ? 1.03 : 1.012}) rotate(${twist ? 1.4 : 0.5}deg)`
           : "scale(1) rotate(0deg)",
         transition:
           "transform 360ms cubic-bezier(0.2, 0.7, 0.3, 1), box-shadow 280ms ease",
