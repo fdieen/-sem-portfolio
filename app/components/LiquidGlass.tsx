@@ -108,6 +108,9 @@ uniform float u_baseDistance;
 uniform float u_cornerBoost;
 uniform float u_rippleEffect;
 uniform float u_tintOpacity;
+uniform float u_time;
+uniform float u_twistAmount;
+uniform float u_causticAmount;
 
 varying vec2 v_texcoord;
 
@@ -163,10 +166,20 @@ void main() {
   float cornerBoost = exp(-cornerNormalized * 0.3) * u_cornerBoost;
   vec2 cornerRefraction = shapeNormal * cornerBoost * 3.0;
 
-  /* Subtle tangential ripple along the rim. */
+  /* Tangential ripple — animates over time so the swirl moves like a
+     fluid. On hover, u_twistAmount lifts the ripple off the rim and lets
+     it spread across the body of the glass, giving the entire shape a
+     visible twisting flow rather than just a wiggle on the perimeter. */
   vec2 perpendicular = vec2(-shapeNormal.y, shapeNormal.x);
-  float rippleEffect = sin(distFromEdgeShape * 25.0) * u_rippleEffect * rimIntensity;
-  vec2 textureRefraction = perpendicular * rippleEffect * 2.5;
+  float dirAngle = atan(shapeNormal.y, shapeNormal.x);
+  float ripplePhase = distFromEdgeShape * 18.0 + dirAngle * 3.0 + u_time * 2.0;
+  float rippleBand = sin(ripplePhase) * u_rippleEffect;
+  /* Rim factor keeps the static look: ripple stays near the rim when
+     u_twistAmount = 0. When u_twistAmount ramps up, the (+ twistAmount)
+     term adds a constant floor so the ripple bleeds inward across the
+     whole shape. */
+  float rippleField = rippleBand * (rimIntensity + u_twistAmount);
+  vec2 textureRefraction = perpendicular * rippleField * 2.5;
 
   textureCoord += baseRefraction + cornerRefraction + textureRefraction;
 
@@ -196,6 +209,15 @@ void main() {
   vec3 gradientTint = mix(topTint, bottomTint, gradientPosition);
   vec3 tintedColor = mix(color.rgb, gradientTint, u_tintOpacity);
   color = vec4(tintedColor, color.a);
+
+  /* Moving caustic highlight — two bright lobes that rotate around the
+     shape, riding just inside the rim. This is what reads as the bright
+     "glass surface" lines in real soap-bubble / liquid-glass refs. */
+  float rimZone = exp(-distFromEdgeShape * 0.45);
+  float causticAngle = atan(shapeNormal.y, shapeNormal.x);
+  float causticPhase = causticAngle * 2.0 + u_time * 0.9;
+  float caustic = max(0.0, sin(causticPhase) - 0.25) * 1.33;
+  color.rgb = mix(color.rgb, vec3(1.0), caustic * rimZone * u_causticAmount);
 
   /* Anti-aliased rounded-rect alpha mask. */
   float maskDistance = roundedRectDistance(coord, u_resolution, u_borderRadius);
@@ -310,7 +332,11 @@ export default function LiquidGlass({
     let cornerBoostLoc: WebGLUniformLocation | null = null;
     let rippleEffectLoc: WebGLUniformLocation | null = null;
     let tintOpacityLoc: WebGLUniformLocation | null = null;
+    let timeLoc: WebGLUniformLocation | null = null;
+    let twistAmountLoc: WebGLUniformLocation | null = null;
+    let causticAmountLoc: WebGLUniformLocation | null = null;
     let imageLoc: WebGLUniformLocation | null = null;
+    const startTime = performance.now();
 
     let cancelled = false;
     let rafId = 0;
@@ -358,6 +384,9 @@ export default function LiquidGlass({
       cornerBoostLoc = gl!.getUniformLocation(program, "u_cornerBoost");
       rippleEffectLoc = gl!.getUniformLocation(program, "u_rippleEffect");
       tintOpacityLoc = gl!.getUniformLocation(program, "u_tintOpacity");
+      timeLoc = gl!.getUniformLocation(program, "u_time");
+      twistAmountLoc = gl!.getUniformLocation(program, "u_twistAmount");
+      causticAmountLoc = gl!.getUniformLocation(program, "u_causticAmount");
       imageLoc = gl!.getUniformLocation(program, "u_image");
 
       gl!.bindBuffer(gl!.ARRAY_BUFFER, positionBuffer);
@@ -432,16 +461,22 @@ export default function LiquidGlass({
       if (scrollYLoc) gl.uniform1f(scrollYLoc, window.scrollY);
 
       /* Hover ramps the refraction up; ripple gets the strongest boost so
-         the rim shimmer reads as a deliberate "twist" under the cursor. */
+         the rim shimmer reads as a deliberate "twist" under the cursor.
+         twistAmount lets the ripple bleed off the rim into the body of
+         the glass, and causticAmount drives the bright moving highlight. */
       const p = hoverProgressRef.current;
-      const intensityMul = 1 + p * 2.2;
-      const rippleMul = 1 + p * 5.0;
-      const cornerMul = 1 + p * 3.0;
+      const intensityMul = 1 + p * 2.5;
+      const rippleMul = 1 + p * 7.0;
+      const cornerMul = 1 + p * 3.5;
+      const t = (performance.now() - startTime) / 1000;
       if (rimIntensityLoc) gl.uniform1f(rimIntensityLoc, rimIntensity * intensityMul);
       if (edgeIntensityLoc) gl.uniform1f(edgeIntensityLoc, edgeIntensity * intensityMul);
       if (baseIntensityLoc) gl.uniform1f(baseIntensityLoc, baseIntensity * intensityMul);
       if (cornerBoostLoc) gl.uniform1f(cornerBoostLoc, cornerBoost * cornerMul);
       if (rippleEffectLoc) gl.uniform1f(rippleEffectLoc, rippleEffect * rippleMul);
+      if (timeLoc) gl.uniform1f(timeLoc, t);
+      if (twistAmountLoc) gl.uniform1f(twistAmountLoc, p * 0.6);
+      if (causticAmountLoc) gl.uniform1f(causticAmountLoc, 0.18 + p * 0.55);
 
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -456,15 +491,14 @@ export default function LiquidGlass({
       const diff = target - current;
       if (Math.abs(diff) > 0.001) {
         hoverProgressRef.current = current + diff * 0.12;
-        needsDraw = true;
       } else if (current !== target) {
         hoverProgressRef.current = target;
-        needsDraw = true;
       }
-      if (needsDraw) {
-        draw();
-        needsDraw = false;
-      }
+      /* Always redraw — the shader is now animated by u_time so each
+         frame produces a slightly different ripple / caustic, even when
+         the user isn't hovering. */
+      draw();
+      needsDraw = false;
       rafId = window.requestAnimationFrame(tick);
     }
 
