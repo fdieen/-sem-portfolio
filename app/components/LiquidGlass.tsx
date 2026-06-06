@@ -654,10 +654,12 @@ export default function LiquidGlass({
         position: "relative",
         isolation: "isolate",
         borderRadius,
-        // Almost no frost at all — the WebGL canvas + glare layers carry
-        // the entire glass look. The CSS just contributes the rim shadow
-        // and the bezel highlight stripe.
-        background: "transparent",
+        /* twist=false content cards sit on a busy backdrop (IslandScene
+           + warm glow), and with the canvas now 55% opaque the text was
+           competing with all that. A subtle dark layer gives the content
+           a stable substrate to read against; small CTAs (twist=true)
+           stay fully transparent for the clear-glass look. */
+        background: twist ? "transparent" : "rgba(8, 12, 22, 0.35)",
         border: "1px solid rgba(255,255,255,0.18)",
         boxShadow: hoverActive
           ? "0 12px 32px rgba(0,0,0,0.22), 0 0 0 1px rgba(255,255,255,0.10), inset 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -1px 0 rgba(0,0,0,0.10)"
