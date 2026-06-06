@@ -259,16 +259,16 @@ export default function LiquidGlass({
   className = "",
   style,
   borderRadius = 20,
-  tintOpacity = 0.2,
-  blurRadius = 6,
-  rimIntensity = 0.05,
-  edgeIntensity = 0.01,
-  baseIntensity = 0.01,
+  tintOpacity = 0.18,
+  blurRadius = 5,
+  rimIntensity = 0.35,
+  edgeIntensity = 0.18,
+  baseIntensity = 0.08,
   edgeDistance = 0.15,
   rimDistance = 0.8,
   baseDistance = 0.1,
-  cornerBoost = 0.02,
-  rippleEffect = 0.1,
+  cornerBoost = 0.08,
+  rippleEffect = 0.18,
 }: LiquidGlassProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);

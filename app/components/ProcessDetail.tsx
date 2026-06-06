@@ -86,20 +86,7 @@ function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
       transition={{ duration: 0.55, delay: index * 0.12 + 0.08 }}
       className="relative mb-6 group"
     >
-      <LiquidGlass
-        borderRadius={20}
-        tintOpacity={0.2}
-        blurRadius={5}
-        rimIntensity={0.05}
-        edgeIntensity={0.01}
-        baseIntensity={0.01}
-        edgeDistance={0.15}
-        rimDistance={0.8}
-        baseDistance={0.1}
-        cornerBoost={0.02}
-        rippleEffect={0.1}
-        style={{ padding: "1.5rem" }}
-      >
+      <LiquidGlass borderRadius={20} style={{ padding: "1.5rem" }}>
         <div className="flex items-start gap-4">
           <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-xl"
             style={{ background: step.color + "0c", color: step.color }}>
@@ -216,20 +203,7 @@ export default function ProcessDetail() {
           transition={{ duration: 0.5 }}
           className="mt-4 flex flex-wrap gap-4"
         >
-          <LiquidGlass
-            borderRadius={28}
-            tintOpacity={0.2}
-            blurRadius={5}
-            rimIntensity={0.05}
-            edgeIntensity={0.01}
-            baseIntensity={0.01}
-            edgeDistance={0.15}
-            rimDistance={0.8}
-            baseDistance={0.1}
-            cornerBoost={0.02}
-            rippleEffect={0.1}
-            style={{ display: "inline-block" }}
-          >
+          <LiquidGlass borderRadius={28} style={{ display: "inline-block" }}>
             <a
               href="/#contact"
               className="block font-semibold px-7 py-3.5 text-sm text-white hover:text-white/90 transition-colors"
@@ -237,20 +211,7 @@ export default function ProcessDetail() {
               Start jouw project
             </a>
           </LiquidGlass>
-          <LiquidGlass
-            borderRadius={28}
-            tintOpacity={0.2}
-            blurRadius={5}
-            rimIntensity={0.05}
-            edgeIntensity={0.01}
-            baseIntensity={0.01}
-            edgeDistance={0.15}
-            rimDistance={0.8}
-            baseDistance={0.1}
-            cornerBoost={0.02}
-            rippleEffect={0.1}
-            style={{ display: "inline-block" }}
-          >
+          <LiquidGlass borderRadius={28} style={{ display: "inline-block" }}>
             <a
               href="mailto:sem.vdwebdesign@gmail.com"
               className="flex items-center gap-2 px-6 py-3.5 text-sm text-white/70 hover:text-white transition-colors group"
