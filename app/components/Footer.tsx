@@ -80,7 +80,7 @@ export default function Footer({ transparent = false, seamlessTop = false }: Foo
             />
           </a>
           <p className="text-white/20 text-xs">
-            © 2026 Sem van Dieen. Alle rechten voorbehouden.
+            © 2026 SVD BV. Alle rechten voorbehouden.
           </p>
           <a
             href="/algemene-voorwaarden"

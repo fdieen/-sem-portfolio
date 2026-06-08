@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Sem van Dieen | Webdesign & Development";
+export const alt = "SVD BV | Webdesign & Development";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -47,7 +47,7 @@ export default async function Image() {
         {/* Name */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
           <span style={{ color: "#f0f0f0", fontSize: 28, fontWeight: 700, letterSpacing: -0.5 }}>
-            Sem van Dieen
+            SVD BV
           </span>
           <span style={{ color: "#6ee7f7", fontSize: 28, fontWeight: 700 }}>.</span>
         </div>
