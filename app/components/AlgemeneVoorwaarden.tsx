@@ -7,8 +7,8 @@ const sections = [
     nr: "01",
     title: "Definities en toepasselijkheid",
     body: [
-      "In deze algemene voorwaarden wordt verstaan onder: ‘opdrachtnemer’: SVD WebDesign, gevestigd in Nederland, eigendom van Sem van Dieen. ‘opdrachtgever’: de natuurlijke of rechtspersoon die met opdrachtnemer een overeenkomst sluit of wenst te sluiten.",
-      "Deze voorwaarden zijn van toepassing op alle offertes, overeenkomsten en leveringen van diensten door SVD WebDesign, tenzij schriftelijk uitdrukkelijk anders is overeengekomen.",
+      "In deze algemene voorwaarden wordt verstaan onder: ‘opdrachtnemer’: SVD BV, gevestigd in Nederland, eigendom van Sem van Dieen. ‘opdrachtgever’: de natuurlijke of rechtspersoon die met opdrachtnemer een overeenkomst sluit of wenst te sluiten.",
+      "Deze voorwaarden zijn van toepassing op alle offertes, overeenkomsten en leveringen van diensten door SVD BV, tenzij schriftelijk uitdrukkelijk anders is overeengekomen.",
       "Eventuele inkoop- of andere voorwaarden van opdrachtgever zijn niet van toepassing, tenzij deze door opdrachtnemer uitdrukkelijk schriftelijk zijn aanvaard.",
     ],
   },
@@ -16,7 +16,7 @@ const sections = [
     nr: "02",
     title: "Offertes",
     body: [
-      "Alle offertes van SVD WebDesign zijn vrijblijvend, tenzij in de offerte een termijn voor aanvaarding is gesteld. Een offerte is geldig gedurende 30 dagen na dagtekening, daarna heeft zij slechts een informatieve waarde.",
+      "Alle offertes van SVD BV zijn vrijblijvend, tenzij in de offerte een termijn voor aanvaarding is gesteld. Een offerte is geldig gedurende 30 dagen na dagtekening, daarna heeft zij slechts een informatieve waarde.",
       "Opdrachtnemer kan niet aan zijn offerte worden gehouden indien opdrachtgever redelijkerwijs kan begrijpen dat de offerte een kennelijke vergissing of verschrijving bevat.",
       "De in een offerte vermelde prijzen zijn exclusief btw en eventuele kosten van derden (zoals hosting, domeinregistratie, licenties of stockmateriaal), tenzij anders aangegeven.",
     ],
@@ -33,7 +33,7 @@ const sections = [
     nr: "04",
     title: "Uitvoering van de opdracht",
     body: [
-      "SVD WebDesign zal de overeenkomst naar beste inzicht en vermogen en in overeenstemming met de eisen van goed vakmanschap uitvoeren. Alle verbintenissen zijn inspanningsverplichtingen, geen resultaatsverplichtingen, tenzij uitdrukkelijk anders overeengekomen.",
+      "SVD BV zal de overeenkomst naar beste inzicht en vermogen en in overeenstemming met de eisen van goed vakmanschap uitvoeren. Alle verbintenissen zijn inspanningsverplichtingen, geen resultaatsverplichtingen, tenzij uitdrukkelijk anders overeengekomen.",
       "Opdrachtgever draagt er zorg voor dat alle gegevens, materialen en informatie waarvan opdrachtnemer aangeeft dat deze noodzakelijk zijn, tijdig worden aangeleverd. Vertraging in de aanlevering komt voor risico van opdrachtgever.",
       "Opdrachtnemer is gerechtigd bepaalde werkzaamheden door derden te laten verrichten. De toepasselijkheid van artikel 7:404, 7:407 lid 2 en 7:409 BW wordt uitdrukkelijk uitgesloten.",
     ],
@@ -50,7 +50,7 @@ const sections = [
     nr: "06",
     title: "Tarieven en betaling",
     body: [
-      "Tenzij anders overeengekomen, factureert SVD WebDesign 50% van het overeengekomen bedrag bij aanvang van het project en het resterende deel bij oplevering. Voor onderhouds- en doorlopende dienstverlening wordt maandelijks of jaarlijks gefactureerd.",
+      "Tenzij anders overeengekomen, factureert SVD BV 50% van het overeengekomen bedrag bij aanvang van het project en het resterende deel bij oplevering. Voor onderhouds- en doorlopende dienstverlening wordt maandelijks of jaarlijks gefactureerd.",
       "Betaling dient te geschieden binnen 14 dagen na factuurdatum, op een door opdrachtnemer aan te wijzen bankrekening, zonder verrekening of opschorting.",
       "Bij niet-tijdige betaling is opdrachtgever zonder nadere ingebrekestelling in verzuim en is hij de wettelijke (handels)rente verschuldigd, alsmede alle gerechtelijke en buitengerechtelijke incassokosten.",
       "Bij aanhoudende wanbetaling is opdrachtnemer gerechtigd om de geleverde diensten op te schorten of offline te halen, totdat de openstaande facturen volledig zijn voldaan.",
@@ -76,7 +76,7 @@ const sections = [
     nr: "09",
     title: "Intellectueel eigendom",
     body: [
-      "Alle door SVD WebDesign ontwikkelde of ter beschikking gestelde werken — waaronder ontwerpen, broncode, teksten en grafisch materiaal — blijven eigendom van opdrachtnemer, tenzij schriftelijk anders is overeengekomen.",
+      "Alle door SVD BV ontwikkelde of ter beschikking gestelde werken — waaronder ontwerpen, broncode, teksten en grafisch materiaal — blijven eigendom van opdrachtnemer, tenzij schriftelijk anders is overeengekomen.",
       "Na volledige betaling verkrijgt opdrachtgever een niet-exclusief, niet-overdraagbaar gebruiksrecht op de specifiek voor hem ontwikkelde werken, voor het overeengekomen doel.",
       "Opdrachtnemer behoudt het recht om gebruikte ideeën, technieken, frameworks en achterliggende componenten ook voor andere opdrachten te gebruiken, en het opgeleverde werk te tonen als referentie in zijn portfolio.",
       "Opdrachtgever garandeert dat door hem aangeleverde materialen vrij zijn van rechten van derden en vrijwaart opdrachtnemer voor aanspraken van derden ter zake.",
@@ -86,7 +86,7 @@ const sections = [
     nr: "10",
     title: "Aansprakelijkheid",
     body: [
-      "De aansprakelijkheid van SVD WebDesign is beperkt tot directe schade en tot maximaal het bedrag dat in de betreffende opdracht door opdrachtgever is betaald, met een maximum van € 2.500,-.",
+      "De aansprakelijkheid van SVD BV is beperkt tot directe schade en tot maximaal het bedrag dat in de betreffende opdracht door opdrachtgever is betaald, met een maximum van € 2.500,-.",
       "Opdrachtnemer is niet aansprakelijk voor indirecte schade, waaronder gevolgschade, gederfde winst, gemiste besparingen, dataverlies of schade door bedrijfsstagnatie.",
       "Opdrachtnemer is niet aansprakelijk voor schade die ontstaat doordat opdrachtgever onjuiste of onvolledige informatie heeft verstrekt, of door wijzigingen die opdrachtgever zelf of een door hem ingeschakelde derde in de geleverde producten aanbrengt.",
       "Iedere aanspraak op schadevergoeding vervalt indien deze niet binnen 12 maanden na ontdekking schriftelijk bij opdrachtnemer is gemeld.",
@@ -128,7 +128,7 @@ const sections = [
     nr: "15",
     title: "Toepasselijk recht en geschillen",
     body: [
-      "Op alle overeenkomsten tussen opdrachtgever en SVD WebDesign is uitsluitend Nederlands recht van toepassing.",
+      "Op alle overeenkomsten tussen opdrachtgever en SVD BV is uitsluitend Nederlands recht van toepassing.",
       "Geschillen die voortvloeien uit of verband houden met de overeenkomst worden bij uitsluiting voorgelegd aan de bevoegde rechter in het arrondissement waar opdrachtnemer is gevestigd, tenzij dwingend recht een andere rechter aanwijst.",
     ],
   },
@@ -174,7 +174,7 @@ export default function AlgemeneVoorwaarden() {
           </h1>
           <p className="text-white/40 text-base leading-relaxed max-w-xl">
             Deze voorwaarden zijn van toepassing op alle offertes, opdrachten en
-            leveringen van SVD WebDesign. Laatst bijgewerkt: juni 2026.
+            leveringen van SVD BV. Laatst bijgewerkt: juni 2026.
           </p>
         </motion.div>
 
@@ -194,7 +194,7 @@ export default function AlgemeneVoorwaarden() {
             Bedrijfsgegevens
           </p>
           <div className="space-y-1 text-sm text-white/60 leading-relaxed">
-            <p><span className="text-white/40">Handelsnaam:</span> SVD WebDesign</p>
+            <p><span className="text-white/40">Handelsnaam:</span> SVD BV</p>
             <p><span className="text-white/40">Eigenaar:</span> Sem van Dieen</p>
             <p>
               <span className="text-white/40">E-mail:</span>{" "}

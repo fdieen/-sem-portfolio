@@ -4,9 +4,9 @@ import Footer from "../components/Footer";
 import AlgemeneVoorwaarden from "../components/AlgemeneVoorwaarden";
 
 export const metadata: Metadata = {
-  title: "Algemene voorwaarden | SVD WebDesign",
+  title: "Algemene voorwaarden | SVD BV",
   description:
-    "De algemene voorwaarden van SVD WebDesign — van toepassing op alle offertes, opdrachten en leveringen van diensten.",
+    "De algemene voorwaarden van SVD BV — van toepassing op alle offertes, opdrachten en leveringen van diensten.",
   alternates: {
     canonical: "/algemene-voorwaarden",
   },

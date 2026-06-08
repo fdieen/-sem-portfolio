@@ -20,12 +20,12 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "SVD WebDesign | Websites & Webshops op maat",
+  title: "SVD BV | Websites & Webshops op maat",
   description:
-    "SVD WebDesign bouwt moderne websites en webshops op maat — snel, professioneel en volledig naar wens. Bekijk eerder werk en vraag een vrijblijvende offerte aan.",
+    "SVD BV bouwt moderne websites en webshops op maat — snel, professioneel en volledig naar wens. Bekijk eerder werk en vraag een vrijblijvende offerte aan.",
   keywords: [
     "webdesign", "webdesigner", "website laten maken", "webshop laten maken",
-    "websites op maat", "bedrijfswebsite", "SVD WebDesign", "Sem van Dieen",
+    "websites op maat", "bedrijfswebsite", "SVD BV", "Sem van Dieen",
     "website bouwen", "moderne website", "React website", "Next.js webdesign",
     "goedkope website", "professionele website", "webdesign Nederland",
   ],
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "nl_NL",
     url: "https://svdwebdesign.nl",
-    siteName: "SVD WebDesign",
-    title: "SVD WebDesign | Websites & Webshops op maat",
+    siteName: "SVD BV",
+    title: "SVD BV | Websites & Webshops op maat",
     description:
       "Moderne websites en webshops volledig op maat. Snel, betaalbaar en professioneel. Vraag vrijblijvend een offerte aan.",
     images: [
@@ -48,13 +48,13 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "SVD WebDesign — Websites & Webshops op maat",
+        alt: "SVD BV — Websites & Webshops op maat",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SVD WebDesign | Websites & Webshops op maat",
+    title: "SVD BV | Websites & Webshops op maat",
     description:
       "Moderne websites en webshops volledig op maat. Snel, betaalbaar en professioneel.",
     images: ["/opengraph-image"],
@@ -77,9 +77,9 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  name: "SVD WebDesign",
+  name: "SVD BV",
   description:
-    "SVD WebDesign bouwt moderne websites en webshops op maat voor bedrijven en ondernemers in Nederland.",
+    "SVD BV bouwt moderne websites en webshops op maat voor bedrijven en ondernemers in Nederland.",
   url: "https://svdwebdesign.nl",
   email: "sem.vdieen@gmail.com",
   telephone: "+31627381813",

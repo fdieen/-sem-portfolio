@@ -66,7 +66,7 @@ export default function SeoFooter() {
       <div className="max-w-6xl mx-auto px-6 py-5 space-y-3">
 
         <p className="text-[9px] tracking-[0.2em] uppercase text-white/20 font-mono">
-          SVD WebDesign — Diensten & informatie
+          SVD BV — Diensten & informatie
         </p>
 
         {/* Diensten — horizontal flowing list */}

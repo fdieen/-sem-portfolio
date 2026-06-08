@@ -70,7 +70,7 @@ export default function Footer({ transparent = false, seamlessTop = false }: Foo
           <a href="/" className="hover:opacity-80 transition-opacity">
             <img
               src="/svd-logo.png"
-              alt="SVD WebDesign"
+              alt="SVD BV"
               style={{
                 height: "70px",
                 width: "auto",
