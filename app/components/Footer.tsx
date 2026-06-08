@@ -69,7 +69,7 @@ export default function Footer({ transparent = false, seamlessTop = false }: Foo
         <div className="flex flex-col items-center sm:items-start gap-2">
           <a href="/" className="hover:opacity-80 transition-opacity">
             <img
-              src="/svd-logo.png"
+              src="/svd-bv-logo.png"
               alt="SVD BV"
               style={{
                 height: "70px",

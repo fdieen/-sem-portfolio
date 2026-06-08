@@ -137,7 +137,7 @@ export default function Navbar() {
       <div className={`w-full px-6 flex items-center justify-between transition-all duration-300 ${scrolled ? "py-2" : "py-4"}`}>
         <a href="/" className="flex items-center hover:opacity-90 transition-opacity">
           <div style={{ mixBlendMode: "screen", filter: `drop-shadow(0 0 8px rgba(110,231,247,0.7)) drop-shadow(0 0 20px rgba(110,231,247,0.35))` }}>
-            <Image src="/svd-logo.png" alt="SVD BV" width={700} height={200} className="object-contain transition-all duration-300" style={{ height: "55px", width: "auto" }} />
+            <Image src="/svd-bv-logo.png" alt="SVD BV" width={1536} height={1024} priority className="object-contain transition-all duration-300" style={{ height: "55px", width: "auto" }} />
           </div>
         </a>
 
