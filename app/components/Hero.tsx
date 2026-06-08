@@ -1,14 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import SpaceGlobe from "./SpaceGlobe";
-import Satellite from "./Satellite";
 import StarField from "./StarField";
 import LiquidGlass from "./LiquidGlass";
-import { useDeviceCapabilities } from "../hooks/useDeviceCapabilities";
 
 export default function Hero() {
-  const { isCompact } = useDeviceCapabilities();
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background grid */}
@@ -105,17 +101,11 @@ export default function Hero() {
 
 
 
-      {/* Bottom fade — staat eerst in DOM zodat sterren/globe er bovenop blijven liggen */}
+      {/* Bottom fade — staat eerst in DOM zodat sterren er bovenop blijven liggen */}
       <div className="absolute bottom-0 left-0 right-0 h-72 pointer-events-none" style={{ background: 'linear-gradient(to bottom, transparent 0%, rgba(5,6,15,0.5) 60%, rgba(5,6,15,0.85) 100%)' }} />
 
-      {/* Sterren + globe + satelliet — komen na de fade in DOM zodat ze door de fade heen prikken */}
+      {/* Sterren — komen na de fade in DOM zodat ze door de fade heen prikken */}
       <StarField />
-      {!isCompact && (
-        <>
-          <SpaceGlobe />
-          <Satellite />
-        </>
-      )}
     </section>
   );
 }
