@@ -23,21 +23,16 @@ export default function About() {
               {/* Glow */}
               <div className="absolute -inset-4 bg-[#6ee7f7]/10 rounded-3xl blur-2xl" />
 
-              <div
-                className="relative rounded-2xl overflow-hidden border border-white/10 aspect-[3/5]"
-                style={{
-                  background:
-                    "radial-gradient(ellipse at center, #0d2540 0%, #06101e 55%, #04080f 100%)",
-                }}
-              >
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 aspect-[3/4]">
                 <Image
-                  src="/sem-character.png"
-                  alt="Sem van Dieen — character"
+                  src="/sem-new.jpg"
+                  alt="Sem van Dieen"
                   fill
-                  className="object-contain"
+                  className="object-cover object-[center_10%]"
                   sizes="(max-width: 768px) 100vw, 400px"
-                  priority
                 />
+                {/* Overlay gradient at bottom */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/60 via-transparent to-transparent" />
               </div>
 
               {/* Name badge */}
