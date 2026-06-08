@@ -128,10 +128,10 @@ export default function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 md:transition-all md:duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 md:transition-all md:duration-300 md:bg-[#0a1628]/75 md:backdrop-blur-md ${
         scrolled
-          ? "bg-[#0a1628]/75 backdrop-blur-md"
-          : "bg-transparent"
+          ? "max-md:bg-[#0a1628]/75 max-md:backdrop-blur-md"
+          : "max-md:bg-transparent"
       } ${menuOpen ? "max-md:!bg-[#080808]/95 max-md:!backdrop-blur-md" : ""}`}
     >
       <div className={`w-full px-6 flex items-center justify-between transition-all duration-300 ${scrolled ? "py-2" : "py-4"}`}>
